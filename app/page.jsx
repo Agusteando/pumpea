@@ -5,6 +5,8 @@ import Typewriter from "../components/Typewriter";
 import WhatsAppCta from "../components/WhatsAppCta";
 import GlassPanel from "../components/GlassPanel";
 import Link from "next/link";
+import path from "path";
+import fs from "fs";
 
 const services = [
   {
@@ -63,21 +65,8 @@ const steps = [
 
 const founders = [
   {
-    name: "Alex Jurado",
-    role: "Co-fundador & CEO / Estrategia Digital",
-    image: "/alex.png",
-    bio: (
-      <>
-        Ingeniero, mente visionaria y apasionado del diseño de productos digitales.<br />
-        Lidera la visión de PUMPEA, la estrategia de crecimiento de clientes y las soluciones integrales.
-      </>
-    ),
-    color: "from-[#F0F7FF] via-[#CAE7FF] to-[#E8F8FF]",
-    border: "border-primary/40"
-  },
-  {
     name: "Andros Mendieta",
-    role: "Co-fundador & CTO / Arquitectura de Sistemas",
+    role: "Co-fundador & CEO / Estrategia Digital",
     image: "/andros.png",
     bio: (
       <>
@@ -87,12 +76,41 @@ const founders = [
     ),
     color: "from-[#F8F6FF] via-[#DED5FB] to-[#EBE9FF]",
     border: "border-[#a28cff]/40"
+  },
+  {
+    name: "Alex Jurado",
+    role: "Co-fundador & CTO / Arquitectura de Sistemas",
+    image: "/alex.png",
+    bio: (
+      <>
+        Ingeniero, mente visionaria y apasionado del diseño de productos digitales.<br />
+        Lidera la visión de PUMPEA, la estrategia de crecimiento de clientes y las soluciones integrales.
+      </>
+    ),
+    color: "from-[#F0F7FF] via-[#CAE7FF] to-[#E8F8FF]",
+    border: "border-primary/40"
   }
 ];
 
-const LOGOS = Array.from({ length: 7 }, (_, i) => `/aliados/${i + 1}.png`);
+function getAliadosImages() {
+  const dir = path.join(process.cwd(), "public", "aliados");
+  let files = [];
+  try {
+    files = fs
+      .readdirSync(dir)
+      .filter((f) =>
+        /\.(png|jpe?g|svg|webp)$/i.test(f)
+      )
+      .sort((a, b) => a.localeCompare(b));
+  } catch (e) {
+    return [];
+  }
+  return files.map((f) => `/aliados/${f}`);
+}
 
 export default function Home() {
+  const aliados = getAliadosImages();
+
   return (
     <div>
       <HeroGradientBg>
@@ -139,7 +157,7 @@ export default function Home() {
           </h2>
           <p className="text-neutral-700 text-[1.15rem] md:text-xl font-medium mb-6 text-center">
             En <b>PUMPEA</b> creemos que los negocios pueden ser más eficientes sin perder su esencia.<br />
-            Somos una empresa 100% mexicana fundada por Alex y Andros, apasionados por el desarrollo digital con propósito.
+            Somos una empresa 100% mexicana fundada por Andros y Alex, apasionados por el desarrollo digital con propósito.
           </p>
           <div className="flex flex-col gap-4 text-[1.08rem] text-neutral-800/90">
             <p>
@@ -306,26 +324,34 @@ export default function Home() {
             <div className="font-heading text-base text-primary text-center mb-1">
               <span className="font-extrabold text-lg">¡Gracias por confiar en nosotros!</span>
               <div className="flex items-center justify-center gap-2 mt-2 text-primary-dark font-bold">
-                <span>Alex Jurado</span>
-                <span className="mx-1">&amp;</span>
                 <span>Andros Mendieta</span>
+                <span className="mx-1">&amp;</span>
+                <span>Alex Jurado</span>
               </div>
             </div>
             <div className="mt-8 mb-2">
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center items-center">
-                {LOGOS.map((logo, i) => (
+                {aliados.length === 0 && (
+                  <span className="col-span-full text-center text-gray-400 py-6">Próximamente…</span>
+                )}
+                {aliados.map((src, i) => (
                   <div
-                    key={logo}
-                    className="flex items-center justify-center bg-gradient-to-br from-white/90 via-blue-50/60 to-blue-100/50 rounded-xl shadow border border-blue-100 w-full aspect-square max-w-[100px] md:max-w-[120px] md:aspect-square p-3 transition hover:scale-105 duration-150"
+                    key={src}
+                    className="flex items-center justify-center bg-gradient-to-br from-white/90 via-blue-50/60 to-blue-100/50 rounded-xl shadow border border-blue-100 w-full aspect-square max-w-[120px] md:max-w-[130px] p-3 transition hover:scale-105 duration-150"
                     style={{
                       boxShadow: "0 4px 18px #a3d1ee21",
                     }}
+                    title={`Aliado ${i + 1}`}
+                    aria-label={`Aliado logo ${i + 1}`}
+                    role="img"
                   >
                     <img
-                      src={logo}
+                      src={src}
                       alt={`Aliado logo ${i + 1}`}
                       className="w-full h-full object-contain"
                       draggable={false}
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 ))}

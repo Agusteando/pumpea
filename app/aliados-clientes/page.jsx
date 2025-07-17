@@ -1,14 +1,33 @@
 
 import GlassPanel from "../../components/GlassPanel";
+import path from "path";
+import fs from "fs";
 
 export const metadata = {
   title: "Aliados y Clientes - PUMPEA",
   description: "Nuestros aliados estratégicos y clientes que han confiado en PUMPEA para potenciar su transformación digital.",
 };
 
-const LOGOS = Array.from({ length: 7 }, (_, i) => `/aliados/${i + 1}.png`);
+function getAliadosImages() {
+  // Server-side: Read image files from /public/aliados
+  const dir = path.join(process.cwd(), "public", "aliados");
+  let files = [];
+  try {
+    files = fs
+      .readdirSync(dir)
+      .filter((f) =>
+        /\.(png|jpe?g|svg|webp)$/i.test(f)
+      )
+      .sort((a, b) => a.localeCompare(b)); // alphabetical order
+  } catch (e) {
+    // Could not read; return empty array
+    return [];
+  }
+  return files.map((f) => `/aliados/${f}`);
+}
 
 export default function AliadosClientesPage() {
+  const aliados = getAliadosImages();
   return (
     <div className="max-w-4xl mx-auto px-4 py-14">
       <GlassPanel className="mb-10">
@@ -22,9 +41,9 @@ export default function AliadosClientesPage() {
         <div className="font-heading text-base text-primary text-center">
           <span className="font-extrabold text-lg">¡Gracias por confiar en nosotros!</span>
           <div className="flex items-center justify-center gap-2 mt-2 text-primary-dark font-bold">
-            <span>Alex Jurado</span>
-            <span className="mx-1">&amp;</span>
             <span>Andros Mendieta</span>
+            <span className="mx-1">&amp;</span>
+            <span>Alex Jurado</span>
           </div>
         </div>
       </GlassPanel>
@@ -33,19 +52,27 @@ export default function AliadosClientesPage() {
           Nuestros aliados estratégicos y clientes
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center items-center">
-          {LOGOS.map((logo, i) => (
+          {aliados.length === 0 && (
+            <span className="col-span-full text-center text-gray-400 py-6">Próximamente…</span>
+          )}
+          {aliados.map((src, i) => (
             <div
-              key={logo}
-              className="flex items-center justify-center bg-gradient-to-br from-white/90 via-blue-50/50 to-blue-100/60 rounded-xl shadow border border-blue-100 w-full aspect-square max-w-[110px] md:max-w-[130px] p-3 transition hover:scale-105 duration-150"
+              key={src}
+              className="flex items-center justify-center bg-gradient-to-br from-white/90 via-blue-50/50 to-blue-100/60 rounded-xl shadow border border-blue-100 w-full aspect-square max-w-[120px] md:max-w-[130px] p-3 transition hover:scale-105 duration-150"
               style={{
                 boxShadow: "0 4px 18px #a3d1ee21",
               }}
+              title={`Aliado ${i + 1}`}
+              aria-label={`Aliado logo ${i + 1}`}
+              role="img"
             >
               <img
-                src={logo}
+                src={src}
                 alt={`Aliado logo ${i + 1}`}
                 className="w-full h-full object-contain"
                 draggable={false}
+                loading="lazy"
+                decoding="async"
               />
             </div>
           ))}
