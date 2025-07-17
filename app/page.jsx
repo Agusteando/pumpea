@@ -2,7 +2,6 @@
 import HeroGradientBg from "../components/HeroGradientBg";
 import HeroHeadline from "../components/HeroHeadline";
 import Typewriter from "../components/Typewriter";
-import AnimatedLogo from "../components/AnimatedLogo";
 import WhatsAppCta from "../components/WhatsAppCta";
 import GlassPanel from "../components/GlassPanel";
 import Link from "next/link";
@@ -67,7 +66,6 @@ export default function Home() {
     <div>
       <HeroGradientBg>
         <div className="relative z-10 w-full flex flex-col items-center justify-center pt-8 pb-10 px-3">
-          {/* Logo is always the colored variant for visibility */}
           <img src="/logo.png" alt="Pumpea Logo" className="w-24 h-24 md:w-32 md:h-32 drop-shadow-2xl mb-2" style={{
             filter: "drop-shadow(0 7px 36px #299dff45)"
           }}/>
@@ -102,6 +100,7 @@ export default function Home() {
         </div>
       </HeroGradientBg>
 
+      {/* NUESTRA ESENCIA */}
       <section id="nosotros" className="py-20 px-2 flex justify-center bg-gradient-to-r from-blue-50/70 to-white/95 border-b border-blue-100">
         <GlassPanel className={`max-w-3xl w-full mx-auto`}>
           <h2 className="uppercase font-heading text-gradient-main tracking-widest text-center text-lg md:text-xl font-black mb-2">
@@ -127,7 +126,7 @@ export default function Home() {
         </GlassPanel>
       </section>
 
-      {/* Services SECTION */}
+      {/* Qué hacemos */}
       <section className="py-20 px-2 bg-gradient-to-tr from-white via-sky-100 to-blue-50 border-b border-blue-50">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-center text-2xl md:text-4xl font-heading font-extrabold mb-6 text-gradient-main drop-shadow">
@@ -164,7 +163,6 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-2 justify-center relative">
             {steps.map((step, i) => (
               <div key={i} className="flex-1 min-w-[160px] flex flex-col items-center relative">
-                {/* Connector bar */}
                 {i > 0 && (
                   <div className="hidden md:block absolute left-0 top-9 h-1 w-full -z-10">
                     <div className="h-full w-full bg-gradient-to-r from-blue-100 via-sky-200 to-cyan-100 rounded opacity-90"></div>
@@ -197,22 +195,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Productos highlight */}
+      {/* Soluciones y Productos PUMPEA */}
       <section className="mt-20 max-w-3xl mx-auto px-4">
         <h2 className="text-2xl font-heading mb-5 text-center text-gradient-main drop-shadow">
-          Finalmente, agrega en nuestros <span className="text-primary">Productos</span>:
+          Soluciones y productos que impulsan tu evento y tu marca
         </h2>
         <div className="bg-gradient-to-br from-[#EFF6FF] via-white to-[#E6EBF8] rounded-xl p-7 mx-auto space-y-3 shadow-md border border-[#D4E3FA]">
           <h3 className="text-xl font-heading text-primary mb-2 text-center">
             Click&Celebrate
           </h3>
-          <p className="text-accent/90 text-center">
-            Productos para tu evento, gestión de fotos y momentos en tiempo real, invitaciones, itinerarios, cuentas regresivas, transmisiones en vivo.
-            <br />
-            <span className="inline-block mt-2 text-sm text-gray-500">
-              Streaming con OBS y StreamYard disponible <b>– bajo cotización</b>
-            </span>
+          <p className="text-accent/90 text-center leading-relaxed">
+            Eleva tus eventos con tecnología: invitaciones digitales, galerías compartidas, RSVP ágil y streaming, todo en una solución hecha por PUMPEA.<br/>
+            Convierte cada momento en una experiencia memorable, desde el primer contacto hasta la gestión de recuerdos y fotos en tiempo real.<br/>
           </p>
+          <ul className="list-disc pl-8 text-base text-accent/80 mx-auto text-left max-w-lg">
+            <li>Invitaciones digitales con RSVP instantáneo</li>
+            <li>Galerías y álbumes para compartir fotos entre asistentes</li>
+            <li>Itinerarios digitales, recordatorios y cuentas regresivas</li>
+            <li>Streaming en vivo profesional (OBS, StreamYard y más)</li>
+          </ul>
+          <p className="mt-2 text-center text-neutral-600 text-base">
+            ¿Necesitas tecnología para otro reto? Contamos con soluciones a la medida para empresas, marcas y eventos.
+          </p>
+          <div className="flex justify-center mt-3">
+            <Link href="/click-celebrate" className="cta-button text-lg">
+              Descubre Click&Celebrate
+            </Link>
+          </div>
         </div>
       </section>
 
