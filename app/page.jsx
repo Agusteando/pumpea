@@ -61,12 +61,43 @@ const steps = [
   }
 ];
 
+const founders = [
+  {
+    name: "Alex Jurado",
+    role: "Co-fundador & CEO / Estrategia Digital",
+    image: "/alex.png",
+    bio: (
+      <>
+        Ingeniero, mente visionaria y apasionado del diseño de productos digitales.<br />
+        Lidera la visión de PUMPEA, la estrategia de crecimiento de clientes y las soluciones integrales.
+      </>
+    ),
+    color: "from-[#F0F7FF] via-[#CAE7FF] to-[#E8F8FF]",
+    border: "border-primary/40"
+  },
+  {
+    name: "Andros Mendieta",
+    role: "Co-fundador & CTO / Arquitectura de Sistemas",
+    image: "/andros.png",
+    bio: (
+      <>
+        Arquitecto de software, fan de la automatización y la IA.<br />
+        Dirige el desarrollo tech, la calidad de los proyectos y la innovación interna de PUMPEA.
+      </>
+    ),
+    color: "from-[#F8F6FF] via-[#DED5FB] to-[#EBE9FF]",
+    border: "border-[#a28cff]/40"
+  }
+];
+
+const LOGOS = Array.from({ length: 7 }, (_, i) => `/aliados/${i + 1}.png`);
+
 export default function Home() {
   return (
     <div>
       <HeroGradientBg>
         <div className="relative z-10 w-full flex flex-col items-center justify-center pt-8 pb-10 px-3">
-          <img src="/logo-dark.png" alt="Pumpea Logo" className="w-24 h-24 md:w-32 md:h-32 drop-shadow-2xl mb-2" style={{
+          <img src="/logo-dark.png" alt="Pumpea Logo" className="w-36 h-36 md:w-48 md:h-48 drop-shadow-2xl mb-2" style={{
             filter: "drop-shadow(0 7px 36px #299dff45)"
           }}/>
           <HeroHeadline gradientClass="text-gradient-main drop-shadow-2xl">
@@ -76,7 +107,7 @@ export default function Home() {
               font-heading text-2xl md:text-3xl font-bold w-full max-w-2xl
               shadow shadow-sky-200/50"
           >
-            <span className="text-gradient-main font-extrabold">solo necesita un buen impulso digital.</span>
+            <span className="text-gradient-main font-extrabold">solo necesita un buen impulso.</span>
           </div>
           <div className="mt-2 mb-8">
             <Typewriter
@@ -101,7 +132,7 @@ export default function Home() {
       </HeroGradientBg>
 
       {/* NUESTRA ESENCIA */}
-      <section id="nosotros" className="py-20 px-2 flex justify-center bg-gradient-to-r from-blue-50/70 to-white/95 border-b border-blue-100">
+      <section id="nosotros" className="py-20 px-2 flex flex-col items-center bg-gradient-to-r from-blue-50/70 to-white/95 border-b border-blue-100">
         <GlassPanel className={`max-w-3xl w-full mx-auto`}>
           <h2 className="uppercase font-heading text-gradient-main tracking-widest text-center text-lg md:text-xl font-black mb-2">
             Nosotros / Quiénes Somos
@@ -122,6 +153,42 @@ export default function Home() {
             <div className="mt-1 text-center">
               <span className="inline-block px-4 py-1 rounded-full bg-sky-100/60 text-primary font-bold drop-shadow text-base">PUMPEA tu negocio. Dale potencia a tus ideas.</span>
             </div>
+          </div>
+          {/* Founders section */}
+          <div className="mt-10 flex flex-col items-center gap-7">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 w-full">
+              {founders.map(f => (
+                <div
+                  key={f.name}
+                  className={`rounded-2xl border ${f.border} bg-gradient-to-br ${f.color} shadow-md shadow-blue-200/20 p-6 flex flex-col items-center transition-all`}
+                  style={{
+                    boxShadow: "0 4px 32px #d9eafe1a, 0 1.5px 2.5px rgba(70,90,220,0.09)"
+                  }}
+                >
+                  <div className="relative mb-3 flex items-center justify-center">
+                    <img
+                      src={f.image}
+                      alt={f.name}
+                      className="w-32 h-32 object-cover rounded-full border-4 border-white shadow-xl transition-all hover:scale-105
+                       bg-sky-50 drop-shadow-2xl"
+                      loading="lazy"
+                      style={{ boxShadow: "0 2px 16px #b5d6f33a", background: "linear-gradient(135deg,#d6f2fc,#f6ecff)" }}
+                    />
+                    <span className="absolute bottom-0 right-2 bg-gradient-to-tr from-primary to-accent-sky text-white font-bold text-xs px-2 py-[3px] rounded-xl shadow-xl border border-white/70">
+                      FUNDADOR
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <div className="font-heading text-lg md:text-xl text-primary font-black text-center">{f.name}</div>
+                    <div className="text-sm md:text-base text-primary-dark font-semibold mb-1 text-center">{f.role}</div>
+                    <div className="text-neutral-700/90 text-sm text-center leading-relaxed mt-1">{f.bio}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <span className="text-neutral-400 text-sm flex items-center gap-2 mt-1">
+              <i className="fa fa-star text-accent-sky/80" /> Personas reales, experiencia real, pasión por crecer contigo.
+            </span>
           </div>
         </GlassPanel>
       </section>
@@ -222,6 +289,49 @@ export default function Home() {
               Descubre Click&Celebrate
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Aliados y Clientes Strip Section */}
+      <section className="w-full py-16 bg-gradient-to-br from-blue-50/80 via-white to-blue-100/50 border-t border-blue-100 mt-20">
+        <div className="max-w-4xl mx-auto px-3">
+          <GlassPanel className="mb-9 pb-7">
+            <h2 className="text-2xl md:text-3xl font-heading font-extrabold mb-3 text-gradient-main text-center drop-shadow">
+              Aliados y clientes
+            </h2>
+            <p className="text-center text-base md:text-lg text-neutral-700 mb-5">
+              Agradecemos la confianza que cada aliado y cliente deposita en nosotros. Para nosotros, no son solo nombres o proyectos: su visión, su energía y su crecimiento se han vuelto también parte vital de la historia de PUMPEA.<br className="hidden sm:inline"/>
+              Es un privilegio ser parte de su evolución digital y saber que juntos <b>construimos ideas que trascienden</b>. Cada experiencia, cada reto, cada resultado logrado nos inspira a superarnos siempre.
+            </p>
+            <div className="font-heading text-base text-primary text-center mb-1">
+              <span className="font-extrabold text-lg">¡Gracias por confiar en nosotros!</span>
+              <div className="flex items-center justify-center gap-2 mt-2 text-primary-dark font-bold">
+                <span>Alex Jurado</span>
+                <span className="mx-1">&amp;</span>
+                <span>Andros Mendieta</span>
+              </div>
+            </div>
+            <div className="mt-8 mb-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center items-center">
+                {LOGOS.map((logo, i) => (
+                  <div
+                    key={logo}
+                    className="flex items-center justify-center bg-gradient-to-br from-white/90 via-blue-50/60 to-blue-100/50 rounded-xl shadow border border-blue-100 w-full aspect-square max-w-[100px] md:max-w-[120px] md:aspect-square p-3 transition hover:scale-105 duration-150"
+                    style={{
+                      boxShadow: "0 4px 18px #a3d1ee21",
+                    }}
+                  >
+                    <img
+                      src={logo}
+                      alt={`Aliado logo ${i + 1}`}
+                      className="w-full h-full object-contain"
+                      draggable={false}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </GlassPanel>
         </div>
       </section>
 
