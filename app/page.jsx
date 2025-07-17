@@ -66,7 +66,7 @@ export default function Home() {
     <div>
       <HeroGradientBg>
         <div className="relative z-10 w-full flex flex-col items-center justify-center pt-8 pb-10 px-3">
-          <img src="/logo.png" alt="Pumpea Logo" className="w-24 h-24 md:w-32 md:h-32 drop-shadow-2xl mb-2" style={{
+          <img src="/logo-dark.png" alt="Pumpea Logo" className="w-24 h-24 md:w-32 md:h-32 drop-shadow-2xl mb-2" style={{
             filter: "drop-shadow(0 7px 36px #299dff45)"
           }}/>
           <HeroHeadline gradientClass="text-gradient-main drop-shadow-2xl">

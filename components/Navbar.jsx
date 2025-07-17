@@ -27,7 +27,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 sm:px-8">
         <Link href="/" className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
           <img
-            src="/logo.png"
+            src="/logo-h.png"
             className="h-10 w-auto"
             alt="Pumpea Logo"
             style={{ filter: "drop-shadow(0 4px 10px #2180df22)" }}
