@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
       </head>
-      <body>
+      <body className="min-h-screen flex flex-col bg-white text-neutral-900 font-sans antialiased">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

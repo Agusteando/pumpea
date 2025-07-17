@@ -1,29 +1,33 @@
 
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* --- Custom --- */
+@layer utilities {
+  .text-gradient-main {
+    @apply bg-gradient-to-r from-blue-700 via-sky-400 to-cyan-400 bg-clip-text text-transparent;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.cta-button {
+  @apply font-heading text-white bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400 shadow-lg shadow-blue-600/15 px-8 py-3 rounded-full font-bold
+    hover:from-blue-800 hover:via-sky-600 hover:to-cyan-400 hover:scale-105 active:brightness-95
+    border-2 border-blue-400 transition;
+}
+.button {
+  @apply font-heading px-7 py-3 rounded-full text-blue-800 border border-blue-300 font-semibold shadow
+    bg-white hover:bg-blue-50 hover:scale-105 active:brightness-95 transition;
 }
 
-/* Optional: add any custom global classes/styles here */
+body {
+  min-height: 100vh;
+  background: linear-gradient(120deg,#eaf2fb 0,#fafdff 100%);
+}
+.font-heading {
+  font-family: Montserrat, var(--font-heading, system-ui), "Segoe UI", Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
