@@ -67,7 +67,10 @@ export default function Home() {
     <div>
       <HeroGradientBg>
         <div className="relative z-10 w-full flex flex-col items-center justify-center pt-8 pb-10 px-3">
-          <AnimatedLogo />
+          {/* Logo is always the colored variant for visibility */}
+          <img src="/logo.png" alt="Pumpea Logo" className="w-24 h-24 md:w-32 md:h-32 drop-shadow-2xl mb-2" style={{
+            filter: "drop-shadow(0 7px 36px #299dff45)"
+          }}/>
           <HeroHeadline gradientClass="text-gradient-main drop-shadow-2xl">
             Tu negocio tiene todo para crecer…
           </HeroHeadline>
@@ -124,7 +127,7 @@ export default function Home() {
         </GlassPanel>
       </section>
 
-      {/* Services */}
+      {/* Services SECTION */}
       <section className="py-20 px-2 bg-gradient-to-tr from-white via-sky-100 to-blue-50 border-b border-blue-50">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-center text-2xl md:text-4xl font-heading font-extrabold mb-6 text-gradient-main drop-shadow">
