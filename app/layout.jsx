@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CalendlyProvider from "../components/CalendlyProvider";
 import CalendlyModalProvider from "../components/CalendlyModal";
+import PageTransitionProvider from "../components/PageTransitionProvider";
 
 export const metadata = {
   title: "Pumpea - Transformación Digital de Clase Mundial",
@@ -22,13 +23,15 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
       </head>
       <body className="min-h-screen flex flex-col bg-white text-neutral-900 font-sans antialiased">
-        <CalendlyProvider />
-        <CalendlyModalProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </CalendlyModalProvider>
-        <div id="custom-alert" className="fixed bottom-4 right-4 z-50"></div>
+        <PageTransitionProvider>
+          <CalendlyProvider />
+          <CalendlyModalProvider>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </CalendlyModalProvider>
+          <div id="custom-alert" className="fixed bottom-4 right-4 z-50"></div>
+        </PageTransitionProvider>
       </body>
     </html>
   );
