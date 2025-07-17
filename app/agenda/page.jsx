@@ -1,6 +1,8 @@
 
+"use client";
 import WhatsAppCta from "../../components/WhatsAppCta";
 import Link from "next/link";
+import { useCalendlyModal } from "../../components/CalendlyModal";
 
 const steps = [
   {
@@ -31,6 +33,13 @@ const steps = [
 ];
 
 export default function AgendaPage() {
+  const { showCalendly } = useCalendlyModal();
+
+  const handleAgendaClick = (e) => {
+    e.preventDefault();
+    showCalendly();
+  };
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
       <h1 className="text-3xl font-heading mb-4 text-gradient-main text-center font-bold animate-in fade-in slide-in-from-top duration-1000">
@@ -45,14 +54,13 @@ export default function AgendaPage() {
         ))}
       </div>
       <div className="text-center mt-10">
-        <a
-          href="https://calendly.com/pumpea/agenda"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          onClick={handleAgendaClick}
           className="cta-button text-base animate-in fade-in duration-700 delay-700"
         >
           Agenda ahora en línea
-        </a>
+        </button>
         <div className="mt-2 flex flex-col items-center gap-1">
           <span className="text-accent/70 text-sm">
             ¿Tienes dudas? <Link href="/contact" className="text-primary underline">Contáctanos</Link> y un experto PUMPEA te ayuda.
