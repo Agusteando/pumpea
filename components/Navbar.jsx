@@ -3,47 +3,29 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useCalendlyModal } from "./CalendlyModal";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { showCalendly } = useCalendlyModal();
 
-  // Open Calendly badge when clicking "Agenda tu cita"
-  const openCalendly = (e) => {
-    e.preventDefault();
-    if (typeof window !== "undefined" && window.Calendly) {
-      window.Calendly.initBadgeWidget({
-        url: "https://calendly.com/desarrollo-tecnologico-casitaiedis/programa-tu-sesion-con-pumpea",
-        text: "Programa tu cita con Pumpea",
-        color: "#50678b",
-        textColor: "#ffffff",
-      });
-    }
-    setMenuOpen(false);
-  };
-
-  const navLinks = [
-    {
-      href: "/",
-      label: "Inicio",
-      active: pathname === "/",
-    },
-    {
-      href: "/pricing",
-      label: "Precios",
-      active: pathname.startsWith("/pricing"),
-    },
-    {
-      href: "/contact",
-      label: "Contacto",
-      active: pathname.startsWith("/contact"),
-    },
+  const links = [
+    { href: "/", label: "Inicio", match: (p) => p === "/" },
+    { href: "/pricing", label: "Precios", match: (p) => p.startsWith("/pricing") },
+    { href: "/click-celebrate", label: "Click&Celebrate", match: (p) => p.startsWith("/click-celebrate") },
+    { href: "/contact", label: "Contacto", match: (p) => p.startsWith("/contact") },
   ];
+
+  function handleAgenda() {
+    setMenuOpen(false);
+    showCalendly();
+  }
 
   return (
     <header className="sticky top-0 z-30 bg-white border-b border-gray-100 shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 sm:px-8">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
           <img
             src="/logo.png"
             className="h-10 w-auto"
@@ -65,23 +47,23 @@ export default function Navbar() {
               : "hidden sm:flex"
           }`}
         >
-          {navLinks.map((link) => (
+          {links.map((l) => (
             <Link
-              href={link.href}
-              key={link.href}
+              href={l.href}
+              key={l.href}
               className={`block py-1 ${
-                link.active ? "text-primary font-bold" : "text-neutral-700"
+                l.match(pathname) ? "text-primary font-bold" : "text-neutral-700"
               }`}
               onClick={() => setMenuOpen(false)}
             >
-              {link.label}
+              {l.label}
             </Link>
           ))}
-          {/* Calendly agenda CTA */}
           <button
-            onClick={openCalendly}
+            onClick={handleAgenda}
             className="cta-button py-2 px-6 text-base ml-2 font-bold shadow border-2 border-blue-400 hover:brightness-105"
             style={{ minWidth: 145 }}
+            type="button"
           >
             Agenda tu cita
           </button>
