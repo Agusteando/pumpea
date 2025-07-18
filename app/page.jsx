@@ -125,7 +125,7 @@ export default function Home() {
               font-heading text-2xl md:text-3xl font-bold w-full max-w-2xl
               shadow shadow-sky-200/50"
           >
-            <span className="text-gradient-main font-extrabold">solo necesita un buen impulso.</span>
+            <span className="text-gradient-main font-extrabold">Tu negocio solo necesita un buen impulso digital.</span>
           </div>
           <div className="mt-2 mb-8">
             <Typewriter
