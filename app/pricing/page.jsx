@@ -1,227 +1,106 @@
-
 "use client";
-import WhatsAppCta from "../../components/WhatsAppCta";
-import Link from "next/link";
+
 import { useState } from "react";
+import Link from "next/link";
+import PageHero from "../../components/PageHero";
+import WhatsAppCta from "../../components/WhatsAppCta";
 
 const packages = [
   {
-    title: "Sitio Web Simple",
-    price: "$3,500 MXN",
-    badge: "Ahorro",
-    category: "web",
-    popular: false,
-    perks: [
-      "Dominio y hosting 1 año gratis",
-      "Diseño responsive a tu marca",
-      "Formulario de contacto básico",
-      "Soporte por correo",
-    ],
-    details: "Ideal para presentar servicios y captar prospectos sin complicaciones.",
+    title: "Impulso Web",
+    price: "Desde $8,500 MXN",
+    badge: "Inicio sólido",
+    desc: "Landing page o sitio simple con identidad clara, copy comercial y estructura lista para captar prospectos.",
+    perks: ["Diseño responsive premium", "Secciones comerciales clave", "Formulario o WhatsApp CTA", "SEO técnico base", "Entrega y capacitación"],
   },
   {
-    title: "Sitio E-commerce",
-    price: "$20,000 MXN",
-    badge: "¡Más vendido!",
-    category: "web",
+    title: "Conversión Pro",
+    price: "Desde $18,500 MXN",
+    badge: "Más solicitado",
     popular: true,
-    perks: [
-      "Carrito, pagos y catálogo",
-      "Integración con WhatsApp y email",
-      "Panel de administración simple",
-      "Capacitación inicial sin costo",
-    ],
-    details: "Vende productos en línea y gestiona tus pedidos fácilmente.",
+    desc: "Sitio multipágina con estrategia de conversión, analítica, contenido más robusto y experiencia visual completa.",
+    perks: ["Arquitectura de navegación", "Diseño 1:1 con sistema visual", "Integración de analítica", "Optimización de rendimiento", "Componentes reutilizables", "Acompañamiento de lanzamiento"],
   },
   {
-    title: "Bot WhatsApp",
-    price: "$3,000 MXN",
-    badge: "Automatización",
-    category: "bot",
-    popular: false,
-    perks: [
-      "Respuestas automáticas personalizadas",
-      "Disponible 24/7 para tus clientes",
-      "Envío de menús, catálogos, citas y más",
-      "Incluye manual de uso",
-    ],
-    details: "Atiende a tus clientes 24/7 y olvida los mensajes repetidos.",
+    title: "Automatización",
+    price: "Desde $12,000 MXN",
+    badge: "Ahorro operativo",
+    desc: "Flujos, bots, formularios, CRM ligero e integraciones para reducir trabajo manual y acelerar respuesta.",
+    perks: ["Bot o flujo de atención", "Captura de leads ordenada", "Integraciones con herramientas", "Notificaciones y seguimiento", "Documentación del proceso"],
   },
   {
-    title: "Gestión de Redes Sociales",
-    price: "$1,000 MXN",
-    badge: "Tu presencia",
-    category: "social",
-    popular: false,
-    perks: [
-      "Facebook e Instagram",
-      "5 publicaciones semanales",
-      "Calendario mensual + insights",
-      "Diseños gráficos incluidos",
-    ],
-    details: "Haz crecer tu comunidad y mantente vigente con contenido profesional.",
-  },
-  {
-    title: "Click&Celebrate (Eventos)",
+    title: "Sistema a medida",
     price: "Cotización personalizada",
-    badge: "¡Eventos únicos!",
-    category: "evento",
-    popular: true,
-    perks: [
-      "Invitaciones digitales con RSVP",
-      "Galería de fotos en tiempo real",
-      "Página personalizada de tu evento",
-      "Opcional: streaming y recordatorios",
-    ],
-    details: "La suite más completa para eventos modernos. Cuéntanos tus ideas.",
+    badge: "Escala completa",
+    desc: "Producto digital, portal, plataforma interna o sistema especializado diseñado alrededor de tu operación.",
+    perks: ["Descubrimiento funcional", "Diseño de producto", "MVP o versión completa", "Base de datos e integraciones", "Manual y capacitación", "Roadmap evolutivo"],
   },
 ];
 
-function highlightColor(pkg) {
-  if (pkg.popular) return "from-primary via-cyan-200 to-primary-light";
-  if (pkg.category === "evento") return "from-rose-200 via-pink-100 to-cyan-100";
-  if (pkg.category === "web") return "from-sky-100 via-white to-blue-50";
-  if (pkg.category === "bot") return "from-green-100 via-green-50 to-white";
-  if (pkg.category === "social") return "from-indigo-100 via-purple-50 to-white";
-  return "from-white";
-}
-
-function getCta(pkg) {
-  if (pkg.category === "evento" || pkg.price.includes("Cotización"))
-    return (
-      <a
-        href="https://wa.me/5217293062147?text=Quiero%20cotizar%20Click%26Celebrate%20o%20solicitar%20más%20info%20de%20eventos."
-        target="_blank"
-        rel="noopener noreferrer"
-        className="cta-button w-full mt-3"
-      >
-        Cotiza tu evento
-      </a>
-    );
-  if (pkg.category === "bot")
-    return (
-      <a
-        href="https://wa.me/5217293062147?text=Me%20interesa%20un%20Bot%20de%20WhatsApp%20para%20mi%20negocio"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="cta-button w-full mt-3"
-      >
-        Solicitar demo
-      </a>
-    );
-  if (pkg.category === "web")
-    return (
-      <Link href="/contact" className="cta-button w-full mt-3">
-        Solicitar cotización
-      </Link>
-    );
-  if (pkg.category === "social")
-    return (
-      <a
-        href="https://wa.me/5217293062147?text=Quiero%20informes%20de%20gesti%C3%B3n%20de%20redes%20sociales"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="cta-button w-full mt-3"
-      >
-        Agenda asesoría gratis
-      </a>
-    );
-}
-
-export default function Pricing() {
-  const [showMore, setShowMore] = useState(false);
+export default function PricingPage() {
+  const [expanded, setExpanded] = useState({});
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12 relative">
-      <h1 className="text-3xl md:text-4xl font-heading mb-6 text-center text-gradient-main font-extrabold fade-in">
-        Paquetes y Precios <span className="block text-lg mt-2 font-normal text-accent/80">Servicios que impulsan tu negocio</span>
-      </h1>
-      <p className="mb-8 text-accent/90 text-center">
-        Selecciona la solución ideal para ti o agenda una cita para armar tu propio paquete. <span className="font-semibold text-primary">¡Cita y diagnóstico gratis!</span>
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-10 items-stretch mb-14">
-        {packages.map((pkg) => (
-          <div
-            key={pkg.title}
-            className={`
-              relative flex flex-col bg-gradient-to-br ${highlightColor(pkg)}
-              border border-blue-100 rounded-2xl shadow-xl px-6 pt-6 pb-7
-              transition hover:scale-[1.026] hover:shadow-blue-300/30
-              min-h-[400px]
-              ${pkg.popular ? "ring-2 ring-primary" : ""}
-            `}
-          >
-            {pkg.badge && (
-              <div className={`absolute -top-3 left-4 rounded px-3 py-[4px] text-xs font-extrabold tracking-wide shadow
-                ${pkg.popular
-                  ? "bg-primary text-white"
-                  : "bg-blue-500/10 text-primary"
-                }
-              `}>
-                {pkg.badge}
-              </div>
-            )}
-            <div className="flex flex-col flex-grow">
-              <h2 className={`text-xl font-heading font-bold mb-1 mt-2 ${pkg.popular ? "text-primary" : "text-blue-700"}`}>{pkg.title}</h2>
-              <div className={`mb-2 text-2xl font-extrabold ${
-                pkg.price.includes("Cotización")
-                ? "bg-gradient-to-r from-blue-600 to-cyan-400 bg-clip-text text-transparent"
-                : pkg.popular ? "text-primary" : "text-green-600"
-              }`}>
-                {pkg.price}
-              </div>
-              <p className="text-accent/90 text-[15px] mb-3">{pkg.details}</p>
-              <ul className="flex-1 flex flex-col gap-2 list-disc pl-5 text-neutral-800/90 text-base pb-1 mt-1">
-                {pkg.perks.slice(0, showMore || pkg.perks.length <= 3 ? pkg.perks.length : 3).map((perk, i) => (
-                  <li key={i}>{perk}</li>
-                ))}
-              </ul>
-              {pkg.perks.length > 3 && !showMore && (
-                <button
-                  className="text-primary mt-1 text-sm underline"
-                  tabIndex={0}
-                  onClick={() => setShowMore(true)}
-                >
-                  Ver más
-                </button>
-              )}
-            </div>
-            {getCta(pkg)}
-          </div>
-        ))}
-      </div>
+    <div>
+      <PageHero kicker="Paquetes y precios" title="Soluciones digitales con alcance claro y posibilidad de escalar.">
+        Selecciona una base de trabajo o agenda una asesoría para armar un paquete a medida. La primera conversación es sin costo y nos ayuda a definir qué conviene construir primero.
+      </PageHero>
 
-      <div className="bg-gradient-to-br from-blue-50/85 via-white to-blue-100 rounded-lg shadow px-5 py-8 mb-7 border border-blue-100">
-        <div className="sm:flex flex-row items-center justify-between mb-3">
-          <div className="font-heading font-bold text-lg text-primary flex items-center gap-2 mb-2 sm:mb-0">
-            <i className="fa fa-lightbulb text-primary" /> ¿No ves tu proyecto?
+      <section className="pumpea-container pb-20">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {packages.map((pkg) => {
+            const showAll = expanded[pkg.title];
+            const perks = showAll ? pkg.perks : pkg.perks.slice(0, 4);
+            return (
+              <article key={pkg.title} className={`glass-card reveal-card relative flex min-h-[520px] flex-col p-7 ${pkg.popular ? "ring-2 ring-blue-500/30" : ""}`}>
+                <div className={`mb-5 w-fit rounded-full px-4 py-2 text-xs font-black ${pkg.popular ? "bg-blue-600 text-white" : "bg-blue-50 text-blue-700"}`}>
+                  {pkg.badge}
+                </div>
+                <h2 className="font-heading text-2xl font-black text-[#102453]">{pkg.title}</h2>
+                <p className="mt-3 font-heading text-3xl font-black text-blue-700">{pkg.price}</p>
+                <p className="mt-4 text-sm font-medium leading-relaxed text-slate-600">{pkg.desc}</p>
+                <ul className="mt-6 flex-1 space-y-3 text-sm font-bold text-slate-600">
+                  {perks.map((perk) => (
+                    <li key={perk} className="flex gap-3"><i className="fa fa-check mt-1 text-blue-600" /> <span>{perk}</span></li>
+                  ))}
+                </ul>
+                {pkg.perks.length > 4 && !showAll && (
+                  <button type="button" className="mt-4 text-left text-sm font-black text-blue-700" onClick={() => setExpanded((v) => ({ ...v, [pkg.title]: true }))}>
+                    Ver alcance completo
+                  </button>
+                )}
+                <Link href="/agenda" className={pkg.popular ? "cta-button mt-7" : "button mt-7"}>
+                  {pkg.price.includes("Cotización") ? "Solicitar diagnóstico" : "Agendar asesoría"}
+                </Link>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="pumpea-container pb-24">
+        <div className="glass-card-strong grid items-center gap-8 p-7 md:grid-cols-[1fr_auto] md:p-10">
+          <div>
+            <span className="section-kicker">Proyecto a medida</span>
+            <h2 className="mt-5 font-heading text-3xl font-black text-[#102453] md:text-4xl">¿No ves tu caso exacto?</h2>
+            <p className="mt-4 max-w-3xl text-lg font-medium leading-relaxed text-slate-600">
+              Cotizamos soluciones por alcance real. Podemos iniciar con una landing, conectar automatizaciones o diseñar un producto completo por fases.
+            </p>
+            <ul className="mt-5 grid gap-3 text-sm font-bold text-slate-600 sm:grid-cols-3">
+              <li><i className="fa fa-check mr-2 text-blue-600" />Diagnóstico inicial gratis</li>
+              <li><i className="fa fa-check mr-2 text-blue-600" />Anticipo de arranque 40%</li>
+              <li><i className="fa fa-check mr-2 text-blue-600" />Entrega con capacitación</li>
+            </ul>
           </div>
-          <span className="text-accent/90">
-            Cotizamos soluciones a la medida y acompañamos tu transformación digital.
-          </span>
+          <div className="flex min-w-[270px] flex-col gap-3">
+            <Link href="/contact" className="cta-button">Pedir cotización</Link>
+            <a href="https://wa.me/5217293062147?text=Hola%20Pumpea%2C%20quiero%20informes%20y%20cotización%20de%20tu%20servicio" target="_blank" rel="noopener noreferrer" className="button !text-emerald-700">
+              <i className="fab fa-whatsapp" /> WhatsApp
+            </a>
+          </div>
         </div>
-        <div className="flex flex-col md:flex-row gap-4 justify-center mt-3">
-          <Link href="/contact" className="cta-button min-w-[160px]">
-            Pide Tu Cotización
-          </Link>
-          <a
-            href="https://wa.me/5217293062147?text=Hola%20Pumpea%2C%20quiero%20informes%20y%20cotización%20de%20tu%20servicio"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="button bg-green-500 hover:bg-green-700 border-green-600 flex items-center gap-2 min-w-[170px]"
-          >
-            <i className="fab fa-whatsapp text-lg" /> Cotiza por WhatsApp
-          </a>
-        </div>
-        <p className="mt-5 text-center text-accent/70 text-base">
-          Todos los paquetes pueden personalizarse; recibe asesoría directa de nuestros expertos.
-        </p>
-        <ul className="list-disc pl-6 mt-3 text-accent/70 text-[15px]">
-          <li>Precios de referencia; pueden variar según requerimientos o personalizaciones.</li>
-          <li>Incluyen cita y diagnóstico inicial gratis.</li>
-          <li>Pago en dos partes: 40% de anticipo y el resto a la entrega.</li>
-        </ul>
-      </div>
+      </section>
+
       <WhatsAppCta />
     </div>
   );

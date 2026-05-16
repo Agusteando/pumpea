@@ -1,82 +1,67 @@
-
-import GlassPanel from "../../components/GlassPanel";
-import SpriteLogoRail from "../../components/SpriteLogoRail";
 import path from "path";
 import fs from "fs";
+import PageHero from "../../components/PageHero";
+import SpriteLogoRail from "../../components/SpriteLogoRail";
 
 export const metadata = {
-  title: "Aliados y Clientes - PUMPEA",
-  description: "Nuestros aliados estratégicos y clientes que han confiado en PUMPEA para potenciar su transformación digital.",
+  title: "Casos de éxito | PUMPEA",
+  description: "Aliados, clientes y marcas que han confiado en PUMPEA para su crecimiento digital.",
 };
 
 function getAliadosImages() {
-  // Server-side: Read image files from /public/aliados
   const dir = path.join(process.cwd(), "public", "aliados");
-  let files = [];
   try {
-    files = fs
+    return fs
       .readdirSync(dir)
-      .filter((f) =>
-        /\.(png|jpe?g|svg|webp)$/i.test(f)
-      )
-      .sort((a, b) => a.localeCompare(b)); // alphabetical order
-  } catch (e) {
-    // Could not read; return empty array
+      .filter((file) => /\.(png|jpe?g|svg|webp)$/i.test(file))
+      .sort((a, b) => a.localeCompare(b))
+      .map((file) => `/aliados/${file}`);
+  } catch {
     return [];
   }
-  return files.map((f) => `/aliados/${f}`);
 }
+
+const outcomes = [
+  { icon: "fa-window-maximize", title: "Presencia digital clara", desc: "Sitios y páginas que explican la oferta con estructura comercial." },
+  { icon: "fa-robot", title: "Procesos automatizados", desc: "Atención, captura de prospectos y seguimiento con menos fricción." },
+  { icon: "fa-chart-line", title: "Crecimiento medible", desc: "Decisiones guiadas por objetivos, datos y operación real." },
+];
 
 export default function AliadosClientesPage() {
   const aliados = getAliadosImages();
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-14">
-      <GlassPanel className="mb-10">
-        <h1 className="text-3xl md:text-4xl font-heading text-gradient-main text-center mb-4 font-extrabold drop-shadow">
-          Aliados y clientes
-        </h1>
-        <p className="text-center text-lg text-neutral-700 mb-7">
-          Agradecemos la confianza que cada aliado y cliente deposita en nosotros. Para nosotros, no son solo nombres o proyectos: su visión, su energía y su crecimiento se han vuelto también parte vital de la historia de PUMPEA.<br className="hidden sm:inline"/>
-          Es un privilegio ser parte de su evolución digital y saber que juntos <b>construimos ideas que trascienden</b>. Cada experiencia, cada reto y cada resultado logrado nos inspira a superarnos siempre.
-        </p>
-        <div className="font-heading text-base text-primary text-center">
-          <span className="font-extrabold text-lg">¡Gracias por confiar en nosotros!</span>
-          <div className="flex items-center justify-center gap-2 mt-2 text-primary-dark font-bold">
-            <span>Andros Mendieta</span>
-            <span className="mx-1">&amp;</span>
-            <span>Alex Jurado</span>
+    <div>
+      <PageHero kicker="Casos de éxito" title="Aliados que ya confían en Pumpea para crecer con tecnología.">
+        Agradecemos la confianza de cada marca y organización. Su visión, energía y crecimiento forman parte de la historia que seguimos construyendo.
+      </PageHero>
+
+      <section className="pumpea-container pb-16">
+        <div className="glass-card-strong p-7 md:p-10">
+          <div className="mb-8 text-center">
+            <span className="section-kicker">Aliados</span>
+            <h2 className="mt-5 font-heading text-3xl font-black text-[#102453] md:text-4xl">Marcas y organizaciones que están creciendo con nosotros.</h2>
+          </div>
+          <SpriteLogoRail compact framed={false} />
+          <div className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
+            {aliados.length === 0 && <p className="col-span-full text-center font-bold text-slate-400">Próximamente…</p>}
+            {aliados.map((src, index) => (
+              <div key={src} className="glass-card reveal-card flex aspect-square items-center justify-center p-5" title={`Aliado ${index + 1}`}>
+                <img src={src} alt={`Aliado ${index + 1}`} className="h-full w-full object-contain" loading="lazy" decoding="async" />
+              </div>
+            ))}
           </div>
         </div>
-        <SpriteLogoRail compact className="mt-7" />
-      </GlassPanel>
-      <section>
-        <h2 className="text-center text-xl md:text-2xl font-heading font-semibold text-blue-700 mb-6">
-          Nuestros aliados estratégicos y clientes
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center items-center">
-          {aliados.length === 0 && (
-            <span className="col-span-full text-center text-gray-400 py-6">Próximamente…</span>
-          )}
-          {aliados.map((src, i) => (
-            <div
-              key={src}
-              className="flex items-center justify-center bg-gradient-to-br from-white/90 via-blue-50/50 to-blue-100/60 rounded-xl shadow border border-blue-100 w-full aspect-square max-w-[120px] md:max-w-[130px] p-3 transition hover:scale-105 duration-150"
-              style={{
-                boxShadow: "0 4px 18px #a3d1ee21",
-              }}
-              title={`Aliado ${i + 1}`}
-              aria-label={`Aliado logo ${i + 1}`}
-              role="img"
-            >
-              <img
-                src={src}
-                alt={`Aliado logo ${i + 1}`}
-                className="w-full h-full object-contain"
-                draggable={false}
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
+      </section>
+
+      <section className="pumpea-container pb-24">
+        <div className="grid gap-5 md:grid-cols-3">
+          {outcomes.map((outcome) => (
+            <article key={outcome.title} className="glass-card reveal-card p-7">
+              <span className="icon-bubble mb-5"><i className={`fa ${outcome.icon}`} /></span>
+              <h3 className="font-heading text-2xl font-black text-[#102453]">{outcome.title}</h3>
+              <p className="mt-3 font-medium leading-relaxed text-slate-600">{outcome.desc}</p>
+            </article>
           ))}
         </div>
       </section>

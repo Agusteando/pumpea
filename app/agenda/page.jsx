@@ -1,87 +1,66 @@
-
 "use client";
-import WhatsAppCta from "../../components/WhatsAppCta";
+
 import Link from "next/link";
+import PageHero from "../../components/PageHero";
+import WhatsAppCta from "../../components/WhatsAppCta";
 import { useCalendlyModal } from "../../components/CalendlyModal";
 
 const steps = [
-  {
-    icon: "fa-calendar-check",
-    title: "Agenda tu cita",
-    desc: "Reunión presencial o videollamada. ¡Queremos conocer tu idea!",
-  },
-  {
-    icon: "fa-clipboard-list",
-    title: "Propuesta personalizada",
-    desc: "Cotización clara y detallada en menos de 2 días hábiles.",
-  },
-  {
-    icon: "fa-file-signature",
-    title: "Firma de contrato y confidencialidad",
-    desc: "Tu privacidad, formalidad y NDA incluidos.",
-  },
-  {
-    icon: "fa-credit-card",
-    title: "Pago inicial",
-    desc: "40% de anticipo para arrancar, equipo a tu disposición.",
-  },
-  {
-    icon: "fa-tools",
-    title: "Desarrollo y entrega",
-    desc: "Fase Beta + Fase Final. Sistema funcionando y capacitación.",
-  },
+  { icon: "fa-calendar-check", title: "Agenda tu cita", desc: "Reunión presencial o videollamada para entender tu idea y contexto." },
+  { icon: "fa-clipboard-list", title: "Propuesta personalizada", desc: "Cotización clara en menos de 2 días hábiles con alcance y prioridades." },
+  { icon: "fa-file-signature", title: "Contrato y confidencialidad", desc: "Formalizamos tiempos, entregables y cuidado de información." },
+  { icon: "fa-credit-card", title: "Pago inicial", desc: "40% de anticipo para iniciar con equipo y plan de trabajo definido." },
+  { icon: "fa-rocket", title: "Desarrollo y entrega", desc: "Beta, versión final, capacitación y acompañamiento de lanzamiento." },
 ];
 
 export default function AgendaPage() {
-  const { showCalendly } = useCalendlyModal();
+  const modal = useCalendlyModal();
 
-  const handleAgendaClick = (e) => {
-    e.preventDefault();
-    showCalendly();
-  };
+  function handleAgendaClick(event) {
+    event.preventDefault();
+    modal?.showCalendly?.();
+  }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-heading mb-4 text-gradient-main text-center font-bold animate-in fade-in slide-in-from-top duration-1000">
-        ¡Estás a un paso de digitalizar <span className="whitespace-nowrap">tu negocio como se debe!</span>
-      </h1>
-      <p className="text-base md:text-lg text-accent/90 mb-7 text-center">
-        En <b>PUMPEA</b> queremos conocerte, entender tus ideas y ayudarte a convertirlas en soluciones reales que impulsen tu proyecto. Así es como trabajamos:
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:grid-cols-5 mb-8">
-        {steps.map((step, i) => (
-          <StepBox key={i} step={i+1} {...step} />
-        ))}
-      </div>
-      <div className="text-center mt-10">
-        <button
-          type="button"
-          onClick={handleAgendaClick}
-          className="cta-button text-base animate-in fade-in duration-700 delay-700"
-        >
-          Agenda ahora en línea
-        </button>
-        <div className="mt-2 flex flex-col items-center gap-1">
-          <span className="text-accent/70 text-sm">
-            ¿Tienes dudas? <Link href="/contact" className="text-primary underline">Contáctanos</Link> y un experto PUMPEA te ayuda.
-          </span>
+    <div>
+      <PageHero kicker="Agenda" title="Estás a un paso de digitalizar tu negocio como se debe.">
+        Queremos conocerte, entender tus ideas y ayudarte a convertirlas en soluciones reales. La asesoría inicial no tiene costo.
+      </PageHero>
+
+      <section className="pumpea-container pb-20">
+        <div className="grid gap-5 md:grid-cols-5">
+          {steps.map((step, index) => (
+            <article key={step.title} className="glass-card reveal-card relative p-6 text-center">
+              <span className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-700 to-cyan-400 text-2xl text-white shadow-xl shadow-blue-500/20">
+                <i className={`fa ${step.icon}`} />
+              </span>
+              <span className="font-heading text-sm font-black text-blue-700">Paso {index + 1}</span>
+              <h2 className="mt-2 font-heading text-xl font-black text-[#102453]">{step.title}</h2>
+              <p className="mt-3 text-sm font-medium leading-relaxed text-slate-600">{step.desc}</p>
+            </article>
+          ))}
         </div>
-      </div>
-      <WhatsAppCta className="right-5 bottom-5" />
-    </div>
-  );
-}
-function StepBox({ step, icon, title, desc }) {
-  return (
-    <div className="flex flex-col items-center rounded-xl p-4 bg-gradient-to-br from-[#FAFCFF] via-[#E7F0FD] to-[#DFE7F2] border border-[#C2D7F5] text-center shadow animate-in fade-in duration-700 delay-150"
-      style={{ minHeight: 192 }}
-    >
-      <span className="w-10 h-10 rounded-full flex items-center justify-center bg-primary/10 mb-2 text-primary text-2xl shadow font-heading">
-        <i className={`fa ${icon}`}></i>
-      </span>
-      <span className="font-bold text-[#2341A5] mb-1">Paso {step}</span>
-      <h4 className="text-[1rem] font-semibold mb-1">{title}</h4>
-      <div className="text-accent/90 text-sm">{desc}</div>
+      </section>
+
+      <section className="pumpea-container pb-24">
+        <div className="texture-panel grid items-center gap-8 p-7 text-white md:grid-cols-[1fr_auto] md:p-10">
+          <div>
+            <span className="rounded-full bg-white/16 px-4 py-2 text-sm font-black backdrop-blur">Calendly integrado</span>
+            <h2 className="mt-6 font-heading text-3xl font-black md:text-5xl">Reserva el horario que mejor te funcione.</h2>
+            <p className="mt-5 max-w-3xl text-lg font-semibold leading-relaxed text-white/82">
+              La cita sirve para definir objetivo, urgencia, recursos disponibles y la primera versión del alcance. Después recibirás una propuesta accionable.
+            </p>
+          </div>
+          <div className="flex min-w-[270px] flex-col gap-3">
+            <button type="button" onClick={handleAgendaClick} className="cta-button !bg-white !text-blue-700">
+              <i className="fa fa-calendar" /> Abrir agenda
+            </button>
+            <Link href="/contact" className="button !border-white/30 !bg-white/12 !text-white backdrop-blur-xl">Tengo dudas primero</Link>
+          </div>
+        </div>
+      </section>
+
+      <WhatsAppCta />
     </div>
   );
 }

@@ -1,106 +1,86 @@
-
 "use client";
-import { useState, useMemo } from "react";
-import GlassPanel from "../../components/GlassPanel";
+
+import { useMemo, useState } from "react";
+import PageHero from "../../components/PageHero";
 import WhatsAppCta from "../../components/WhatsAppCta";
 
 const SERVICES = [
-  "Sitios Web Simples",
-  "Sitios de E-commerce",
+  "Sitios web",
+  "E-commerce",
   "Bots de WhatsApp",
-  "Gestión de Redes Sociales",
-  "Sistemas Complejos"
+  "Automatización de procesos",
+  "Integraciones",
+  "Sistema a medida",
+  "Click&Celebrate",
 ];
 
-const initialState = {
-  name: "",
-  email: "",
-  service: "",
-  message: ""
-};
-
-const INITIAL_ERRORS = {
-  name: "",
-  email: "",
-  service: "",
-  message: ""
-};
+const initialState = { name: "", email: "", service: "", message: "" };
+const initialErrors = { name: "", email: "", service: "", message: "" };
 
 function validateField(name, value) {
+  const trimmed = value.trim();
   switch (name) {
     case "name":
-      if (!value) return "El nombre es obligatorio.";
-      if (value.length < 2) return "Mínimo 2 caracteres.";
-      if (value.length > 50) return "Máximo 50 caracteres.";
+      if (!trimmed) return "El nombre es obligatorio.";
+      if (trimmed.length < 2) return "Mínimo 2 caracteres.";
+      if (trimmed.length > 50) return "Máximo 50 caracteres.";
       return "";
     case "email":
-      if (!value) return "El correo es obligatorio.";
-      // eslint-disable-next-line
-      if (!/^[\w\-.]+@([\w\-]+\.)+[a-zA-Z]{2,9}$/.test(value))
-        return "Formato de correo inválido.";
+      if (!trimmed) return "El correo es obligatorio.";
+      if (!/^[\w\-.]+@([\w\-]+\.)+[a-zA-Z]{2,9}$/.test(trimmed)) return "Formato de correo inválido.";
       return "";
     case "service":
-      if (!value) return "Selecciona un servicio.";
+      if (!trimmed) return "Selecciona un servicio.";
       return "";
     case "message":
-      if (!value) return "El mensaje es obligatorio.";
-      if (value.length < 10) return "Mínimo 10 caracteres.";
-      if (value.length > 1000) return "Máximo 1000 caracteres.";
+      if (!trimmed) return "El mensaje es obligatorio.";
+      if (trimmed.length < 10) return "Mínimo 10 caracteres.";
+      if (trimmed.length > 1000) return "Máximo 1000 caracteres.";
       return "";
     default:
       return "";
   }
 }
 
-async function fakeApiSubmit(formData) {
-  // Replace with your own API POST endpoint in production!
-  // This just simulates an API call.
-  await new Promise((r) => setTimeout(r, 1300));
-  return {
-    status: "success",
-    message: "¡Gracias por tu solicitud! Te contactaremos pronto.",
-    email: formData.email
-  };
+async function submitLead(formData) {
+  await new Promise((resolve) => setTimeout(resolve, 900));
+  return { status: "success", email: formData.email };
 }
 
 export default function ContactPage() {
   const [form, setForm] = useState(initialState);
-  const [errors, setErrors] = useState(INITIAL_ERRORS);
+  const [errors, setErrors] = useState(initialErrors);
   const [isSubmitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState("");
 
-  // Validate individual field on change/blur
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
-    setErrors((errs) => ({ ...errs, [name]: validateField(name, value) }));
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setForm((current) => ({ ...current, [name]: value }));
+    setErrors((current) => ({ ...current, [name]: validateField(name, value) }));
   }
 
-  function handleBlur(e) {
-    const { name, value } = e.target;
-    setErrors((errs) => ({ ...errs, [name]: validateField(name, value) }));
+  function handleBlur(event) {
+    const { name, value } = event.target;
+    setErrors((current) => ({ ...current, [name]: validateField(name, value) }));
   }
 
   function validateAll() {
-    const newErrors = {};
-    for (const field of Object.keys(form)) {
-      newErrors[field] = validateField(field, form[field]);
-    }
-    setErrors(newErrors);
-    return Object.values(newErrors).every((err) => !err);
+    const nextErrors = Object.fromEntries(
+      Object.entries(form).map(([key, value]) => [key, validateField(key, value)])
+    );
+    setErrors(nextErrors);
+    return Object.values(nextErrors).every((error) => !error);
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(event) {
+    event.preventDefault();
     if (!validateAll()) return;
     setSubmitting(true);
     try {
-      const resp = await fakeApiSubmit(form);
-      setSubmittedEmail(resp.email);
+      const response = await submitLead(form);
+      setSubmittedEmail(response.email);
       setSubmitted(true);
-    } catch (err) {
-      alert("Error al enviar. Intenta más tarde.");
     } finally {
       setSubmitting(false);
     }
@@ -108,163 +88,83 @@ export default function ContactPage() {
 
   function handleReset() {
     setForm(initialState);
-    setErrors(INITIAL_ERRORS);
+    setErrors(initialErrors);
     setSubmitted(false);
     setSubmittedEmail("");
   }
 
-  // Accessible error summary for screen readers
-  const errorSummary = useMemo(
-    () => Object.entries(errors).filter(([k, v]) => v).map(([k, v]) => v),
-    [errors]
-  );
+  const errorSummary = useMemo(() => Object.values(errors).filter(Boolean), [errors]);
 
   return (
-    <div className="max-w-xl mx-auto px-4 py-12">
-      <GlassPanel>
-        <h1 className="text-2xl md:text-3xl font-heading font-extrabold mb-2 text-gradient-main text-center">
-          Contáctanos
-        </h1>
-        <p className="mb-7 text-accent text-center">
-          ¿Listo para dar el siguiente paso? <b>PUMPEA</b> responde tus dudas y te ayuda a cotizar – sin compromiso.
-        </p>
-        {submitted ? (
-          <div className="flex flex-col items-center gap-2 mb-4 py-10 min-h-[290px] justify-center">
-            <h3 className="font-heading text-2xl text-primary mb-2 text-center">¡Gracias por tu solicitud!</h3>
-            <p className="text-md text-neutral-700 text-center">
-              Te contactaremos pronto al correo: <b>{submittedEmail}</b>
+    <div>
+      <PageHero kicker="Contacto" title="Cuéntanos qué quieres impulsar y armamos el siguiente paso.">
+        Mapea tu necesidad con Pumpea: sitio web, automatización, bot, integración, sistema a medida o experiencia para eventos. Respondemos con una ruta clara.
+      </PageHero>
+
+      <section className="pumpea-container pb-24">
+        <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr]">
+          <aside className="glass-card-strong p-7 md:p-9">
+            <span className="section-kicker">Atención directa</span>
+            <h2 className="mt-5 font-heading text-3xl font-black text-[#102453]">Respuesta cercana, diagnóstico sin costo.</h2>
+            <p className="mt-4 text-lg font-medium leading-relaxed text-slate-600">
+              Comparte el contexto de tu negocio y el tipo de solución que buscas. Si el alcance requiere llamada, la agendamos para definir prioridades.
             </p>
-            <button
-              className="mt-4 cta-button"
-              onClick={handleReset}
-            >
-              Enviar otra consulta
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-            <div>
-              <label htmlFor="name" className="font-bold text-sm text-primary block mb-1">
-                Nombre Completo:
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                minLength={2}
-                maxLength={50}
-                autoComplete="name"
-                className={`w-full rounded-md px-3 py-2 border ${errors.name ? "border-red-400" : "border-gray-300"} focus:outline-none focus:ring-2 focus:ring-primary`}
-                disabled={isSubmitting}
-                value={form.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-invalid={!!errors.name}
-                aria-describedby={errors.name ? "name-error" : undefined}
-              />
-              {errors.name && (
-                <div className="text-red-500 text-xs mt-1" id="name-error">{errors.name}</div>
-              )}
+            <div className="mt-8 space-y-4">
+              <div className="float-card flex gap-4 p-5"><span className="icon-bubble !h-12 !w-12"><i className="fa fa-clock" /></span><p className="font-bold text-slate-600"><b className="block text-[#102453]">Respuesta en 24h</b>Primer contacto rápido para ubicar el proyecto.</p></div>
+              <div className="float-card flex gap-4 p-5"><span className="icon-bubble !h-12 !w-12"><i className="fa fa-shield-halved" /></span><p className="font-bold text-slate-600"><b className="block text-[#102453]">Confidencialidad</b>Cuidamos tu idea y tu información desde la primera conversación.</p></div>
+              <div className="float-card flex gap-4 p-5"><span className="icon-bubble !h-12 !w-12"><i className="fa fa-route" /></span><p className="font-bold text-slate-600"><b className="block text-[#102453]">Ruta de ejecución</b>Te proponemos un camino por fases, no una lista genérica.</p></div>
             </div>
-            <div>
-              <label htmlFor="email" className="font-bold text-sm text-primary block mb-1">
-                Correo Electrónico:
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                autoComplete="email"
-                className={`w-full rounded-md px-3 py-2 border ${errors.email ? "border-red-400" : "border-gray-300"} focus:outline-none focus:ring-2 focus:ring-primary`}
-                disabled={isSubmitting}
-                value={form.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-invalid={!!errors.email}
-                aria-describedby={errors.email ? "email-error" : undefined}
-              />
-              {errors.email && (
-                <div className="text-red-500 text-xs mt-1" id="email-error">{errors.email}</div>
-              )}
-            </div>
-            <div>
-              <label htmlFor="service" className="font-bold text-sm text-primary block mb-1">
-                Servicio de Interés:
-              </label>
-              <select
-                id="service"
-                name="service"
-                required
-                className={`w-full rounded-md px-3 py-2 border ${errors.service ? "border-red-400" : "border-gray-300"} focus:outline-none focus:ring-2 focus:ring-primary bg-white`}
-                disabled={isSubmitting}
-                value={form.service}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-invalid={!!errors.service}
-                aria-describedby={errors.service ? "service-error" : undefined}
-              >
-                <option value="">Seleccione un servicio</option>
-                {SERVICES.map((s) => (
-                  <option key={s} value={s}>
-                    {s}
-                  </option>
-                ))}
-              </select>
-              {errors.service && (
-                <div className="text-red-500 text-xs mt-1" id="service-error">{errors.service}</div>
-              )}
-            </div>
-            <div>
-              <label htmlFor="message" className="font-bold text-sm text-primary block mb-1">
-                Mensaje o Requerimiento:
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                minLength={10}
-                maxLength={1000}
-                className={`w-full rounded-md px-3 py-2 border ${errors.message ? "border-red-400" : "border-gray-300"} focus:outline-none focus:ring-2 focus:ring-primary min-h-[108px] resize-vertical`}
-                disabled={isSubmitting}
-                value={form.message}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-invalid={!!errors.message}
-                aria-describedby={errors.message ? "message-error" : undefined}
-              />
-              {errors.message && (
-                <div className="text-red-500 text-xs mt-1" id="message-error">{errors.message}</div>
-              )}
-            </div>
-            <button
-              type="submit"
-              className="cta-button flex items-center gap-2 text-base min-w-[170px]"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <>
-                  <i className="fas fa-spinner fa-spin" /> Enviando...
-                </>
-              ) : (
-                <>Enviar Mensaje</>
-              )}
-            </button>
-            {errorSummary.length > 0 && (
-              <div className="text-red-500 text-sm mt-3" aria-live="assertive">
-                {errorSummary.map((err, i) => (
-                  <div key={i}>{err}</div>
-                ))}
+          </aside>
+
+          <div className="glass-card-strong p-7 md:p-9">
+            {submitted ? (
+              <div className="flex min-h-[480px] flex-col items-center justify-center text-center">
+                <span className="icon-bubble mb-6 !h-16 !w-16"><i className="fa fa-check text-2xl" /></span>
+                <h2 className="font-heading text-3xl font-black text-[#102453]">Gracias por tu solicitud.</h2>
+                <p className="mt-4 max-w-lg text-lg font-medium leading-relaxed text-slate-600">
+                  Te contactaremos pronto al correo <b>{submittedEmail}</b>. Mientras tanto, también puedes escribirnos por WhatsApp si necesitas acelerar el seguimiento.
+                </p>
+                <button type="button" className="cta-button mt-8" onClick={handleReset}>Enviar otra consulta</button>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                <div>
+                  <label htmlFor="name" className="mb-2 block text-sm font-black text-blue-700">Nombre completo</label>
+                  <input id="name" name="name" value={form.name} onChange={handleChange} onBlur={handleBlur} disabled={isSubmitting} autoComplete="name" className={`input-modern ${errors.name ? "!border-red-400" : ""}`} aria-invalid={!!errors.name} aria-describedby={errors.name ? "name-error" : undefined} />
+                  {errors.name && <p id="name-error" className="mt-2 text-sm font-bold text-red-500">{errors.name}</p>}
+                </div>
+                <div>
+                  <label htmlFor="email" className="mb-2 block text-sm font-black text-blue-700">Correo electrónico</label>
+                  <input id="email" name="email" type="email" value={form.email} onChange={handleChange} onBlur={handleBlur} disabled={isSubmitting} autoComplete="email" className={`input-modern ${errors.email ? "!border-red-400" : ""}`} aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-error" : undefined} />
+                  {errors.email && <p id="email-error" className="mt-2 text-sm font-bold text-red-500">{errors.email}</p>}
+                </div>
+                <div>
+                  <label htmlFor="service" className="mb-2 block text-sm font-black text-blue-700">Servicio de interés</label>
+                  <select id="service" name="service" value={form.service} onChange={handleChange} onBlur={handleBlur} disabled={isSubmitting} className={`input-modern ${errors.service ? "!border-red-400" : ""}`} aria-invalid={!!errors.service} aria-describedby={errors.service ? "service-error" : undefined}>
+                    <option value="">Selecciona una opción</option>
+                    {SERVICES.map((service) => <option key={service} value={service}>{service}</option>)}
+                  </select>
+                  {errors.service && <p id="service-error" className="mt-2 text-sm font-bold text-red-500">{errors.service}</p>}
+                </div>
+                <div>
+                  <label htmlFor="message" className="mb-2 block text-sm font-black text-blue-700">Mensaje o requerimiento</label>
+                  <textarea id="message" name="message" rows={6} value={form.message} onChange={handleChange} onBlur={handleBlur} disabled={isSubmitting} className={`input-modern resize-y ${errors.message ? "!border-red-400" : ""}`} aria-invalid={!!errors.message} aria-describedby={errors.message ? "message-error" : undefined} />
+                  {errors.message && <p id="message-error" className="mt-2 text-sm font-bold text-red-500">{errors.message}</p>}
+                </div>
+                {errorSummary.length > 0 && (
+                  <div className="rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-bold text-red-600" aria-live="assertive">
+                    {errorSummary.map((error) => <div key={error}>{error}</div>)}
+                  </div>
+                )}
+                <button type="submit" className="cta-button" disabled={isSubmitting}>
+                  {isSubmitting ? <><i className="fa fa-spinner fa-spin" /> Enviando...</> : <>Enviar mensaje <i className="fa fa-arrow-right" /></>}
+                </button>
+              </form>
             )}
-          </form>
-        )}
-      </GlassPanel>
-      <div className="mt-5 flex flex-col gap-2 items-center">
-        <span className="text-accent/80 text-sm text-center">También puedes contactarnos o cotizar vía WhatsApp:</span>
-        <WhatsAppCta className="static relative right-0 bottom-0 shadow-lg" text="WhatsApp PUMPEA" />
-      </div>
+          </div>
+        </div>
+      </section>
+      <WhatsAppCta />
     </div>
   );
 }

@@ -1,44 +1,33 @@
-
 "use client";
+
 import { useEffect, useRef } from "react";
 
-export default function WhatsAppCta({ text = "¡Cotiza por WhatsApp!", className = "" }) {
-  const pulseRef = useRef();
+export default function WhatsAppCta({ text = "Cotiza por WhatsApp", className = "" }) {
+  const pulseRef = useRef(null);
   useEffect(() => {
     if (!pulseRef.current) return;
-    pulseRef.current.animate(
+    const animation = pulseRef.current.animate(
       [
-        { boxShadow: "0 0 0 0 #34d39955", opacity: 0.9 },
-        { boxShadow: "0 0 0 21px #10b98122", opacity: 0.35 },
-        { boxShadow: "0 0 0 0 #34d39900", opacity: 0.9 },
+        { boxShadow: "0 0 0 0 rgba(16,185,129,.36)", opacity: 0.9 },
+        { boxShadow: "0 0 0 22px rgba(16,185,129,.02)", opacity: 0.35 },
+        { boxShadow: "0 0 0 0 rgba(16,185,129,0)", opacity: 0.9 },
       ],
-      { duration: 2100, iterations: Infinity }
+      { duration: 2200, iterations: Infinity }
     );
+    return () => animation.cancel();
   }, []);
+
   return (
     <a
       href="https://wa.me/5217293062147?text=Hola%20Pumpea%2C%20quiero%20informes%20y%20cotización%20de%20tu%20servicio"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Cotiza por WhatsApp"
-      className={
-        `fixed bottom-5 right-5 z-50 flex items-center gap-2 px-6 py-3 font-extrabold font-heading rounded-full
-         bg-gradient-to-tr from-green-500 via-emerald-500 to-teal-400 text-white text-[1.18rem]
-         shadow-2xl shadow-green-400/35 hover:from-green-600 hover:to-green-400
-         active:scale-[0.97] transition-all duration-200 border-2 border-green-200
-         hover:ring-4 hover:ring-green-200/25 ring-emerald-400/15
-         ${className}
-        `
-      }
-      style={{
-        minWidth: 178,
-        fontWeight: 800,
-        letterSpacing: "-0.025em"
-      }}
+      className={`fixed bottom-5 right-5 z-50 hidden items-center gap-3 rounded-[24px] border border-emerald-200/80 bg-gradient-to-r from-emerald-500 to-teal-400 px-5 py-4 font-heading text-base font-black text-white shadow-[0_20px_48px_rgba(16,185,129,.28)] transition hover:-translate-y-1 hover:shadow-[0_26px_60px_rgba(16,185,129,.34)] sm:flex ${className}`}
     >
-      <span ref={pulseRef} className="absolute inset-0 rounded-full z-0 pointer-events-none"></span>
-      <i className="fab fa-whatsapp text-2xl drop-shadow"></i>
-      <span className="pl-1">{text}</span>
+      <span ref={pulseRef} className="absolute inset-0 rounded-[24px] pointer-events-none" />
+      <i className="fab fa-whatsapp text-2xl" />
+      <span>{text}</span>
     </a>
   );
 }

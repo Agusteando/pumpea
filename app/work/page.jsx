@@ -1,77 +1,45 @@
-
 import Link from "next/link";
+import PageHero from "../../components/PageHero";
 
-const pasos = [
-  {
-    icon: "fa-calendar-check",
-    title: "Paso 1: Agenda tu cita (¡totalmente gratis!)",
-    desc: "Elige si prefieres una reunión presencial o videollamada. Nos encanta escuchar nuevas ideas y descubrir cómo podemos ayudarte.",
-  },
-  {
-    icon: "fa-file-alt",
-    title: "Paso 2: Propuesta personalizada",
-    desc: "Con base en lo que nos cuentes, te enviaremos una cotización clara y detallada en máximo 2 días hábiles.",
-  },
-  {
-    icon: "fa-handshake",
-    title: "Paso 3: Firma de contrato + confidencialidad",
-    desc: "Firmamos un contrato formal y un acuerdo de confidencialidad para que tus ideas siempre estén protegidas.",
-  },
-  {
-    icon: "fa-credit-card",
-    title: "Paso 4: Pago inicial",
-    desc: "Solicitamos un anticipo del 40% para comenzar con el desarrollo. ¡Aquí empieza la magia!",
-  },
-  {
-    icon: "fa-gears",
-    title: "Paso 5: Desarrollo en dos fases",
-    desc: (
-      <>
-        <b>Fase Beta:</b> Recibes un primer avance funcional de tu sistema o producto.<br/>
-        <b>Fase Final:</b> Entrega completa del proyecto + manuales y capacitación.
-      </>
-    ),
-  },
+const steps = [
+  { icon: "fa-calendar-check", title: "Agenda tu cita", desc: "Escuchamos tu idea, objetivo y restricciones reales." },
+  { icon: "fa-file-alt", title: "Propuesta personalizada", desc: "Traducimos lo conversado en alcance, fases y costo." },
+  { icon: "fa-handshake", title: "Contrato y confidencialidad", desc: "Formalizamos responsabilidades y protegemos tu información." },
+  { icon: "fa-credit-card", title: "Pago inicial", desc: "Arrancamos con un anticipo y plan de ejecución claro." },
+  { icon: "fa-gears", title: "Desarrollo en dos fases", desc: "Beta funcional, ajustes, entrega final, manuales y capacitación." },
 ];
 
 export default function WorkAgendaPage() {
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10">
-      <h1 className="text-3xl md:text-4xl font-heading text-center mb-4 bg-gradient-to-r from-primary to-accent-sky text-transparent bg-clip-text">
-        ¡Estás a un paso de digitalizar tu negocio como se debe!
-      </h1>
-      <p className="text-accent-sky text-center mb-8">
-        En <b>PUMPEA</b> queremos conocerte y ayudarte a transformar tus ideas en sistemas, plataformas o soluciones reales que impulsen tu proyecto.
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {pasos.map((p, i) => (
-          <div key={i} className="rounded-xl p-6 shadow-lg bg-gradient-to-br from-primary-light via-accent-sky/20 to-grayKt border border-accent-sky flex flex-col gap-3">
-            <div className="flex items-center gap-3">
-              <i className={`fa ${p.icon} text-2xl text-primary`} />
-              <h2 className="font-heading text-base md:text-lg text-primary-dark">{p.title}</h2>
-            </div>
-            <div className="text-accent-sky text-sm leading-relaxed">{p.desc}</div>
+    <div>
+      <PageHero kicker="Cómo trabajamos" title="Una ruta simple para pasar de idea a entrega funcional.">
+        Ordenamos el proyecto por fases para cuidar expectativa, avance, comunicación y calidad de entrega.
+      </PageHero>
+
+      <section className="pumpea-container pb-20">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+          {steps.map((step, index) => (
+            <article key={step.title} className="glass-card reveal-card p-6">
+              <span className="mb-5 flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-700 to-cyan-400 text-2xl text-white shadow-xl shadow-blue-500/20">
+                <i className={`fa ${step.icon}`} />
+              </span>
+              <span className="font-heading text-sm font-black text-blue-700">Paso {index + 1}</span>
+              <h2 className="mt-2 font-heading text-xl font-black text-[#102453]">{step.title}</h2>
+              <p className="mt-3 text-sm font-medium leading-relaxed text-slate-600">{step.desc}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="pumpea-container pb-24">
+        <div className="glass-card-strong grid items-center gap-8 p-7 md:grid-cols-[1fr_auto] md:p-10">
+          <div>
+            <span className="section-kicker">Siguiente paso</span>
+            <h2 className="mt-5 font-heading text-3xl font-black text-[#102453] md:text-4xl">Tu próxima gran idea necesita estructura, estrategia y un buen equipo detrás.</h2>
           </div>
-        ))}
-      </div>
-      <p className="mt-10 text-xl text-center text-primary-dark font-heading font-bold">
-        ¿Listo para transformar tu negocio?<br/>
-        Haz clic abajo y agenda tu cita hoy mismo.
-      </p>
-      <div className="flex justify-center mt-4">
-        <a
-          href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1ogTtHKoE4rEOuBF-JXZgsNdvXjuJxv13aTyVdxQ9dDA3L5rFitNPaVNWT0jbceWMdC0vjlAlO?pli=1"
-          target="_blank"
-          rel="noopener"
-          className="cta-button bg-gradient-to-r from-primary to-accent-sky text-white font-bold border-none"
-        >
-          Agenda tu cita gratis
-        </a>
-      </div>
-      <div className="mt-6 text-center text-accent-sky/80 text-sm font-light">
-        Tu próxima gran idea necesita estructura, estrategia… y un buen equipo detrás. <br/>
-        <b>PUMPEA tu negocio. Dale potencia a tus ideas.</b>
-      </div>
+          <Link href="/agenda" className="cta-button min-w-[260px]"><i className="fa fa-calendar" /> Agenda gratis</Link>
+        </div>
+      </section>
     </div>
   );
 }
