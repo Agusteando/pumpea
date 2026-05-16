@@ -1,33 +1,21 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* --- Custom --- */
-@layer utilities {
-  .text-gradient-main {
-    @apply bg-gradient-to-r from-blue-700 via-sky-400 to-cyan-400 bg-clip-text text-transparent;
-  }
+:root {
+  --ink: #0f1722;
+  --ivory: #f4f2eb;
+  --accent: #f4a261;
 }
 
-.cta-button {
-  @apply font-heading text-white bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400 shadow-lg shadow-blue-600/15 px-8 py-3 rounded-full font-bold
-    hover:from-blue-800 hover:via-sky-600 hover:to-cyan-400 hover:scale-105 active:brightness-95
-    border-2 border-blue-400 transition;
-}
-.button {
-  @apply font-heading px-7 py-3 rounded-full text-blue-800 border border-blue-300 font-semibold shadow
-    bg-white hover:bg-blue-50 hover:scale-105 active:brightness-95 transition;
-}
+body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; background: var(--ink); }
 
-body {
-  min-height: 100vh;
-  background: linear-gradient(120deg,#eaf2fb 0,#fafdff 100%);
-}
-.font-heading {
-  font-family: Montserrat, var(--font-heading, system-ui), "Segoe UI", Arial, sans-serif;
-}
+.bg-ink { background: var(--ink); }
+.text-ivory { color: var(--ivory); }
+.text-accent { color: var(--accent); }
+.border-accent\/30 { border-color: color-mix(in oklab, var(--accent) 30%, transparent); }
+.bg-accent\/10 { background: color-mix(in oklab, var(--accent) 10%, transparent); }
 
-html {
-  scroll-behavior: smooth;
-}
+.card { @apply rounded-2xl border border-white/10 bg-white/5 p-6; }
+.btn-solid { @apply rounded-full bg-[#f4a261] px-5 py-3 font-medium text-[#102030] hover:brightness-95; }
+.btn-outline { @apply rounded-full border border-white/40 px-5 py-3 hover:bg-white/10; }
