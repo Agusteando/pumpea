@@ -47,7 +47,7 @@ function CalendlyModal({ onClose }) {
             className="w-full min-h-[540px] rounded-xl"
             style={{ border: "none" }}
             allow="camera; microphone; autoplay; encrypted-media"
-            title="Calendly appointment booking"
+            title="Reserva de cita con PUMPEA"
           />
         </div>
       </div>

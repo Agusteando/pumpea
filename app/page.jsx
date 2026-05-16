@@ -2,8 +2,11 @@
 import HeroGradientBg from "../components/HeroGradientBg";
 import HeroHeadline from "../components/HeroHeadline";
 import Typewriter from "../components/Typewriter";
+import AnimatedLogo from "../components/AnimatedLogo";
 import WhatsAppCta from "../components/WhatsAppCta";
 import GlassPanel from "../components/GlassPanel";
+import FounderCards from "../components/FounderCards";
+import SpriteLogoRail from "../components/SpriteLogoRail";
 import Link from "next/link";
 import path from "path";
 import fs from "fs";
@@ -23,7 +26,7 @@ const services = [
   },
   {
     icon: "fa-share-nodes",
-    title: "Redes + Social Growth",
+    title: "Redes + crecimiento",
     desc: "Gestión profesional, diseño y campañas para crecer en redes sociales.",
     gradient: "from-purple-200 via-indigo-200 to-blue-300",
   },
@@ -63,35 +66,6 @@ const steps = [
   }
 ];
 
-const founders = [
-  {
-    name: "Andros Mendieta",
-    role: "Co-fundador & CEO / Estrategia Digital",
-    image: "/andros.png",
-    bio: (
-      <>
-        Arquitecto de software, fan de la automatización y la IA.<br />
-        Dirige el desarrollo tech, la calidad de los proyectos y la innovación interna de PUMPEA.
-      </>
-    ),
-    color: "from-[#F8F6FF] via-[#DED5FB] to-[#EBE9FF]",
-    border: "border-[#a28cff]/40"
-  },
-  {
-    name: "Alex Jurado",
-    role: "Co-fundador & CTO / Arquitectura de Sistemas",
-    image: "/alex.png",
-    bio: (
-      <>
-        Ingeniero, mente visionaria y apasionado del diseño de productos digitales.<br />
-        Lidera la visión de PUMPEA, la estrategia de crecimiento de clientes y las soluciones integrales.
-      </>
-    ),
-    color: "from-[#F0F7FF] via-[#CAE7FF] to-[#E8F8FF]",
-    border: "border-primary/40"
-  }
-];
-
 function getAliadosImages() {
   const dir = path.join(process.cwd(), "public", "aliados");
   let files = [];
@@ -114,106 +88,97 @@ export default function Home() {
   return (
     <div>
       <HeroGradientBg>
-        <div className="relative z-10 w-full flex flex-col items-center justify-center pt-8 pb-10 px-3">
-          <img src="/logo-dark.png" alt="Pumpea Logo" className="w-36 h-36 md:w-48 md:h-48 drop-shadow-2xl mb-2" style={{
-            filter: "drop-shadow(0 7px 36px #299dff45)"
-          }}/>
+        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-10 md:py-14">
+          <div className="section-kicker mb-5">Transformación digital hecha en México</div>
+          <AnimatedLogo className="mb-3" />
           <HeroHeadline gradientClass="text-gradient-main drop-shadow-2xl">
             Tu negocio tiene todo para crecer…
           </HeroHeadline>
-          <div className="bg-gradient-to-r from-white/80 via-sky-50/80 to-white/60 rounded-xl px-5 py-3 mb-2
-              font-heading text-2xl md:text-3xl font-bold w-full max-w-2xl
-              shadow shadow-sky-200/50"
-          >
-            <span className="text-gradient-main font-extrabold">Tu negocio solo necesita un buen impulso digital.</span>
+          <div className="mb-3 w-full max-w-3xl rounded-2xl bg-gradient-to-r from-white/90 via-sky-50/90 to-white/75 px-5 py-3 text-center font-heading text-2xl font-bold shadow shadow-sky-200/50 md:text-3xl">
+            <span className="text-gradient-main font-extrabold">
+              solo necesita un buen impulso digital.
+            </span>
           </div>
-          <div className="mt-2 mb-8">
+          <div className="mb-8 mt-2">
             <Typewriter
               words={[
-                "En PUMPEA la tecnología trabaja contigo. Automatizamos, conectamos y lanzamos tu marca como se debe."
+                "En PUMPEA la tecnología trabaja contigo. Automatizamos, conectamos y lanzamos tu marca como se debe.",
               ]}
-              className="text-lg md:text-2xl font-semibold max-w-xl mx-auto text-neutral-700 text-center"
+              className="mx-auto max-w-2xl text-center text-lg font-semibold text-neutral-700 md:text-2xl"
             />
           </div>
-          <div className="flex flex-col sm:flex-row gap-5 justify-center w-full max-w-xl">
+          <div className="mb-8 flex w-full max-w-2xl flex-col justify-center gap-4 sm:flex-row">
             <Link href="/agenda" className="cta-button text-lg shadow-xl">
               Agenda tu cita gratis
             </Link>
-            <Link href="/pricing" className="button text-lg bg-white/80 border-white/40 font-bold text-blue-700 hover:text-primary shadow">
-              Ver Precios
+            <Link
+              href="/pricing"
+              className="button bg-white/80 text-lg font-bold text-blue-700 shadow hover:text-primary"
+            >
+              Ver precios
             </Link>
-            <Link href="/contact" className="button bg-white/90 text-primary border-primary hover:bg-blue-50 border font-semibold text-lg shadow">
-              Solicita Cotización
+            <Link
+              href="/contact"
+              className="button border border-primary bg-white/90 text-lg font-semibold text-primary shadow hover:bg-blue-50"
+            >
+              Solicita cotización
             </Link>
+          </div>
+          <div className="w-full max-w-5xl">
+            <p className="mb-3 text-center text-sm font-semibold uppercase tracking-[0.18em] text-blue-700/70">
+              Aliados que ya confían en PUMPEA
+            </p>
+            <SpriteLogoRail compact />
           </div>
         </div>
       </HeroGradientBg>
 
-      {/* NUESTRA ESENCIA */}
-      <section id="nosotros" className="py-20 px-2 flex flex-col items-center bg-gradient-to-r from-blue-50/70 to-white/95 border-b border-blue-100">
-        <GlassPanel className={`max-w-3xl w-full mx-auto`}>
-          <h2 className="uppercase font-heading text-gradient-main tracking-widest text-center text-lg md:text-xl font-black mb-2">
-            Nosotros / Quiénes Somos
-          </h2>
-          <p className="text-neutral-700 text-[1.15rem] md:text-xl font-medium mb-6 text-center">
-            En <b>PUMPEA</b> creemos que los negocios pueden ser más eficientes sin perder su esencia.<br />
-            Somos una empresa 100% mexicana fundada por Andros y Alex, apasionados por el desarrollo digital con propósito.
-          </p>
-          <div className="flex flex-col gap-4 text-[1.08rem] text-neutral-800/90">
-            <p>
-              Ofrecemos soluciones tecnológicas reales para empresas que quieren crecer con orden, automatización y equilibrio.
-              Desde plataformas y sistemas a la medida, hasta páginas web que sí venden y <b>bots de WhatsApp</b> que responden por ti — diseñamos herramientas que trabajan <span className="text-primary font-bold">contigo</span> y <span className="text-primary font-bold">por tu negocio</span>.
+      <section
+        id="nosotros"
+        className="border-b border-blue-100 bg-gradient-to-r from-blue-50/70 to-white/95 px-4 py-20"
+      >
+        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(420px,0.95fr)] lg:items-start">
+          <GlassPanel className="h-full">
+            <div className="section-kicker mb-4">Nuestra esencia</div>
+            <h2 className="mb-4 font-heading text-2xl font-black text-gradient-main md:text-3xl">
+              Nosotros / Quiénes somos
+            </h2>
+            <p className="mb-5 text-[1.08rem] font-medium leading-relaxed text-neutral-700 md:text-xl">
+              En <b>PUMPEA</b> creemos que los negocios pueden ser más eficientes sin perder su esencia.
+              Somos una empresa 100% mexicana fundada por Andros y Alex, apasionados por el desarrollo digital con propósito.
             </p>
-            <p>
-              Creemos que el bienestar y la efectividad pueden ir de la mano. Que crecer no tiene que doler, ni ser un caos.
-              Cada proyecto que hacemos lleva estrategia, creatividad y corazón, porque tu crecimiento también es el nuestro.
-            </p>
-            <div className="mt-1 text-center">
-              <span className="inline-block px-4 py-1 rounded-full bg-sky-100/60 text-primary font-bold drop-shadow text-base">PUMPEA tu negocio. Dale potencia a tus ideas.</span>
+            <div className="flex flex-col gap-4 text-[1.03rem] leading-relaxed text-neutral-800/90">
+              <p>
+                Ofrecemos soluciones tecnológicas reales para empresas que quieren crecer con orden,
+                automatización y equilibrio. Desde plataformas y sistemas a la medida, hasta páginas web
+                que sí venden y <b>bots de WhatsApp</b> que responden por ti.
+              </p>
+              <p>
+                Creemos que el bienestar y la efectividad pueden ir de la mano. Que crecer no tiene que
+                doler, ni ser un caos. Cada proyecto que hacemos lleva estrategia, creatividad y corazón.
+              </p>
+              <div className="mt-1">
+                <span className="inline-block rounded-full bg-sky-100/70 px-4 py-1 text-base font-bold text-primary drop-shadow">
+                  PUMPEA tu negocio. Dale potencia a tus ideas.
+                </span>
+              </div>
             </div>
-          </div>
-          {/* Founders section */}
-          <div className="mt-10 flex flex-col items-center gap-7">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 w-full">
-              {founders.map(f => (
-                <div
-                  key={f.name}
-                  className={`rounded-2xl border ${f.border} bg-gradient-to-br ${f.color} shadow-md shadow-blue-200/20 p-6 flex flex-col items-center transition-all`}
-                  style={{
-                    boxShadow: "0 4px 32px #d9eafe1a, 0 1.5px 2.5px rgba(70,90,220,0.09)"
-                  }}
-                >
-                  <div className="relative mb-3 flex items-center justify-center">
-                    <img
-                      src={f.image}
-                      alt={f.name}
-                      className="w-32 h-32 object-cover rounded-full border-4 border-white shadow-xl transition-all hover:scale-105
-                       bg-sky-50 drop-shadow-2xl"
-                      loading="lazy"
-                      style={{ boxShadow: "0 2px 16px #b5d6f33a", background: "linear-gradient(135deg,#d6f2fc,#f6ecff)" }}
-                    />
-                    <span className="absolute bottom-0 right-2 bg-gradient-to-tr from-primary to-accent-sky text-white font-bold text-xs px-2 py-[3px] rounded-xl shadow-xl border border-white/70">
-                      FUNDADOR
-                    </span>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="font-heading text-lg md:text-xl text-primary font-black text-center">{f.name}</div>
-                    <div className="text-sm md:text-base text-primary-dark font-semibold mb-1 text-center">{f.role}</div>
-                    <div className="text-neutral-700/90 text-sm text-center leading-relaxed mt-1">{f.bio}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <span className="text-neutral-400 text-sm flex items-center gap-2 mt-1">
+          </GlassPanel>
+
+          <div className="flex flex-col gap-4">
+            <FounderCards compact />
+            <span className="flex items-center justify-center gap-2 text-sm text-neutral-500">
               <i className="fa fa-star text-accent-sky/80" /> Personas reales, experiencia real, pasión por crecer contigo.
             </span>
           </div>
-        </GlassPanel>
+        </div>
       </section>
 
-      {/* Qué hacemos */}
       <section className="py-20 px-2 bg-gradient-to-tr from-white via-sky-100 to-blue-50 border-b border-blue-50">
         <div className="max-w-5xl mx-auto">
+          <div className="mb-4 text-center">
+            <span className="section-kicker">Soluciones</span>
+          </div>
           <h2 className="text-center text-2xl md:text-4xl font-heading font-extrabold mb-6 text-gradient-main drop-shadow">
             ¿Qué hacemos?
           </h2>
@@ -242,6 +207,9 @@ export default function Home() {
       {/* Steps Agenda */}
       <section className="py-20 px-2 bg-gradient-to-br from-blue-50 via-sky-50 to-white/80 border-b border-blue-50">
         <div className="max-w-5xl mx-auto">
+          <div className="mb-4 text-center">
+            <span className="section-kicker">Cómo trabajamos</span>
+          </div>
           <h2 className="text-center text-2xl md:text-3xl font-heading font-extrabold mb-9 text-gradient-main drop-shadow">
             Agenda tu cita <span className="text-primary">sin costo</span>
           </h2>
@@ -280,8 +248,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Soluciones y Productos PUMPEA */}
       <section className="mt-20 max-w-3xl mx-auto px-4">
+        <div className="mb-4 text-center">
+          <span className="section-kicker">Producto destacado</span>
+        </div>
         <h2 className="text-2xl font-heading mb-5 text-center text-gradient-main drop-shadow">
           Soluciones y productos que impulsan tu evento y tu marca
         </h2>
@@ -310,10 +280,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Aliados y Clientes Strip Section */}
       <section className="w-full py-16 bg-gradient-to-br from-blue-50/80 via-white to-blue-100/50 border-t border-blue-100 mt-20">
         <div className="max-w-4xl mx-auto px-3">
           <GlassPanel className="mb-9 pb-7">
+            <div className="mb-4 text-center">
+              <span className="section-kicker">Confianza</span>
+            </div>
             <h2 className="text-2xl md:text-3xl font-heading font-extrabold mb-3 text-gradient-main text-center drop-shadow">
               Aliados y clientes
             </h2>
@@ -329,6 +301,7 @@ export default function Home() {
                 <span>Alex Jurado</span>
               </div>
             </div>
+            <SpriteLogoRail compact className="mt-7" />
             <div className="mt-8 mb-2">
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center items-center">
                 {aliados.length === 0 && (

@@ -12,6 +12,7 @@ export default function Navbar() {
 
   const links = [
     { href: "/", label: "Inicio", match: (p) => p === "/" },
+    { href: "/about", label: "Nosotros", match: (p) => p.startsWith("/about") },
     { href: "/pricing", label: "Precios", match: (p) => p.startsWith("/pricing") },
     { href: "/click-celebrate", label: "Click&Celebrate", match: (p) => p.startsWith("/click-celebrate") },
     { href: "/contact", label: "Contacto", match: (p) => p.startsWith("/contact") },

@@ -3,6 +3,8 @@ import React from "react";
 export default function HeroGradientBg({ children }) {
   return (
     <div className="relative min-h-[540px] w-full overflow-hidden flex items-center justify-center bg-[#fafdff]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.96),_transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(186,230,253,0.8),_transparent_32%)]" />
+      <div className="absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(37,99,235,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(37,99,235,0.06)_1px,transparent_1px)] [background-size:34px_34px]" />
       {/* Blurred SVG radial shapes */}
       <svg
         className="absolute -top-36 -left-36 z-0"

@@ -1,5 +1,6 @@
 
 import GlassPanel from "../../components/GlassPanel";
+import SpriteLogoRail from "../../components/SpriteLogoRail";
 import path from "path";
 import fs from "fs";
 
@@ -36,7 +37,7 @@ export default function AliadosClientesPage() {
         </h1>
         <p className="text-center text-lg text-neutral-700 mb-7">
           Agradecemos la confianza que cada aliado y cliente deposita en nosotros. Para nosotros, no son solo nombres o proyectos: su visión, su energía y su crecimiento se han vuelto también parte vital de la historia de PUMPEA.<br className="hidden sm:inline"/>
-          Es un privilegio ser parte de su evolución digital y saber que juntos <b>construimos ideas que trascienden</b>. Cada experiencia, cada reto, cada resultado logrando nos inspira a superarnos siempre.
+          Es un privilegio ser parte de su evolución digital y saber que juntos <b>construimos ideas que trascienden</b>. Cada experiencia, cada reto y cada resultado logrado nos inspira a superarnos siempre.
         </p>
         <div className="font-heading text-base text-primary text-center">
           <span className="font-extrabold text-lg">¡Gracias por confiar en nosotros!</span>
@@ -46,6 +47,7 @@ export default function AliadosClientesPage() {
             <span>Alex Jurado</span>
           </div>
         </div>
+        <SpriteLogoRail compact className="mt-7" />
       </GlassPanel>
       <section>
         <h2 className="text-center text-xl md:text-2xl font-heading font-semibold text-blue-700 mb-6">

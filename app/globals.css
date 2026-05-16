@@ -20,6 +20,14 @@
     bg-white hover:bg-blue-50 hover:scale-105 active:brightness-95 transition;
 }
 
+.section-kicker {
+  @apply inline-flex items-center rounded-full border border-blue-100 bg-white/80 px-3 py-1 text-xs font-black uppercase tracking-[0.22em] text-blue-700 shadow-sm;
+}
+
+.surface-card {
+  @apply rounded-3xl border border-blue-100 bg-white/80 shadow-xl shadow-blue-100/50 backdrop-blur-sm;
+}
+
 body {
   min-height: 100vh;
   background: linear-gradient(120deg,#eaf2fb 0,#fafdff 100%);
