@@ -26,7 +26,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 px-4 pt-4 md:px-8">
-      <div className="glass-nav mx-auto flex h-[82px] w-full max-w-[1376px] items-center justify-between rounded-2xl px-5 md:px-9">
+      <div className="glass-nav mx-auto flex h-[82px] w-full max-w-[1580px] items-center justify-between rounded-2xl px-5 md:px-9">
         <Link href="/" className="flex items-center" onClick={() => setMenuOpen(false)} aria-label="Ir al inicio de Pumpea">
           <img
             src="/logo-h.png"

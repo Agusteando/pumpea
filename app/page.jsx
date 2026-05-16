@@ -49,18 +49,50 @@ const aboutStats = [
   { icon: "fa-star", value: "100%", label: "Compromiso cercano" },
 ];
 
+function PhoneMockup() {
+  return (
+    <div className="phone-frame-stage absolute bottom-[3.5%] left-[56.5%] z-30 w-[clamp(250px,35%,310px)] -translate-x-1/2">
+      <div className="phone-screen absolute">
+        <div className="phone-screen-inner">
+          <div className="flex items-center justify-between px-[9%] pb-[4.5%] pt-[9%]">
+            <span className="flex items-center gap-[5px] text-[9px] font-black text-slate-800">
+              <img src="/logo.png" alt="" className="h-[14px] w-[14px]" />
+              Pumpea
+            </span>
+            <i className="fa fa-bars text-[12px] text-slate-800" />
+          </div>
+          <div className="px-[9%]">
+            <h4 className="font-heading text-[clamp(13px,1.05vw,15px)] font-black leading-[1.12] tracking-[-0.035em] text-slate-900">
+              Soluciones digitales que hacen crecer tu negocio
+            </h4>
+            <button className="mt-[8%] rounded-[8px] bg-blue-600 px-[10%] py-[4.8%] text-[8px] font-black text-white shadow-lg">
+              Solicitar asesoría
+            </button>
+            <div className="mt-[12%] overflow-hidden rounded-[15px] border border-blue-100 bg-sky-50 p-[4%]">
+              <div className="h-[70px] rounded-[11px] bg-[linear-gradient(135deg,#d7ecff_0%,#ffffff_55%,#e4f5ff_100%)] p-2">
+                <div className="h-full rounded-[9px] bg-[radial-gradient(circle_at_24%_34%,rgba(90,169,255,.30),transparent_28%),linear-gradient(135deg,rgba(19,88,243,.22),rgba(36,209,246,.28))]" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Image src="/mobile-frame.png" alt="Marco de teléfono" width={1024} height={1536} priority className="relative z-10 h-auto w-full select-none pointer-events-none" />
+    </div>
+  );
+}
+
 function BrowserMockup() {
   return (
-    <div className="relative mx-auto w-full max-w-[700px] aspect-[695/565] lg:justify-self-end">
-      <div className="absolute left-[16%] top-[4%] h-[68%] w-[68%] rounded-full border border-cyan-100/80" />
-      <div className="absolute left-[23%] top-[10%] h-[56%] w-[56%] rounded-full border border-cyan-100/70" />
-      <div className="absolute left-[10%] top-[24%] h-[48%] w-[80%] rounded-full bg-[radial-gradient(circle,_rgba(58,210,230,0.12),_transparent_68%)] blur-3xl" />
+    <div className="hero-visual relative mx-auto w-full max-w-[780px] aspect-[780/620] lg:justify-self-end">
+      <div className="absolute left-[14%] top-[2%] h-[67%] w-[66%] rounded-full border border-cyan-100/80" />
+      <div className="absolute left-[21%] top-[8%] h-[55%] w-[54%] rounded-full border border-cyan-100/70" />
+      <div className="absolute left-[8%] top-[20%] h-[52%] w-[83%] rounded-full bg-[radial-gradient(circle,_rgba(58,210,230,0.13),_transparent_68%)] blur-3xl" />
 
-      <div className="texture-panel absolute left-[18%] top-[12%] h-[52%] w-[66%] rounded-[24px] px-[4.7%] py-[5.1%] text-white">
-        <div className="mb-[10%] flex items-center justify-between text-[10px] min-[480px]:text-[11px] font-bold">
+      <div className="texture-panel absolute left-[17%] top-[10%] h-[50.6%] w-[66.4%] rounded-[24px] px-[4.5%] py-[4.7%] text-white">
+        <div className="mb-[8.5%] flex items-center justify-between font-bold">
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="" className="h-7 w-7 rounded-full bg-white/10 p-1" />
-            <span className="text-[10px] min-[480px]:text-[12px]">Pumpea</span>
+            <span className="text-[12px]">Pumpea</span>
           </div>
           <div className="hidden gap-5 text-[10px] md:flex">
             <span>Inicio</span>
@@ -70,10 +102,10 @@ function BrowserMockup() {
           </div>
           <span className="rounded-full bg-white px-4 py-2 text-[10px] font-black text-blue-700">Cotizar proyecto</span>
         </div>
-        <h3 className="max-w-[68%] font-heading text-[7vw] min-[480px]:text-[33px] font-black leading-[1.05]">
+        <h3 className="max-w-[68%] font-heading text-[clamp(24px,2.15vw,35px)] font-black leading-[1.06] tracking-[-0.035em]">
           Impulsamos marcas con tecnología, creatividad y datos.
         </h3>
-        <p className="mt-[5.5%] max-w-[64%] text-[11px] min-[480px]:text-[13px] font-semibold leading-[1.55] text-white/88">
+        <p className="mt-[5%] max-w-[64%] text-[clamp(10px,.78vw,13px)] font-semibold leading-[1.55] text-white/88">
           Soluciones digitales a la medida para automatizar, conectar y escalar tu negocio.
         </p>
         <button className="mt-[5.5%] rounded-full bg-white px-5 py-3 text-[11px] font-black text-blue-700 shadow-xl">
@@ -81,18 +113,18 @@ function BrowserMockup() {
         </button>
       </div>
 
-      <div className="float-card absolute right-[3%] top-[20%] w-[29%] min-w-[170px] rounded-[22px] px-[4.1%] py-[4.4%]">
+      <div className="float-card absolute right-[1.5%] top-[18%] z-20 w-[27.5%] min-w-[176px] rounded-[22px] px-5 py-5">
         <p className="text-[15px] font-black leading-tight text-slate-700">Rendimiento general</p>
-        <div className="mt-3 flex items-center gap-2 text-[44px] font-black leading-none text-emerald-500">
+        <div className="mt-3 flex items-center gap-2 text-[42px] font-black leading-none text-emerald-500">
           <i className="fa fa-arrow-up text-lg" /> 48%
         </div>
         <p className="mt-1 text-[11px] font-semibold text-slate-500">vs. mes anterior</p>
-        <svg viewBox="0 0 160 58" className="mt-2 h-[52px] w-full" aria-hidden>
+        <svg viewBox="0 0 160 58" className="mt-2 h-[50px] w-full" aria-hidden>
           <polyline points="4,48 22,44 38,34 54,28 72,40 88,32 104,14 122,25 138,12 156,6" fill="none" stroke="#1358f3" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
 
-      <div className="float-card absolute bottom-[12%] left-[13%] w-[32%] min-w-[226px] rounded-[24px] p-5">
+      <div className="float-card absolute bottom-[18%] left-[12%] z-20 w-[31.5%] min-w-[230px] rounded-[24px] p-5">
         <p className="mb-4 font-heading text-[15px] font-black leading-tight text-slate-800">Automatizaciones activas</p>
         <div className="space-y-3">
           {automationStats.map((item) => (
@@ -112,33 +144,9 @@ function BrowserMockup() {
         </div>
       </div>
 
-      <div className="absolute bottom-[8.5%] left-[55.4%] z-20 w-[25.5%] min-w-[180px] -translate-x-1/2">
-        <div className="absolute left-[13.4%] top-[4.5%] z-0 h-[83.8%] w-[73.2%] overflow-hidden rounded-[13%] bg-white shadow-[0_26px_60px_rgba(15,23,42,.18)]">
-          <div className="flex items-center justify-between px-[10%] pb-[5%] pt-[8.5%]">
-            <span className="flex items-center gap-[6px] text-[9px] font-black text-slate-800">
-              <img src="/logo.png" alt="" className="h-[13px] w-[13px]" />
-              Pumpea
-            </span>
-            <i className="fa fa-bars text-[12px] text-slate-800" />
-          </div>
-          <div className="px-[10%]">
-            <h4 className="font-heading text-[13px] min-[480px]:text-[14px] font-black leading-[1.12] text-slate-900">
-              Soluciones digitales que hacen crecer tu negocio
-            </h4>
-            <button className="mt-[8%] rounded-[8px] bg-blue-600 px-[10%] py-[4.8%] text-[8px] font-black text-white shadow-lg">
-              Solicitar asesoría
-            </button>
-            <div className="mt-[12%] rounded-[16px] border border-blue-100 bg-sky-50 p-[4%]">
-              <div className="h-[68px] rounded-[12px] bg-[linear-gradient(135deg,#d7ecff_0%,#ffffff_55%,#e4f5ff_100%)] p-2">
-                <div className="h-full rounded-[10px] bg-[radial-gradient(circle_at_20%_30%,rgba(90,169,255,.28),transparent_28%),linear-gradient(135deg,rgba(19,88,243,.22),rgba(36,209,246,.28))]" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <Image src="/mobile-frame.png" alt="Marco de teléfono" width={1024} height={1536} className="relative z-10 h-auto w-full" />
-      </div>
+      <PhoneMockup />
 
-      <div className="absolute right-[0.8%] top-[52%] grid w-[26%] min-w-[210px] gap-3">
+      <div className="absolute right-[0%] top-[50%] z-30 grid w-[26.5%] min-w-[214px] gap-3">
         {services.map((service) => (
           <div key={service.title} className="float-card flex items-center gap-4 rounded-[20px] p-4">
             <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
@@ -280,28 +288,28 @@ function SolutionCard({ icon, title, desc, children }) {
 export default function Home() {
   return (
     <div>
-      <section className="relative overflow-hidden pb-14 pt-16 md:pb-20 md:pt-20 lg:pb-16 xl:pb-20">
+      <section className="relative overflow-hidden pb-12 pt-14 md:pb-16 md:pt-[72px] lg:pb-12 xl:pb-16">
         <div className="hero-orb one animate-pulse-glow" />
         <div className="hero-orb two animate-pulse-glow" />
-        <div className="pumpea-container grid items-center gap-10 lg:grid-cols-[minmax(0,590px)_minmax(0,700px)] lg:gap-12 xl:gap-14">
-          <div className="relative z-10 pt-2">
+        <div className="pumpea-container grid items-center gap-10 lg:grid-cols-[minmax(540px,0.92fr)_minmax(560px,1.08fr)] lg:gap-10 xl:gap-12">
+          <div className="relative z-10 pt-1">
             <div className="badge-pill px-6 py-3 text-[15px] font-bold">
               <span className="text-xl">🇲🇽</span>
               <span>Transformación digital <b className="text-blue-700">hecha en México</b></span>
             </div>
 
-            <h1 className="mt-8 font-heading font-black leading-[0.98] tracking-[-0.055em] text-[#090d1d] text-[56px] sm:text-[62px] md:text-[72px] lg:text-[74px] xl:text-[72px]">
+            <h1 className="mt-8 max-w-[650px] font-heading text-[clamp(48px,3.65vw,68px)] font-black leading-[1.05] tracking-[-0.055em] text-[#090d1d]">
               <span className="block">Tu negocio necesita</span>
               <span className="block">más que presencia digital:</span>
               <span className="mt-2 block bg-gradient-to-r from-[#1358f3] via-[#1f7fff] to-[#20cfe8] bg-clip-text text-transparent">necesita impulso</span>
               <span className="block bg-gradient-to-r from-[#1358f3] via-[#1f7fff] to-[#20cfe8] bg-clip-text text-transparent">que convierta.</span>
             </h1>
 
-            <p className="mt-7 max-w-[620px] text-[19px] font-medium leading-[1.72] text-slate-600 md:text-[20px]">
+            <p className="mt-6 max-w-[650px] text-[clamp(17px,1.06vw,20px)] font-medium leading-[1.65] text-slate-600">
               Diseñamos sitios web, automatizamos procesos, integramos herramientas y desarrollamos productos digitales que conectan tecnología con resultados reales para hacer crecer tu marca.
             </p>
 
-            <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Link href="/agenda" className="cta-button min-h-[58px] min-w-[284px] justify-center rounded-[20px] px-7 py-4 text-[16px]">
                 <i className="fa fa-calendar" /> Agenda una asesoría gratis <i className="fa fa-arrow-right" />
               </Link>
@@ -310,7 +318,7 @@ export default function Home() {
               </Link>
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm font-semibold text-slate-600">
+            <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm font-semibold text-slate-600">
               <span><i className="fa fa-bolt mr-2 text-slate-900" />Respuesta en 24h</span>
               <span className="hidden text-slate-300 sm:inline">•</span>
               <span><i className="fa fa-shield-halved mr-2 text-slate-900" />Sin costo inicial de asesoría</span>

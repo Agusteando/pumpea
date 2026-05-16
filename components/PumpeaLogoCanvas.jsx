@@ -6,15 +6,12 @@ import * as THREE from "three";
 function disposeScene(scene) {
   scene.traverse((object) => {
     if (object.geometry) object.geometry.dispose();
-
     if (object.material) {
       const materials = Array.isArray(object.material) ? object.material : [object.material];
       materials.forEach((material) => {
         if (!material) return;
         Object.values(material).forEach((value) => {
-          if (value && typeof value === "object" && typeof value.dispose === "function") {
-            value.dispose();
-          }
+          if (value && typeof value === "object" && typeof value.dispose === "function") value.dispose();
         });
         material.dispose();
       });
@@ -22,15 +19,39 @@ function disposeScene(scene) {
   });
 }
 
-function makeCapsule(radius, length, material, radialSegments = 24) {
-  const geometry = new THREE.CapsuleGeometry(radius, length, 12, radialSegments);
-  const mesh = new THREE.Mesh(geometry, material);
+function capsuleMesh(radius, length, material, radialSegments = 32) {
+  const mesh = new THREE.Mesh(new THREE.CapsuleGeometry(radius, length, 14, radialSegments), material);
   mesh.castShadow = true;
   mesh.receiveShadow = true;
   return mesh;
 }
 
-export default function PumpeaLogoScene() {
+function arrowGeometry() {
+  const shape = new THREE.Shape();
+  shape.moveTo(-0.24, -0.44);
+  shape.lineTo(-0.24, 0.28);
+  shape.lineTo(-0.58, 0.28);
+  shape.lineTo(0, 0.96);
+  shape.lineTo(0.58, 0.28);
+  shape.lineTo(0.24, 0.28);
+  shape.lineTo(0.24, -0.44);
+  shape.quadraticCurveTo(0.24, -0.56, 0.12, -0.56);
+  shape.lineTo(-0.12, -0.56);
+  shape.quadraticCurveTo(-0.24, -0.56, -0.24, -0.44);
+
+  const geometry = new THREE.ExtrudeGeometry(shape, {
+    depth: 0.24,
+    bevelEnabled: true,
+    bevelSize: 0.035,
+    bevelThickness: 0.04,
+    bevelSegments: 9,
+    curveSegments: 18,
+  });
+  geometry.center();
+  return geometry;
+}
+
+export default function PumpeaLogoCanvas() {
   const hostRef = useRef(null);
 
   useEffect(() => {
@@ -38,15 +59,14 @@ export default function PumpeaLogoScene() {
     if (!host) return undefined;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-    camera.position.set(0, 0.45, 6);
+    const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+    camera.position.set(0, 0.42, 6.9);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
       powerPreference: "high-performance",
     });
-
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -58,146 +78,147 @@ export default function PumpeaLogoScene() {
     renderer.domElement.style.height = "100%";
     host.appendChild(renderer.domElement);
 
-    const root = new THREE.Group();
-    root.position.set(0, 0.08, 0);
-    scene.add(root);
+    const logo = new THREE.Group();
+    logo.position.set(0, 0.06, 0);
+    logo.scale.setScalar(0.88);
+    scene.add(logo);
 
-    const glassMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0xf8fbff,
-      roughness: 0.18,
-      metalness: 0,
-      transparent: true,
-      opacity: 0.92,
-      transmission: 0.42,
-      thickness: 0.85,
-      ior: 1.18,
-      clearcoat: 1,
-      clearcoatRoughness: 0.15,
-      attenuationColor: new THREE.Color(0xeaf4ff),
-      attenuationDistance: 2.2,
-    });
-
-    const innerMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0xe4edf9,
+    const porcelain = new THREE.MeshPhysicalMaterial({
+      color: 0xf9fbff,
       roughness: 0.22,
       metalness: 0,
       transparent: true,
       opacity: 0.96,
+      transmission: 0.26,
+      thickness: 0.9,
+      ior: 1.18,
       clearcoat: 1,
       clearcoatRoughness: 0.12,
+      attenuationColor: new THREE.Color(0xeaf4ff),
+      attenuationDistance: 2.1,
     });
 
-    const highlightMaterial = new THREE.MeshBasicMaterial({
+    const blueGlass = new THREE.MeshPhysicalMaterial({
+      color: 0x6d78ff,
+      roughness: 0.26,
+      metalness: 0.02,
+      transparent: true,
+      opacity: 0.92,
+      transmission: 0.08,
+      clearcoat: 1,
+      clearcoatRoughness: 0.14,
+    });
+
+    const gleam = new THREE.MeshBasicMaterial({
       color: 0xffffff,
       transparent: true,
-      opacity: 0.26,
+      opacity: 0.24,
       depthWrite: false,
     });
 
-    const torus = new THREE.Mesh(new THREE.TorusGeometry(1.33, 0.22, 48, 180), glassMaterial);
-    torus.castShadow = true;
-    torus.receiveShadow = true;
-    torus.position.set(0, 0.12, 0);
-    root.add(torus);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(1.24, 0.19, 48, 192), porcelain);
+    ring.castShadow = true;
+    ring.receiveShadow = true;
+    ring.position.set(0, -0.08, 0);
+    logo.add(ring);
 
-    const torusHighlight = new THREE.Mesh(new THREE.TorusGeometry(1.34, 0.018, 12, 180), highlightMaterial);
-    torusHighlight.position.set(-0.03, 0.19, 0.25);
-    torusHighlight.scale.set(0.96, 0.96, 0.96);
-    root.add(torusHighlight);
+    const ringHighlight = new THREE.Mesh(new THREE.TorusGeometry(1.245, 0.014, 12, 192), gleam);
+    ringHighlight.position.set(-0.05, 0.01, 0.24);
+    ringHighlight.scale.set(0.96, 0.96, 1);
+    logo.add(ringHighlight);
 
-    const stem = makeCapsule(0.075, 0.34, glassMaterial, 20);
-    stem.position.set(0.08, 1.39, 0.02);
-    stem.rotation.z = -0.18;
-    root.add(stem);
+    const leftEar = capsuleMesh(0.18, 0.22, porcelain, 28);
+    leftEar.rotation.z = Math.PI / 2;
+    leftEar.position.set(-1.38, -0.06, 0.01);
+    leftEar.scale.set(1.05, 0.98, 0.9);
+    logo.add(leftEar);
 
-    const leaf = makeCapsule(0.16, 0.38, glassMaterial, 24);
-    leaf.position.set(0.28, 1.7, 0.02);
-    leaf.rotation.z = -0.48;
-    leaf.scale.set(0.82, 1.06, 0.8);
-    root.add(leaf);
+    const rightEar = leftEar.clone();
+    rightEar.material = porcelain;
+    rightEar.position.x = 1.38;
+    logo.add(rightEar);
 
-    [-0.34, 0, 0.34].forEach((x, index) => {
-      const bar = makeCapsule(0.11, 0.44, innerMaterial, 22);
-      bar.position.set(x, 0.11, 0.22);
-      bar.scale.set(1, index === 1 ? 1.04 : 0.98, 1);
-      root.add(bar);
+    const arrow = new THREE.Mesh(arrowGeometry(), porcelain);
+    arrow.position.set(0, 1.34, 0.02);
+    arrow.scale.set(0.9, 0.9, 0.86);
+    arrow.castShadow = true;
+    arrow.receiveShadow = true;
+    logo.add(arrow);
 
-      const glint = makeCapsule(0.025, 0.28, highlightMaterial, 10);
-      glint.position.set(x - 0.032, 0.22, 0.32);
-      glint.scale.set(0.8, 1, 0.5);
-      root.add(glint);
+    const arrowGleam = new THREE.Mesh(arrowGeometry(), gleam);
+    arrowGleam.position.set(-0.045, 1.39, 0.18);
+    arrowGleam.scale.set(0.72, 0.72, 0.18);
+    logo.add(arrowGleam);
+
+    [-0.34, 0.34].forEach((x) => {
+      const eye = capsuleMesh(0.12, 0.44, blueGlass, 30);
+      eye.position.set(x, -0.14, 0.25);
+      eye.scale.set(0.88, 1.04, 0.82);
+      logo.add(eye);
+
+      const eyeGlow = capsuleMesh(0.034, 0.29, gleam, 12);
+      eyeGlow.position.set(x - 0.04, -0.02, 0.35);
+      eyeGlow.scale.set(0.7, 1, 0.5);
+      logo.add(eyeGlow);
     });
 
-    const floor = new THREE.Group();
-    floor.position.set(0, -1.52, 0);
-    floor.rotation.x = -Math.PI / 2;
-    scene.add(floor);
+    const base = new THREE.Group();
+    base.position.set(0, -1.55, 0);
+    base.rotation.x = -Math.PI / 2;
+    scene.add(base);
 
-    const disc = new THREE.Mesh(
-      new THREE.CircleGeometry(1.22, 96),
-      new THREE.MeshBasicMaterial({
-        color: 0xf8fbff,
-        transparent: true,
-        opacity: 0.66,
-        side: THREE.DoubleSide,
-        depthWrite: false,
-      })
+    const softDisc = new THREE.Mesh(
+      new THREE.CircleGeometry(1.36, 128),
+      new THREE.MeshBasicMaterial({ color: 0xf8fbff, transparent: true, opacity: 0.62, side: THREE.DoubleSide, depthWrite: false })
     );
-    floor.add(disc);
+    base.add(softDisc);
 
     const ripples = [0, 1, 2].map((index) => {
-      const ring = new THREE.Mesh(
-        new THREE.RingGeometry(1.22 + index * 0.42, 1.25 + index * 0.42, 128),
+      const ringMesh = new THREE.Mesh(
+        new THREE.RingGeometry(1.26 + index * 0.42, 1.29 + index * 0.42, 144),
         new THREE.MeshBasicMaterial({
-          color: 0xdcecff,
+          color: 0xdbeaff,
           transparent: true,
-          opacity: 0.78 - index * 0.16,
+          opacity: 0.76 - index * 0.15,
           side: THREE.DoubleSide,
           depthWrite: false,
         })
       );
-      floor.add(ring);
-      return ring;
+      base.add(ringMesh);
+      return ringMesh;
     });
 
     const shadowPlane = new THREE.Mesh(
-      new THREE.CircleGeometry(1.65, 96),
-      new THREE.ShadowMaterial({
-        color: 0x3b82f6,
-        transparent: true,
-        opacity: 0.14,
-      })
+      new THREE.CircleGeometry(1.66, 128),
+      new THREE.ShadowMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.17 })
     );
     shadowPlane.receiveShadow = true;
-    shadowPlane.position.set(0, -1.56, 0);
+    shadowPlane.position.set(0, -1.5, 0);
     shadowPlane.rotation.x = -Math.PI / 2;
     scene.add(shadowPlane);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 1.28);
-    scene.add(ambient);
+    scene.add(new THREE.AmbientLight(0xffffff, 1.22));
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xe6f3ff, 0.94));
 
-    const hemi = new THREE.HemisphereLight(0xffffff, 0xe7f3ff, 1.05);
-    scene.add(hemi);
+    const key = new THREE.DirectionalLight(0xffffff, 2.05);
+    key.position.set(4.4, 5.1, 4.4);
+    key.castShadow = true;
+    key.shadow.mapSize.set(1024, 1024);
+    key.shadow.camera.near = 0.5;
+    key.shadow.camera.far = 12;
+    key.shadow.camera.left = -4;
+    key.shadow.camera.right = 4;
+    key.shadow.camera.top = 4;
+    key.shadow.camera.bottom = -4;
+    scene.add(key);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.1);
-    keyLight.position.set(4.6, 5.2, 4.2);
-    keyLight.castShadow = true;
-    keyLight.shadow.mapSize.set(1024, 1024);
-    keyLight.shadow.camera.near = 0.5;
-    keyLight.shadow.camera.far = 12;
-    keyLight.shadow.camera.left = -4;
-    keyLight.shadow.camera.right = 4;
-    keyLight.shadow.camera.top = 4;
-    keyLight.shadow.camera.bottom = -4;
-    scene.add(keyLight);
+    const fill = new THREE.PointLight(0xd9efff, 1.7, 9);
+    fill.position.set(-3.7, 2.8, 3.8);
+    scene.add(fill);
 
-    const fillLight = new THREE.PointLight(0xd9efff, 1.9, 9);
-    fillLight.position.set(-3.8, 2.7, 3.8);
-    scene.add(fillLight);
-
-    const rimLight = new THREE.PointLight(0xffffff, 1.2, 8);
-    rimLight.position.set(1.8, 3.4, -3.4);
-    scene.add(rimLight);
+    const rim = new THREE.PointLight(0xffffff, 1.15, 8);
+    rim.position.set(1.7, 3.4, -3.5);
+    scene.add(rim);
 
     const clock = new THREE.Clock();
     let frameId = 0;
@@ -208,7 +229,7 @@ export default function PumpeaLogoScene() {
       const height = Math.max(1, Math.floor(rect.height));
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.8));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
       renderer.setSize(width, height, false);
     };
 
@@ -218,18 +239,16 @@ export default function PumpeaLogoScene() {
 
     const render = () => {
       const elapsed = clock.getElapsedTime();
+      logo.rotation.y = Math.sin(elapsed * 0.32) * 0.14;
+      logo.rotation.x = Math.cos(elapsed * 0.24) * 0.035;
+      logo.position.y = Math.sin(elapsed * 0.56) * 0.05 + 0.04;
 
-      root.rotation.y = Math.sin(elapsed * 0.34) * 0.16;
-      root.rotation.x = Math.cos(elapsed * 0.28) * 0.035;
-      root.position.y = Math.sin(elapsed * 0.58) * 0.055 + 0.08;
-
-      ripples.forEach((ring, index) => {
-        const pulse = 1 + Math.sin(elapsed * 0.72 + index * 0.9) * 0.018;
-        ring.scale.setScalar(pulse);
-        ring.material.opacity = 0.74 - index * 0.16 + Math.sin(elapsed * 0.55 + index) * 0.035;
+      ripples.forEach((item, index) => {
+        const pulse = 1 + Math.sin(elapsed * 0.62 + index * 0.8) * 0.017;
+        item.scale.setScalar(pulse);
+        item.material.opacity = 0.73 - index * 0.14 + Math.sin(elapsed * 0.48 + index) * 0.03;
       });
-
-      torusHighlight.rotation.z = Math.sin(elapsed * 0.32) * 0.05;
+      ringHighlight.rotation.z = Math.sin(elapsed * 0.3) * 0.045;
       renderer.render(scene, camera);
       frameId = window.requestAnimationFrame(render);
     };
@@ -242,18 +261,9 @@ export default function PumpeaLogoScene() {
       disposeScene(scene);
       renderer.dispose();
       renderer.forceContextLoss();
-      if (renderer.domElement.parentNode === host) {
-        host.removeChild(renderer.domElement);
-      }
+      if (renderer.domElement.parentNode === host) host.removeChild(renderer.domElement);
     };
   }, []);
 
-  return (
-    <div
-      ref={hostRef}
-      className="h-full w-full"
-      aria-label="Modelo 3D animado inspirado en el logo de Pumpea"
-      role="img"
-    />
-  );
+  return <div ref={hostRef} className="h-full w-full" aria-label="Modelo 3D animado inspirado en el logo de Pumpea" role="img" />;
 }
