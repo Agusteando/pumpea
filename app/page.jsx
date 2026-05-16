@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import SpriteLogoRail from "../components/SpriteLogoRail";
+import AboutHero3D from "../components/AboutHero3D";
+import FounderCards from "../components/FounderCards";
 import WhatsAppCta from "../components/WhatsAppCta";
 
 const services = [
@@ -38,6 +40,13 @@ const process = [
   "Diseño del sistema y experiencia",
   "Desarrollo, integración y automatización",
   "Lanzamiento, medición y mejora continua",
+];
+
+const aboutStats = [
+  { icon: "fa-rocket", value: "+50", label: "Proyectos exitosos" },
+  { icon: "fa-users", value: "+20", label: "Clientes satisfechos" },
+  { icon: "fa-clock", value: "+1,200", label: "Horas automatizadas" },
+  { icon: "fa-star", value: "100%", label: "Compromiso cercano" },
 ];
 
 function BrowserMockup() {
@@ -146,6 +155,81 @@ function BrowserMockup() {
   );
 }
 
+
+function HomeAboutSection() {
+  return (
+    <section id="nosotros" className="relative overflow-hidden pb-14 pt-4 md:pb-20 md:pt-6">
+      <div className="absolute inset-x-0 top-0 -z-10 h-[720px] bg-[radial-gradient(circle_at_18%_14%,rgba(255,255,255,.95),transparent_34%),radial-gradient(circle_at_78%_24%,rgba(190,229,255,.28),transparent_36%),linear-gradient(180deg,#f8fbff_0%,#f4f8fd_58%,rgba(248,251,255,0)_100%)]" />
+      <div className="pumpea-container">
+        <div className="grid items-center gap-8 rounded-[44px] border border-white/75 bg-white/62 px-5 py-8 shadow-[0_34px_100px_rgba(19,88,243,.08)] backdrop-blur-[18px] md:px-8 md:py-10 lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)] lg:px-12 lg:py-12">
+          <div className="relative z-10 max-w-[540px]">
+            <span className="section-kicker">Nosotros</span>
+            <h2 className="mt-6 font-heading text-[42px] font-black leading-[1.02] tracking-[-0.05em] text-[#2d426d] md:text-[58px]">
+              <span className="block text-[#2b7cff]">Quiénes somos</span>
+              <span className="block">y por qué lo hacemos.</span>
+            </h2>
+            <div className="mt-7 space-y-5 text-[18px] font-medium leading-[1.72] text-slate-600">
+              <p className="font-semibold text-[#334b78]">
+                En PUMPEA creemos que los negocios pueden ser más eficientes sin perder su esencia.
+              </p>
+              <p>
+                Somos una empresa 100% mexicana fundada por Andros y Alex, apasionados por el desarrollo digital con propósito.
+              </p>
+              <p className="font-semibold text-[#57a0ff]">
+                Creamos soluciones tecnológicas reales para empresas que quieren crecer con orden, automatización y equilibrio.
+              </p>
+            </div>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link href="/about" className="cta-button justify-center rounded-[20px] px-7 py-4 text-[16px]">
+                Conoce al equipo <i className="fa fa-arrow-right" />
+              </Link>
+              <Link href="/agenda" className="button justify-center rounded-[20px] px-7 py-4 text-[16px]">
+                Agenda una asesoría
+              </Link>
+            </div>
+          </div>
+
+          <AboutHero3D />
+        </div>
+
+        <div className="mt-8 overflow-hidden rounded-[34px] border border-white/75 bg-white/72 shadow-[0_28px_80px_rgba(19,88,243,.07)] backdrop-blur-[18px]">
+          <div className="grid md:grid-cols-2 xl:grid-cols-4">
+            {aboutStats.map((stat, index) => (
+              <div key={stat.value} className="relative flex items-center gap-5 px-7 py-7">
+                <span className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-blue-100 bg-white text-[22px] text-blue-500 shadow-[0_12px_32px_rgba(19,88,243,.07)]">
+                  <i className={`fa ${stat.icon}`} />
+                </span>
+                <span>
+                  <span className="block font-heading text-[30px] font-black tracking-[-0.04em] text-[#2a74f5]">{stat.value}</span>
+                  <span className="block text-[15px] font-bold leading-snug text-[#40557e]">{stat.label}</span>
+                </span>
+                {index < aboutStats.length - 1 && <span className="absolute right-0 top-1/2 hidden h-[58%] w-px -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(55,109,219,.14),transparent)] xl:block" />}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 rounded-[40px] border border-white/75 bg-white/68 px-5 py-8 shadow-[0_30px_90px_rgba(19,88,243,.075)] backdrop-blur-[18px] md:px-8 md:py-10 lg:px-12">
+          <div className="grid items-end gap-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1fr)]">
+            <div>
+              <span className="section-kicker">Los fundadores</span>
+              <h3 className="mt-5 font-heading text-3xl font-black tracking-[-0.04em] text-[#101a39] md:text-5xl">
+                Personas detrás de cada solución.
+              </h3>
+            </div>
+            <p className="text-lg font-medium leading-relaxed text-slate-600">
+              Nos involucramos como socios estratégicos, no solo como proveedores. Tu crecimiento es también nuestro.
+            </p>
+          </div>
+          <div className="mt-9">
+            <FounderCards />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function AlliancePanel() {
   return (
     <section className="pumpea-container relative pb-14 md:pb-20">
@@ -238,6 +322,8 @@ export default function Home() {
           <BrowserMockup />
         </div>
       </section>
+
+      <HomeAboutSection />
 
       <AlliancePanel />
 
