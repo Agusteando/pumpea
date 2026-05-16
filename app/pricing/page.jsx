@@ -7,7 +7,7 @@ import { useState } from "react";
 const packages = [
   {
     title: "Sitio Web Simple",
-    price: "$3,500 MXN",
+    price: "$5,500 MXN",
     badge: "Ahorro",
     category: "web",
     popular: false,
@@ -21,7 +21,7 @@ const packages = [
   },
   {
     title: "Sitio E-commerce",
-    price: "$20,000 MXN",
+    price: "$22,000 MXN",
     badge: "¡Más vendido!",
     category: "web",
     popular: true,
@@ -35,7 +35,7 @@ const packages = [
   },
   {
     title: "Bot WhatsApp",
-    price: "$3,000 MXN",
+    price: "$5,000 MXN",
     badge: "Automatización",
     category: "bot",
     popular: false,
@@ -49,7 +49,7 @@ const packages = [
   },
   {
     title: "Gestión de Redes Sociales",
-    price: "$1,000 MXN",
+    price: "$3,000 MXN",
     badge: "Tu presencia",
     category: "social",
     popular: false,

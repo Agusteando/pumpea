@@ -1,367 +1,74 @@
+import Image from 'next/image';
 
-import HeroGradientBg from "../components/HeroGradientBg";
-import HeroHeadline from "../components/HeroHeadline";
-import Typewriter from "../components/Typewriter";
-import WhatsAppCta from "../components/WhatsAppCta";
-import GlassPanel from "../components/GlassPanel";
-import Link from "next/link";
-import path from "path";
-import fs from "fs";
-
-const services = [
-  {
-    icon: "fa-globe",
-    title: "Sitios Web de Impacto",
-    desc: "Desarrollo de sitios web y e-commerce que venden y posicionan tu marca.",
-    gradient: "from-cyan-300 via-blue-200 to-sky-400",
-  },
-  {
-    icon: "fa-robot",
-    title: "Automatización + Bots",
-    desc: "Bots inteligentes para WhatsApp, flujos automatizados y atención 24/7.",
-    gradient: "from-lime-200 via-emerald-200 to-green-400",
-  },
-  {
-    icon: "fa-share-nodes",
-    title: "Redes + Social Growth",
-    desc: "Gestión profesional, diseño y campañas para crecer en redes sociales.",
-    gradient: "from-purple-200 via-indigo-200 to-blue-300",
-  },
-  {
-    icon: "fa-plug",
-    title: "Integraciones & Sistemas",
-    desc: "Plataformas y sistemas a la medida, integración de todo tu ecosistema digital.",
-    gradient: "from-pink-200 via-yellow-100 to-rose-200",
-  }
+const serviceGroups = [
+  { title: 'Website Design + Build', copy: 'Sales pages, landing pages, brand websites, and institutional sites built to convert and communicate clearly.', icon: '/brand/icons/websites.svg' },
+  { title: 'Internal Systems', copy: 'Portals, admin panels, workflows, permissions, and audit trails that support real operations.', icon: '/brand/icons/internal-systems.svg' },
+  { title: 'Automations', copy: 'Notification routing, approvals, and repetitive task automation across WhatsApp, Telegram, and email.', icon: '/brand/icons/automations.svg' },
+  { title: 'Dashboards + BI', copy: 'Operational timelines, status views, lag indicators, and drill-down dashboards for decision-making.', icon: '/brand/icons/dashboards.svg' },
+  { title: 'Document/PDF Systems', copy: 'PDF pipelines, rendering services, legal and academic document workflows, and report exports.', icon: '/brand/icons/pdf-tools.svg' },
+  { title: 'Integrations', copy: 'Google Workspace, MySQL, authentication, APIs, and notification channels connected into one system.', icon: '/brand/icons/integrations.svg' },
 ];
 
-const steps = [
-  {
-    icon: "fa-calendar-check",
-    title: "Agenda tu cita",
-    desc: "Presencial o virtual. Escuchamos tu idea.",
-  },
-  {
-    icon: "fa-clipboard-list",
-    title: "Propuesta personalizada",
-    desc: "Cotización clara y detallada (24-48h).",
-  },
-  {
-    icon: "fa-file-signature",
-    title: "Firma y confidencialidad",
-    desc: "Contrato formal y protección de ideas.",
-  },
-  {
-    icon: "fa-credit-card",
-    title: "Pago inicial 40%",
-    desc: "Arrancamos con enfoque y equipo listo.",
-  },
-  {
-    icon: "fa-rocket",
-    title: "Desarrollo + entrega",
-    desc: "Fase Beta y Final. Capacitación y acompañamiento.",
-  }
+const portfolio = [
+  ['Pases Digitales','Institutional approval and notification system','Manages labor-incident justification passes with distributed authorization.','No-login approval links, signed JWT routing, WhatsApp authorization links, Telegram audit feed, role-based exceptions, Google identity enrichment, and approval audit trail.'],
+  ['CajaSmart','Operational workflow and BI dashboard','Tracks reimbursements and payments across operational stages.','Ops → Fiscal → Tesorería → Pago timeline, plantel swimlanes, lag indicators, month filters, and folio drill-down visibility.'],
+  ['Talleres / Husky Pass','Education/admin platform','Supports school administration and role-based portals.','Dashboard, administration modules, teacher and workshop portals, global analytics views, parent attention, and student history flows.'],
+  ['SAPF','Parent support workflow system','Organizes attention workflows for parents/families with reporting support.','Next.js + MySQL stack, Google API integration, and ExcelJS-oriented reporting/export processes.'],
+  ['Legal PDF Workbench','Legal/document workflow platform','Handles document-heavy legal workflows with assisted processing.','PDF.js processing orientation, OpenAI-assisted workflows, validation with Zod, sanitized content handling, and database-backed document interfaces.'],
+  ['PDF Render Service','Document rendering microservice','Provides standalone server-side PDF rendering infrastructure.','Express + Puppeteer service design, CORS support, environment-driven configuration, and independent deployment model.'],
+  ['Academic Report Builder','Academic reporting tool','Builds structured visual academic reports and dashboards.','ECharts-powered visualizations, reporting-oriented UI, and organized data presentation for academic contexts.'],
+  ['EvaPath','Dashboard / AI-supported reporting system','Combines dashboard operations with authenticated report workflows.','Next.js dashboard architecture, NextAuth, MySQL, OpenAI-assisted processing, Puppeteer reporting, and Hashids-based handling.'],
+  ['IECS-IEDIS / Web2','Institutional website modernization','Modernizes a site while preserving original design workflow.','Pixel-preserved legacy HTML structure, MySQL-driven news cards, API endpoints for updates, and refreshable static workflow support.'],
+  ['KTKids','Large education/content platform','Large full-stack platform for content, users, and operations.','Auth, Prisma, AWS S3, Stripe, rich editing, drag-and-drop workflows, PDF generation, testing, and complex UI subsystems.'],
 ];
-
-const founders = [
-  {
-    name: "Andros Mendieta",
-    role: "Co-fundador & CEO / Estrategia Digital",
-    image: "/andros.png",
-    bio: (
-      <>
-        Arquitecto de software, fan de la automatización y la IA.<br />
-        Dirige el desarrollo tech, la calidad de los proyectos y la innovación interna de PUMPEA.
-      </>
-    ),
-    color: "from-[#F8F6FF] via-[#DED5FB] to-[#EBE9FF]",
-    border: "border-[#a28cff]/40"
-  },
-  {
-    name: "Alex Jurado",
-    role: "Co-fundador & CTO / Arquitectura de Sistemas",
-    image: "/alex.png",
-    bio: (
-      <>
-        Ingeniero, mente visionaria y apasionado del diseño de productos digitales.<br />
-        Lidera la visión de PUMPEA, la estrategia de crecimiento de clientes y las soluciones integrales.
-      </>
-    ),
-    color: "from-[#F0F7FF] via-[#CAE7FF] to-[#E8F8FF]",
-    border: "border-primary/40"
-  }
-];
-
-function getAliadosImages() {
-  const dir = path.join(process.cwd(), "public", "aliados");
-  let files = [];
-  try {
-    files = fs
-      .readdirSync(dir)
-      .filter((f) =>
-        /\.(png|jpe?g|svg|webp)$/i.test(f)
-      )
-      .sort((a, b) => a.localeCompare(b));
-  } catch (e) {
-    return [];
-  }
-  return files.map((f) => `/aliados/${f}`);
-}
 
 export default function Home() {
-  const aliados = getAliadosImages();
-
   return (
-    <div>
-      <HeroGradientBg>
-        <div className="relative z-10 w-full flex flex-col items-center justify-center pt-8 pb-10 px-3">
-          <img src="/logo-dark.png" alt="Pumpea Logo" className="w-36 h-36 md:w-48 md:h-48 drop-shadow-2xl mb-2" style={{
-            filter: "drop-shadow(0 7px 36px #299dff45)"
-          }}/>
-          <HeroHeadline gradientClass="text-gradient-main drop-shadow-2xl">
-            Tu negocio tiene todo para crecer…
-          </HeroHeadline>
-          <div className="bg-gradient-to-r from-white/80 via-sky-50/80 to-white/60 rounded-xl px-5 py-3 mb-2
-              font-heading text-2xl md:text-3xl font-bold w-full max-w-2xl
-              shadow shadow-sky-200/50"
-          >
-            <span className="text-gradient-main font-extrabold">Tu negocio solo necesita un buen impulso digital.</span>
-          </div>
-          <div className="mt-2 mb-8">
-            <Typewriter
-              words={[
-                "En PUMPEA la tecnología trabaja contigo. Automatizamos, conectamos y lanzamos tu marca como se debe."
-              ]}
-              className="text-lg md:text-2xl font-semibold max-w-xl mx-auto text-neutral-700 text-center"
-            />
-          </div>
-          <div className="flex flex-col sm:flex-row gap-5 justify-center w-full max-w-xl">
-            <Link href="/agenda" className="cta-button text-lg shadow-xl">
-              Agenda tu cita gratis
-            </Link>
-            <Link href="/pricing" className="button text-lg bg-white/80 border-white/40 font-bold text-blue-700 hover:text-primary shadow">
-              Ver Precios
-            </Link>
-            <Link href="/contact" className="button bg-white/90 text-primary border-primary hover:bg-blue-50 border font-semibold text-lg shadow">
-              Solicita Cotización
-            </Link>
-          </div>
-        </div>
-      </HeroGradientBg>
+    <div className="bg-ink text-ivory">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-ink/95 backdrop-blur">
+        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <a href="#top" className="text-xl font-bold tracking-[0.18em]">PUMPEA</a>
+          <div className="hidden gap-6 text-sm md:flex"><a href="#portfolio">Work</a><a href="#services">Systems</a><a href="#process">Process</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a></div>
+        </nav>
+      </header>
 
-      {/* NUESTRA ESENCIA */}
-      <section id="nosotros" className="py-20 px-2 flex flex-col items-center bg-gradient-to-r from-blue-50/70 to-white/95 border-b border-blue-100">
-        <GlassPanel className={`max-w-3xl w-full mx-auto`}>
-          <h2 className="uppercase font-heading text-gradient-main tracking-widest text-center text-lg md:text-xl font-black mb-2">
-            Nosotros / Quiénes Somos
-          </h2>
-          <p className="text-neutral-700 text-[1.15rem] md:text-xl font-medium mb-6 text-center">
-            En <b>PUMPEA</b> creemos que los negocios pueden ser más eficientes sin perder su esencia.<br />
-            Somos una empresa 100% mexicana fundada por Andros y Alex, apasionados por el desarrollo digital con propósito.
-          </p>
-          <div className="flex flex-col gap-4 text-[1.08rem] text-neutral-800/90">
-            <p>
-              Ofrecemos soluciones tecnológicas reales para empresas que quieren crecer con orden, automatización y equilibrio.
-              Desde plataformas y sistemas a la medida, hasta páginas web que sí venden y <b>bots de WhatsApp</b> que responden por ti — diseñamos herramientas que trabajan <span className="text-primary font-bold">contigo</span> y <span className="text-primary font-bold">por tu negocio</span>.
-            </p>
-            <p>
-              Creemos que el bienestar y la efectividad pueden ir de la mano. Que crecer no tiene que doler, ni ser un caos.
-              Cada proyecto que hacemos lleva estrategia, creatividad y corazón, porque tu crecimiento también es el nuestro.
-            </p>
-            <div className="mt-1 text-center">
-              <span className="inline-block px-4 py-1 rounded-full bg-sky-100/60 text-primary font-bold drop-shadow text-base">PUMPEA tu negocio. Dale potencia a tus ideas.</span>
-            </div>
+      <main id="top" className="mx-auto max-w-6xl px-6 py-14">
+        <section className="grid gap-10 md:grid-cols-2 md:items-center">
+          <div>
+            <p className="mb-3 text-xs uppercase tracking-[0.3em] text-accent">Pumpea Studio</p>
+            <h1 className="text-4xl font-semibold leading-tight md:text-6xl">Websites that sell. Systems that run the business.</h1>
+            <p className="mt-6 max-w-xl text-lg text-ivory/80">We design the public face and the private machinery behind it: websites, internal platforms, automations, dashboards, approvals, reporting, and document workflows.</p>
+            <div className="mt-8 flex gap-4"><a className="btn-solid" href="#contact">Start a project</a><a className="btn-outline" href="#portfolio">See systems built</a></div>
           </div>
-          {/* Founders section */}
-          <div className="mt-10 flex flex-col items-center gap-7">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 w-full">
-              {founders.map(f => (
-                <div
-                  key={f.name}
-                  className={`rounded-2xl border ${f.border} bg-gradient-to-br ${f.color} shadow-md shadow-blue-200/20 p-6 flex flex-col items-center transition-all`}
-                  style={{
-                    boxShadow: "0 4px 32px #d9eafe1a, 0 1.5px 2.5px rgba(70,90,220,0.09)"
-                  }}
-                >
-                  <div className="relative mb-3 flex items-center justify-center">
-                    <img
-                      src={f.image}
-                      alt={f.name}
-                      className="w-32 h-32 object-cover rounded-full border-4 border-white shadow-xl transition-all hover:scale-105
-                       bg-sky-50 drop-shadow-2xl"
-                      loading="lazy"
-                      style={{ boxShadow: "0 2px 16px #b5d6f33a", background: "linear-gradient(135deg,#d6f2fc,#f6ecff)" }}
-                    />
-                    <span className="absolute bottom-0 right-2 bg-gradient-to-tr from-primary to-accent-sky text-white font-bold text-xs px-2 py-[3px] rounded-xl shadow-xl border border-white/70">
-                      FUNDADOR
-                    </span>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="font-heading text-lg md:text-xl text-primary font-black text-center">{f.name}</div>
-                    <div className="text-sm md:text-base text-primary-dark font-semibold mb-1 text-center">{f.role}</div>
-                    <div className="text-neutral-700/90 text-sm text-center leading-relaxed mt-1">{f.bio}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <span className="text-neutral-400 text-sm flex items-center gap-2 mt-1">
-              <i className="fa fa-star text-accent-sky/80" /> Personas reales, experiencia real, pasión por crecer contigo.
-            </span>
-          </div>
-        </GlassPanel>
-      </section>
+          <Image src="/brand/hero-system.svg" alt="Pumpea branded system illustration with website, workflow pipeline, and dashboards" width={860} height={640} className="w-full" />
+        </section>
 
-      {/* Qué hacemos */}
-      <section className="py-20 px-2 bg-gradient-to-tr from-white via-sky-100 to-blue-50 border-b border-blue-50">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-center text-2xl md:text-4xl font-heading font-extrabold mb-6 text-gradient-main drop-shadow">
-            ¿Qué hacemos?
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-7">
-            {services.map(s => (
-              <div
-                key={s.title}
-                className={`
-                  group flex flex-col items-center p-7 rounded-2xl shadow-xl hover:scale-105 transition
-                  border border-blue-100 bg-gradient-to-br ${s.gradient}
-                  from-30% via-white/85 to-white/70
-                `}
-                style={{ minHeight: 248, boxShadow: "0 4px 32px #eaf6ffb2" }}
-              >
-                <span className="rounded-full bg-white/80 p-4 mb-2 shadow">
-                  <i className={`fa ${s.icon} text-3xl text-blue-700 group-hover:text-primary transition`}></i>
-                </span>
-                <h3 className="text-lg md:text-xl font-bold font-heading text-blue-700 mb-2">{s.title}</h3>
-                <div className="text-accent/85 text-base text-center">{s.desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        <div className="mt-10 grid grid-cols-2 gap-2 rounded-xl border border-white/10 bg-white/5 p-4 text-xs uppercase tracking-[0.15em] md:grid-cols-6"><span>Websites</span><span>Systems</span><span>Automations</span><span>Dashboards</span><span>PDFs</span><span>Operations</span></div>
 
-      {/* Steps Agenda */}
-      <section className="py-20 px-2 bg-gradient-to-br from-blue-50 via-sky-50 to-white/80 border-b border-blue-50">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-center text-2xl md:text-3xl font-heading font-extrabold mb-9 text-gradient-main drop-shadow">
-            Agenda tu cita <span className="text-primary">sin costo</span>
-          </h2>
-          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-2 justify-center relative">
-            {steps.map((step, i) => (
-              <div key={i} className="flex-1 min-w-[160px] flex flex-col items-center relative">
-                {i > 0 && (
-                  <div className="hidden md:block absolute left-0 top-9 h-1 w-full -z-10">
-                    <div className="h-full w-full bg-gradient-to-r from-blue-100 via-sky-200 to-cyan-100 rounded opacity-90"></div>
-                  </div>
-                )}
-                <span
-                  className="flex items-center justify-center rounded-full bg-gradient-to-br from-sky-100 to-blue-50 shadow p-4 border border-blue-200 mb-2"
-                  style={{ boxShadow: "0 6px 22px #c4eaff33, 0 1.5px 3.5px #e2effa70" }}
-                >
-                  <i className={`fa ${step.icon} text-2xl text-gradient-main`}></i>
-                </span>
-                <span className="text-blue-700 font-heading font-bold mb-0.5 text-[1rem]">{step.title}</span>
-                <span className="text-neutral-700/90 text-sm text-center">{step.desc}</span>
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-row justify-center mt-12 gap-3">
-            <Link href="/agenda" className="cta-button text-lg shadow-xl">
-              Agenda tu cita ahora
-            </Link>
-            <a
-              href="https://wa.me/5217293062147?text=Hola%20Pumpea%2C%20quiero%20informes%20y%20cotización%20de%20tu%20servicio"
-              className="button border-emerald-500 text-emerald-900 font-extrabold"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-whatsapp text-xl mr-1"></i> WhatsApp
-            </a>
-          </div>
-        </div>
-      </section>
+        <section className="mt-20">
+          <h2 className="text-3xl">Most websites look good for a week. Good systems keep working for years.</h2>
+        </section>
 
-      {/* Soluciones y Productos PUMPEA */}
-      <section className="mt-20 max-w-3xl mx-auto px-4">
-        <h2 className="text-2xl font-heading mb-5 text-center text-gradient-main drop-shadow">
-          Soluciones y productos que impulsan tu evento y tu marca
-        </h2>
-        <div className="bg-gradient-to-br from-[#EFF6FF] via-white to-[#E6EBF8] rounded-xl p-7 mx-auto space-y-3 shadow-md border border-[#D4E3FA]">
-          <h3 className="text-xl font-heading text-primary mb-2 text-center">
-            Click&Celebrate
-          </h3>
-          <p className="text-accent/90 text-center leading-relaxed">
-            Eleva tus eventos con tecnología: invitaciones digitales, galerías compartidas, RSVP ágil y streaming, todo en una solución hecha por PUMPEA.<br/>
-            Convierte cada momento en una experiencia memorable, desde el primer contacto hasta la gestión de recuerdos y fotos en tiempo real.<br/>
-          </p>
-          <ul className="list-disc pl-8 text-base text-accent/80 mx-auto text-left max-w-lg">
-            <li>Invitaciones digitales con RSVP instantáneo</li>
-            <li>Galerías y álbumes para compartir fotos entre asistentes</li>
-            <li>Itinerarios digitales, recordatorios y cuentas regresivas</li>
-            <li>Streaming en vivo profesional (OBS, StreamYard y más)</li>
-          </ul>
-          <p className="mt-2 text-center text-neutral-600 text-base">
-            ¿Necesitas tecnología para otro reto? Contamos con soluciones a la medida para empresas, marcas y eventos.
-          </p>
-          <div className="flex justify-center mt-3">
-            <Link href="/click-celebrate" className="cta-button text-lg">
-              Descubre Click&Celebrate
-            </Link>
-          </div>
-        </div>
-      </section>
+        <section id="services" className="mt-12 grid gap-5 md:grid-cols-2">
+          {serviceGroups.map((s) => <article key={s.title} className="card"><div className='flex items-center gap-3'><Image src={s.icon} alt="" aria-hidden width={32} height={32}/><h3 className="text-xl">{s.title}</h3></div><p className="mt-3 text-ivory/75">{s.copy}</p></article>)}
+        </section>
 
-      {/* Aliados y Clientes Strip Section */}
-      <section className="w-full py-16 bg-gradient-to-br from-blue-50/80 via-white to-blue-100/50 border-t border-blue-100 mt-20">
-        <div className="max-w-4xl mx-auto px-3">
-          <GlassPanel className="mb-9 pb-7">
-            <h2 className="text-2xl md:text-3xl font-heading font-extrabold mb-3 text-gradient-main text-center drop-shadow">
-              Aliados y clientes
-            </h2>
-            <p className="text-center text-base md:text-lg text-neutral-700 mb-5">
-              Agradecemos la confianza que cada aliado y cliente deposita en nosotros. Para nosotros, no son solo nombres o proyectos: su visión, su energía y su crecimiento se han vuelto también parte vital de la historia de PUMPEA.<br className="hidden sm:inline"/>
-              Es un privilegio ser parte de su evolución digital y saber que juntos <b>construimos ideas que trascienden</b>. Cada experiencia, cada reto, cada resultado logrado nos inspira a superarnos siempre.
-            </p>
-            <div className="font-heading text-base text-primary text-center mb-1">
-              <span className="font-extrabold text-lg">¡Gracias por confiar en nosotros!</span>
-              <div className="flex items-center justify-center gap-2 mt-2 text-primary-dark font-bold">
-                <span>Andros Mendieta</span>
-                <span className="mx-1">&amp;</span>
-                <span>Alex Jurado</span>
-              </div>
-            </div>
-            <div className="mt-8 mb-2">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center items-center">
-                {aliados.length === 0 && (
-                  <span className="col-span-full text-center text-gray-400 py-6">Próximamente…</span>
-                )}
-                {aliados.map((src, i) => (
-                  <div
-                    key={src}
-                    className="flex items-center justify-center bg-gradient-to-br from-white/90 via-blue-50/60 to-blue-100/50 rounded-xl shadow border border-blue-100 w-full aspect-square max-w-[120px] md:max-w-[130px] p-3 transition hover:scale-105 duration-150"
-                    style={{
-                      boxShadow: "0 4px 18px #a3d1ee21",
-                    }}
-                    title={`Aliado ${i + 1}`}
-                    aria-label={`Aliado logo ${i + 1}`}
-                    role="img"
-                  >
-                    <img
-                      src={src}
-                      alt={`Aliado logo ${i + 1}`}
-                      className="w-full h-full object-contain"
-                      draggable={false}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </GlassPanel>
-        </div>
-      </section>
+        <section className="mt-20 card">
+          <h2 className="text-2xl">Request → Routing → Approval → Notification → Dashboard → Report</h2>
+          <p className="mt-3 text-ivory/75">Pumpea builds complete operational flows, not isolated screens.</p>
+          <Image src="/brand/workflow-diagram.svg" alt="Workflow routing diagram" width={1200} height={350} className="mt-6 w-full" />
+        </section>
 
-      <WhatsAppCta />
+        <section id="portfolio" className="mt-20">
+          <h2 className="text-3xl">Systems Built</h2>
+          <div className="mt-8 grid gap-5 md:grid-cols-2">{portfolio.map(([n,t,w,f],i)=><article className="card" key={n}><p className='text-xs uppercase tracking-[0.2em] text-accent'>{t}</p><h3 className="mt-2 text-2xl">{n}</h3><p className="mt-3 text-ivory/80">{w}</p><p className="mt-3 text-sm text-ivory/70">{f}</p><Image src={`/brand/motifs/motif-${(i%5)+1}.svg`} alt="" aria-hidden width={260} height={120} className="mt-4"/></article>)}</div>
+        </section>
+
+        <section id='process' className="mt-20 card"><h2 className="text-3xl">Discover → Map → Design → Build → Integrate → Launch → Improve</h2><p className="mt-3 text-ivory/75">Useful software first. Sharp design always.</p></section>
+        <section className="mt-12 grid gap-4 md:grid-cols-3">{['Website Sprint','System Build','Automation Layer','Dashboard / BI View','PDF / Document System','Existing System Rescue'].map((e)=><article key={e} className='card'><h3 className='text-xl'>{e}</h3></article>)}</section>
+
+        <section id='contact' className="mt-20 rounded-2xl border border-accent/30 bg-accent/10 p-8"><h2 className="text-3xl">Bring the messy process. We’ll turn it into a working system.</h2><p className="mt-3 text-ivory/85">From landing pages to approval engines, dashboards, notifications, and PDF/document flows.</p></section>
+      </main>
     </div>
   );
 }
