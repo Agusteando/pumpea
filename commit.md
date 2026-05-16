@@ -1,7 +1,7 @@
-feat: align Pumpea website with new premium digital-growth visual system
+fix: tighten hero scaling to match Figma and replace phone mockup frame
 
-- Rebuilt the homepage around the provided Figma direction with a floating glass navbar, conversion-focused hero, layered product mockups, trust panel, metric cards, and the supplied blue technology texture.
-- Extended the new visual language across the rest of the website: Nosotros, Precios, Agenda, Contacto, Casos de éxito, Click&Celebrate, and Work.
-- Added shared page hero styling, stronger glass surfaces, responsive cards, gradients, motion effects, CTA patterns, and consistent journey sections.
-- Preserved existing business logic where relevant, including contact form validation and Calendly/WhatsApp entry points.
-- Fixed the broken contact form markup and verified the project builds successfully with `npm run build`.
+- Reworked the homepage hero composition to better match the provided reference with more precise spacing, text wrapping, and desktop proportions.
+- Replaced the previous CSS phone shell with the supplied transparent mobile frame asset and rebuilt the inner mobile screen content behind it.
+- Rebalanced the hero visual cluster so the browser panel, stat cards, service cards, and mobile mockup scale more cleanly across screen sizes.
+- Refined headline line breaks, button sizing, body copy width, and overall hero rhythm to reduce clutter and align more closely with the reference.
+- Kept the broader premium visual system intact across the site and verified the project still builds successfully.

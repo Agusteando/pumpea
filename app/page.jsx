@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import SpriteLogoRail from "../components/SpriteLogoRail";
 import WhatsAppCta from "../components/WhatsAppCta";
 
@@ -41,18 +42,18 @@ const process = [
 
 function BrowserMockup() {
   return (
-    <div className="relative mx-auto min-h-[540px] w-full max-w-[700px] lg:min-h-[610px]">
-      <div className="absolute left-1/2 top-1/2 h-[590px] w-[590px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/70 opacity-80" />
-      <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/60 opacity-80" />
-      <div className="absolute left-1/2 top-1/2 h-[410px] w-[410px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/50 opacity-80" />
+    <div className="relative mx-auto w-full max-w-[700px] aspect-[695/565] lg:justify-self-end">
+      <div className="absolute left-[16%] top-[4%] h-[68%] w-[68%] rounded-full border border-cyan-100/80" />
+      <div className="absolute left-[23%] top-[10%] h-[56%] w-[56%] rounded-full border border-cyan-100/70" />
+      <div className="absolute left-[10%] top-[24%] h-[48%] w-[80%] rounded-full bg-[radial-gradient(circle,_rgba(58,210,230,0.12),_transparent_68%)] blur-3xl" />
 
-      <div className="texture-panel absolute left-[8%] top-[6%] h-[350px] w-[76%] rounded-[24px] p-7 text-white md:p-8">
-        <div className="mb-12 flex items-center justify-between text-[11px] font-bold">
+      <div className="texture-panel absolute left-[18%] top-[12%] h-[52%] w-[66%] rounded-[24px] px-[4.7%] py-[5.1%] text-white">
+        <div className="mb-[10%] flex items-center justify-between text-[10px] min-[480px]:text-[11px] font-bold">
           <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="" className="h-8 w-8 rounded-full bg-white/10 p-1" />
-            <span>Pumpea</span>
+            <img src="/logo.png" alt="" className="h-7 w-7 rounded-full bg-white/10 p-1" />
+            <span className="text-[10px] min-[480px]:text-[12px]">Pumpea</span>
           </div>
-          <div className="hidden gap-7 md:flex">
+          <div className="hidden gap-5 text-[10px] md:flex">
             <span>Inicio</span>
             <span>Servicios</span>
             <span>Nosotros</span>
@@ -60,20 +61,20 @@ function BrowserMockup() {
           </div>
           <span className="rounded-full bg-white px-4 py-2 text-[10px] font-black text-blue-700">Cotizar proyecto</span>
         </div>
-        <h3 className="max-w-[330px] font-heading text-[30px] font-black leading-[1.04] md:text-[34px]">
+        <h3 className="max-w-[68%] font-heading text-[7vw] min-[480px]:text-[33px] font-black leading-[1.05]">
           Impulsamos marcas con tecnología, creatividad y datos.
         </h3>
-        <p className="mt-6 max-w-[310px] text-sm font-semibold leading-relaxed text-white/88">
+        <p className="mt-[5.5%] max-w-[64%] text-[11px] min-[480px]:text-[13px] font-semibold leading-[1.55] text-white/88">
           Soluciones digitales a la medida para automatizar, conectar y escalar tu negocio.
         </p>
-        <button className="mt-6 rounded-full bg-white px-5 py-3 text-xs font-black text-blue-700 shadow-xl">
+        <button className="mt-[5.5%] rounded-full bg-white px-5 py-3 text-[11px] font-black text-blue-700 shadow-xl">
           Hablemos de tu proyecto <i className="fa fa-arrow-right ml-2" />
         </button>
       </div>
 
-      <div className="float-card animate-float-medium absolute right-[2%] top-[13%] w-[196px] p-6">
-        <p className="text-sm font-black text-slate-700">Rendimiento general</p>
-        <div className="mt-3 flex items-center gap-2 text-3xl font-black text-emerald-500">
+      <div className="float-card absolute right-[3%] top-[20%] w-[29%] min-w-[170px] rounded-[22px] px-[4.1%] py-[4.4%]">
+        <p className="text-[15px] font-black leading-tight text-slate-700">Rendimiento general</p>
+        <div className="mt-3 flex items-center gap-2 text-[44px] font-black leading-none text-emerald-500">
           <i className="fa fa-arrow-up text-lg" /> 48%
         </div>
         <p className="mt-1 text-[11px] font-semibold text-slate-500">vs. mes anterior</p>
@@ -82,8 +83,8 @@ function BrowserMockup() {
         </svg>
       </div>
 
-      <div className="float-card animate-float-slow absolute bottom-[11%] left-[3%] w-[246px] p-5">
-        <p className="mb-4 font-heading text-[15px] font-black text-slate-800">Automatizaciones activas</p>
+      <div className="float-card absolute bottom-[12%] left-[13%] w-[32%] min-w-[226px] rounded-[24px] p-5">
+        <p className="mb-4 font-heading text-[15px] font-black leading-tight text-slate-800">Automatizaciones activas</p>
         <div className="space-y-3">
           {automationStats.map((item) => (
             <div key={item.label} className="flex items-center justify-between rounded-2xl border border-blue-50 bg-white/72 px-3 py-3 shadow-sm">
@@ -102,36 +103,41 @@ function BrowserMockup() {
         </div>
       </div>
 
-      <div className="absolute bottom-[8%] right-[18%] h-[330px] w-[178px] rounded-[34px] border-[4px] border-slate-900 bg-slate-950 p-2 shadow-[0_26px_60px_rgba(15,23,42,.32)]">
-        <div className="absolute left-1/2 top-2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-slate-950" />
-        <div className="h-full overflow-hidden rounded-[26px] bg-white">
-          <div className="flex items-center justify-between border-b border-blue-50 px-3 py-4">
-            <span className="flex items-center gap-1 text-[10px] font-black text-slate-800">
-              <img src="/logo.png" alt="" className="h-5 w-5" /> Pumpea
+      <div className="absolute bottom-[8.5%] left-[55.4%] z-20 w-[25.5%] min-w-[180px] -translate-x-1/2">
+        <div className="absolute left-[13.4%] top-[4.5%] z-0 h-[83.8%] w-[73.2%] overflow-hidden rounded-[13%] bg-white shadow-[0_26px_60px_rgba(15,23,42,.18)]">
+          <div className="flex items-center justify-between px-[10%] pb-[5%] pt-[8.5%]">
+            <span className="flex items-center gap-[6px] text-[9px] font-black text-slate-800">
+              <img src="/logo.png" alt="" className="h-[13px] w-[13px]" />
+              Pumpea
             </span>
-            <i className="fa fa-bars text-slate-800" />
+            <i className="fa fa-bars text-[12px] text-slate-800" />
           </div>
-          <div className="p-4">
-            <h4 className="font-heading text-[20px] font-black leading-[1.03] text-slate-900">
+          <div className="px-[10%]">
+            <h4 className="font-heading text-[13px] min-[480px]:text-[14px] font-black leading-[1.12] text-slate-900">
               Soluciones digitales que hacen crecer tu negocio
             </h4>
-            <button className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-[10px] font-black text-white shadow-lg">Solicitar asesoría</button>
-            <div className="mt-9 overflow-hidden rounded-2xl border border-blue-100 bg-sky-50 p-2">
-              <div className="h-20 rounded-xl bg-gradient-to-br from-sky-200 via-white to-blue-100" />
+            <button className="mt-[8%] rounded-[8px] bg-blue-600 px-[10%] py-[4.8%] text-[8px] font-black text-white shadow-lg">
+              Solicitar asesoría
+            </button>
+            <div className="mt-[12%] rounded-[16px] border border-blue-100 bg-sky-50 p-[4%]">
+              <div className="h-[68px] rounded-[12px] bg-[linear-gradient(135deg,#d7ecff_0%,#ffffff_55%,#e4f5ff_100%)] p-2">
+                <div className="h-full rounded-[10px] bg-[radial-gradient(circle_at_20%_30%,rgba(90,169,255,.28),transparent_28%),linear-gradient(135deg,rgba(19,88,243,.22),rgba(36,209,246,.28))]" />
+              </div>
             </div>
           </div>
         </div>
+        <Image src="/mobile-frame.png" alt="Marco de teléfono" width={1024} height={1536} className="relative z-10 h-auto w-full" />
       </div>
 
-      <div className="absolute right-0 top-[43%] grid w-[242px] gap-3">
+      <div className="absolute right-[0.8%] top-[52%] grid w-[26%] min-w-[210px] gap-3">
         {services.map((service) => (
-          <div key={service.title} className="float-card flex items-center gap-4 p-4">
-            <span className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i className={`fa ${service.icon} text-xl`} />
+          <div key={service.title} className="float-card flex items-center gap-4 rounded-[20px] p-4">
+            <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+              <i className={`fa ${service.icon} text-lg`} />
             </span>
             <span>
-              <span className="block font-heading text-[17px] font-black text-blue-700">{service.title}</span>
-              <span className="block text-[12px] font-semibold leading-snug text-slate-500">{service.desc}</span>
+              <span className="block font-heading text-[16px] font-black leading-tight text-blue-700">{service.title}</span>
+              <span className="mt-1 block text-[12px] font-semibold leading-snug text-slate-500">{service.desc}</span>
             </span>
           </div>
         ))}
@@ -142,7 +148,7 @@ function BrowserMockup() {
 
 function AlliancePanel() {
   return (
-    <section className="pumpea-container relative -mt-2 pb-14 md:pb-20">
+    <section className="pumpea-container relative pb-14 md:pb-20">
       <div className="glass-card-strong p-6 md:p-10">
         <div className="grid items-center gap-8 lg:grid-cols-[220px_1fr]">
           <div>
@@ -190,33 +196,37 @@ function SolutionCard({ icon, title, desc, children }) {
 export default function Home() {
   return (
     <div>
-      <section className="relative overflow-hidden pb-16 pt-20 md:pb-20 md:pt-24">
+      <section className="relative overflow-hidden pb-14 pt-16 md:pb-20 md:pt-20 lg:pb-16 xl:pb-20">
         <div className="hero-orb one animate-pulse-glow" />
         <div className="hero-orb two animate-pulse-glow" />
-        <div className="pumpea-container grid items-center gap-10 lg:grid-cols-[minmax(0,560px)_minmax(620px,1fr)]">
-          <div className="relative z-10">
-            <div className="badge-pill px-5 py-3 text-[15px] font-bold">
+        <div className="pumpea-container grid items-center gap-10 lg:grid-cols-[minmax(0,590px)_minmax(0,700px)] lg:gap-12 xl:gap-14">
+          <div className="relative z-10 pt-2">
+            <div className="badge-pill px-6 py-3 text-[15px] font-bold">
               <span className="text-xl">🇲🇽</span>
               <span>Transformación digital <b className="text-blue-700">hecha en México</b></span>
             </div>
-            <h1 className="mt-8 max-w-[650px] font-heading text-[46px] font-black leading-[1.12] tracking-[-0.045em] text-[#090d1d] md:text-[64px] lg:text-[68px]">
-              Tu negocio necesita más que presencia digital:
-              <span className="block bg-gradient-to-r from-[#1358f3] via-[#1f7fff] to-[#20cfe8] bg-clip-text text-transparent">
-                necesita impulso que convierta.
-              </span>
+
+            <h1 className="mt-8 font-heading font-black leading-[0.98] tracking-[-0.055em] text-[#090d1d] text-[56px] sm:text-[62px] md:text-[72px] lg:text-[74px] xl:text-[72px]">
+              <span className="block">Tu negocio necesita</span>
+              <span className="block">más que presencia digital:</span>
+              <span className="mt-2 block bg-gradient-to-r from-[#1358f3] via-[#1f7fff] to-[#20cfe8] bg-clip-text text-transparent">necesita impulso</span>
+              <span className="block bg-gradient-to-r from-[#1358f3] via-[#1f7fff] to-[#20cfe8] bg-clip-text text-transparent">que convierta.</span>
             </h1>
-            <p className="mt-6 max-w-[640px] text-[19px] font-medium leading-[1.75] text-slate-600 md:text-[21px]">
+
+            <p className="mt-7 max-w-[620px] text-[19px] font-medium leading-[1.72] text-slate-600 md:text-[20px]">
               Diseñamos sitios web, automatizamos procesos, integramos herramientas y desarrollamos productos digitales que conectan tecnología con resultados reales para hacer crecer tu marca.
             </p>
-            <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-              <Link href="/agenda" className="cta-button">
+
+            <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <Link href="/agenda" className="cta-button min-h-[58px] min-w-[284px] justify-center rounded-[20px] px-7 py-4 text-[16px]">
                 <i className="fa fa-calendar" /> Agenda una asesoría gratis <i className="fa fa-arrow-right" />
               </Link>
-              <Link href="#soluciones" className="button">
+              <Link href="#soluciones" className="button min-h-[58px] min-w-[210px] justify-center rounded-[20px] px-7 py-4 text-[16px]">
                 <i className="fa fa-play" /> Ver soluciones
               </Link>
             </div>
-            <div className="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-sm font-semibold text-slate-600">
+
+            <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm font-semibold text-slate-600">
               <span><i className="fa fa-bolt mr-2 text-slate-900" />Respuesta en 24h</span>
               <span className="hidden text-slate-300 sm:inline">•</span>
               <span><i className="fa fa-shield-halved mr-2 text-slate-900" />Sin costo inicial de asesoría</span>
@@ -224,6 +234,7 @@ export default function Home() {
               <span><i className="fa fa-lock mr-2 text-slate-900" />Confidencialidad garantizada</span>
             </div>
           </div>
+
           <BrowserMockup />
         </div>
       </section>
@@ -333,7 +344,7 @@ export default function Home() {
         </div>
       </section>
 
-      <WhatsAppCta text="Cotiza por WhatsApp" />
+      <WhatsAppCta text="Cotiza por WhatsApp" className="bottom-4 right-4 px-4 py-3 text-sm xl:bottom-6 xl:right-6 xl:px-5 xl:py-3.5" />
     </div>
   );
 }
