@@ -1,8 +1,7 @@
-feat: refine solutions section and add interactive 3D logo motion
+feat: replace ecosystem banner illustration with direct Three.js cubes scene
 
-- Added mouse-hover interaction to the direct Three.js Pumpea logo scene with calm pointer-follow rotation, soft lift, light response, and an elegant hover spin.
-- Rebuilt the next home section to closely match the provided reference: centered Soluciones header, four pastel service cards, ecosystem banner, process timeline, and Click&Celebrate product spotlight.
-- Added production-oriented scroll reveal transitions for sections and staggered content, using IntersectionObserver with route-change support and reduced-motion fallbacks.
-- Improved section spacing, scaling, card rhythm, icon treatments, CTA placement, and responsive structure for a stronger commercial landing-page feel.
-- Removed stale React Three Fiber scene references and kept the implementation on direct Three.js only.
-- Excluded package-lock.json from the deliverable.
+- Replaced the CSS-only "Todo lo que tu negocio necesita" cube graphic with a direct Three.js canvas component.
+- Built a production-safe vanilla Three.js scene for the ecosystem banner using translucent beveled cuboids, layered top plates, soft shadows, glows, network nodes, and subtle sparkle details to better match the reference graphic.
+- Added calm animation and pointer hover response to the cubes scene without introducing React Three Fiber or additional runtime dependencies.
+- Removed the unused CSS cube construction styles and kept the banner layout/scaling intact for the existing section flow.
+- Preserved existing business logic and excluded package-lock.json from the deliverable.

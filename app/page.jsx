@@ -4,6 +4,7 @@ import SpriteLogoRail from "../components/SpriteLogoRail";
 import AboutHero3D from "../components/AboutHero3D";
 import FounderCards from "../components/FounderCards";
 import WhatsAppCta from "../components/WhatsAppCta";
+import EcosystemCubesCanvas from "../components/EcosystemCubesCanvas";
 
 const services = [
   {
@@ -366,17 +367,9 @@ function SoftSolutionCard({ item, index }) {
 }
 
 function CubesIllustration() {
-  return (
-    <div className="cube-scene-ref" aria-hidden="true">
-      <div className="cube-ref cube-main"><span /></div>
-      <div className="cube-ref cube-tall"><span /></div>
-      <div className="cube-ref cube-small"><span /></div>
-      <div className="cube-ref cube-tiny"><span /></div>
-      <div className="cube-network one" />
-      <div className="cube-network two" />
-    </div>
-  );
+  return <EcosystemCubesCanvas />;
 }
+
 
 function WorkTimeline() {
   return (
