@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import CalendlyProvider from "../components/CalendlyProvider";
 import CalendlyModalProvider from "../components/CalendlyModal";
 import PageTransitionProvider from "../components/PageTransitionProvider";
+import ScrollEffects from "../components/ScrollEffects";
 
 export const metadata = {
   title: "Pumpea | Tecnología que impulsa negocios",
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
         <div className="pumpea-shell min-h-screen flex flex-col">
           <PageTransitionProvider>
             <CalendlyProvider />
+            <ScrollEffects />
             <CalendlyModalProvider>
               <Navbar />
               <main className="flex-1">{children}</main>

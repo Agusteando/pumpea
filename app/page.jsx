@@ -49,6 +49,53 @@ const aboutStats = [
   { icon: "fa-star", value: "100%", label: "Compromiso cercano" },
 ];
 
+
+const solutionCards = [
+  {
+    tone: "blue",
+    icon: "fa-globe",
+    title: "Sitios Web de Impacto",
+    desc: "Desarrollo de sitios web modernos, rápidos y optimizados que venden y posicionan tu marca.",
+    bullets: ["Diseño responsivo", "SEO técnico", "Velocidad ultrarrápida"],
+  },
+  {
+    tone: "green",
+    icon: "fa-robot",
+    title: "Automatización + Bots",
+    desc: "Bots inteligentes para WhatsApp, flujos automatizados y atención 24/7 que convierten.",
+    bullets: ["Bots para WhatsApp", "Flujos automatizados", "Atención 24/7"],
+  },
+  {
+    tone: "violet",
+    icon: "fa-share-nodes",
+    title: "Redes + Crecimiento",
+    desc: "Gestión profesional de redes sociales y campañas que conectan y convierten.",
+    bullets: ["Estrategia de contenido", "Publicidad pagada", "Análisis y reportes"],
+  },
+  {
+    tone: "orange",
+    icon: "fa-plug",
+    title: "Integraciones & Sistemas",
+    desc: "Plataformas y sistemas a la medida, integrados para escalar tu ecosistema digital.",
+    bullets: ["Desarrollo a la medida", "Integraciones API", "Escalabilidad garantizada"],
+  },
+];
+
+const workSteps = [
+  { icon: "fa-calendar-check", number: "01", title: "Agenda tu cita", desc: "Presencial o virtual. Escuchamos tu idea." },
+  { icon: "fa-file-lines", number: "02", title: "Propuesta personalizada", desc: "Cotización clara y detallada (24-48h)." },
+  { icon: "fa-file-signature", number: "03", title: "Firma y confidencialidad", desc: "Contrato formal y protección de tu información." },
+  { icon: "fa-credit-card", number: "04", title: "Pago inicial 40%", desc: "Arrancamos con enfoque y equipo listo." },
+  { icon: "fa-rocket", number: "05", title: "Desarrollo + entrega", desc: "Fase Beta y Final. Capacitación y acompañamiento." },
+];
+
+const eventFeatures = [
+  "Invitaciones digitales con RSVP instantáneo",
+  "Galerías y álbumes para compartir fotos entre asistentes",
+  "Itinerarios digitales, recordatorios y cuentas regresivas",
+  "Streaming en vivo profesional (OBS, StreamYard y más)",
+];
+
 function PhoneMockup() {
   return (
     <div className="phone-frame-stage absolute bottom-[3.5%] left-[56.5%] z-30 w-[clamp(250px,35%,310px)] -translate-x-1/2">
@@ -274,16 +321,189 @@ function AlliancePanel() {
   );
 }
 
-function SolutionCard({ icon, title, desc, children }) {
+function SoftSolutionCard({ item, index }) {
+  const toneClasses = {
+    blue: "from-[#eef8ff] to-white text-[#155fff] border-blue-100/90",
+    green: "from-[#effced] to-white text-[#51c94f] border-green-100/90",
+    violet: "from-[#f6efff] to-white text-[#9c73ff] border-violet-100/90",
+    orange: "from-[#fff3ef] to-white text-[#ff9943] border-orange-100/90",
+  };
+
+  const checkClasses = {
+    blue: "bg-blue-100 text-blue-500",
+    green: "bg-green-100 text-green-500",
+    violet: "bg-violet-100 text-violet-500",
+    orange: "bg-orange-100 text-orange-500",
+  };
+
+  const titleParts = item.title.split(" ");
+  const titleMid = Math.ceil(titleParts.length / 2);
+
   return (
-    <article className="glass-card reveal-card flex h-full flex-col p-7">
-      <span className="icon-bubble mb-6"><i className={`fa ${icon} text-xl`} /></span>
-      <h3 className="font-heading text-2xl font-black text-[#142653]">{title}</h3>
-      <p className="mt-3 text-base font-medium leading-relaxed text-slate-600">{desc}</p>
-      {children}
+    <article className={`scroll-reveal service-card-ref group bg-gradient-to-br ${toneClasses[item.tone]}`} style={{ transitionDelay: `${index * 75}ms` }}>
+      <span className="service-icon-ref">
+        <i className={`fa ${item.icon}`} />
+      </span>
+      <h3 className="mt-8 font-heading text-[24px] font-black leading-[1.08] tracking-[-0.035em] text-[#0d4ee7]">
+        <span className="block">{titleParts.slice(0, titleMid).join(" ")}</span>
+        <span className="block">{titleParts.slice(titleMid).join(" ")}</span>
+      </h3>
+      <p className="mx-auto mt-7 max-w-[230px] text-center text-[14px] font-medium leading-[1.72] text-slate-600">
+        {item.desc}
+      </p>
+      <ul className="mt-8 space-y-3 text-left text-[13px] font-semibold text-slate-500">
+        {item.bullets.map((bullet) => (
+          <li key={bullet} className="flex items-center gap-3">
+            <span className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${checkClasses[item.tone]}`}>
+              <i className="fa fa-check text-[10px]" />
+            </span>
+            {bullet}
+          </li>
+        ))}
+      </ul>
     </article>
   );
 }
+
+function CubesIllustration() {
+  return (
+    <div className="cube-scene-ref" aria-hidden="true">
+      <div className="cube-ref cube-main"><span /></div>
+      <div className="cube-ref cube-tall"><span /></div>
+      <div className="cube-ref cube-small"><span /></div>
+      <div className="cube-ref cube-tiny"><span /></div>
+      <div className="cube-network one" />
+      <div className="cube-network two" />
+    </div>
+  );
+}
+
+function WorkTimeline() {
+  return (
+    <section className="section-transition workflow-card-ref mt-14 px-5 py-12 sm:px-8 md:px-12 md:py-14">
+      <div className="text-center">
+        <span className="section-kicker !px-4 !py-1.5 !text-[11px] !tracking-[0.24em]">CÓMO TRABAJAMOS</span>
+        <h3 className="mt-6 font-heading text-[clamp(30px,2.25vw,44px)] font-black tracking-[-0.045em] text-[#142653]">
+          Agenda tu cita <span className="text-gradient-main">sin costo</span>
+        </h3>
+      </div>
+
+      <div className="workflow-track-ref stagger-reveal mt-12 grid gap-8 md:grid-cols-5 md:gap-4">
+        {workSteps.map((step) => (
+          <article key={step.number} className="relative text-center">
+            <span className="workflow-icon-ref"><i className={`fa ${step.icon}`} /></span>
+            <span className="workflow-number-ref">{step.number}</span>
+            <h4 className="mt-5 font-heading text-[17px] font-black leading-tight text-[#0c4be6]">{step.title}</h4>
+            <p className="mx-auto mt-3 max-w-[170px] text-[13px] font-medium leading-[1.55] text-slate-500">{step.desc}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-11 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Link href="/agenda" className="cta-button min-h-[58px] min-w-[280px] rounded-full"><i className="fa fa-calendar-days" /> Agenda tu cita ahora</Link>
+        <a href="https://wa.me/528113520984" target="_blank" rel="noopener noreferrer" className="button min-h-[58px] min-w-[220px] rounded-full"><i className="fab fa-whatsapp text-lg" /> WhatsApp</a>
+      </div>
+    </section>
+  );
+}
+
+function ProductSpotlight() {
+  return (
+    <section className="section-transition product-card-ref mt-14 px-5 py-10 sm:px-8 md:px-12 md:py-12">
+      <div className="text-center">
+        <span className="section-kicker !px-4 !py-1.5 !text-[11px] !tracking-[0.22em]">PRODUCTO DESTACADO</span>
+        <h3 className="mx-auto mt-6 max-w-[1000px] font-heading text-[clamp(27px,2vw,38px)] font-black leading-tight tracking-[-0.035em] text-[#142653]">
+          Soluciones y productos que <span className="text-gradient-main">impulsan tu evento y tu marca</span>
+        </h3>
+      </div>
+
+      <div className="mx-auto mt-9 grid max-w-[1160px] overflow-hidden rounded-[28px] border border-blue-100 bg-white/72 shadow-[0_24px_80px_rgba(19,88,243,.09)] backdrop-blur-xl lg:grid-cols-[1fr_0.78fr]">
+        <div className="p-7 text-center md:p-10">
+          <h4 className="font-heading text-[22px] font-black text-[#0d61f2]">Click&amp;Celebrate</h4>
+          <p className="mx-auto mt-5 max-w-[640px] text-[14px] font-medium leading-[1.8] text-slate-600">
+            Eleva tus eventos con tecnología: invitaciones digitales, galerías compartidas, RSVP ágil y streaming, todo en una solución hecha por PUMPEA.
+          </p>
+          <p className="mx-auto mt-4 max-w-[620px] text-[14px] font-medium leading-[1.8] text-slate-600">
+            Convierte cada momento en una experiencia memorable, desde el primer contacto hasta la gestión de recuerdos y fotos en tiempo real.
+          </p>
+          <ul className="mx-auto mt-7 max-w-[600px] space-y-2.5 text-left text-[13px] font-semibold leading-relaxed text-slate-500">
+            {eventFeatures.map((feature) => (
+              <li key={feature} className="flex gap-3">
+                <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-500"><i className="fa fa-check text-[10px]" /></span>
+                {feature}
+              </li>
+            ))}
+          </ul>
+          <p className="mx-auto mt-7 max-w-[620px] text-[13px] font-medium leading-[1.8] text-slate-500">
+            ¿Necesitas tecnología para otro reto? Contamos con soluciones a la medida para empresas, marcas y eventos.
+          </p>
+          <Link href="/click-celebrate" className="cta-button mt-8 min-w-[270px] rounded-full px-8 py-3.5 text-sm">Descubre Click&amp;Celebrate</Link>
+        </div>
+
+        <div className="event-phone-stage relative min-h-[460px] overflow-hidden bg-[radial-gradient(circle_at_60%_50%,rgba(174,120,255,.22),transparent_28%),radial-gradient(circle_at_45%_82%,rgba(36,209,246,.18),transparent_32%),linear-gradient(135deg,rgba(239,248,255,.62),rgba(255,255,255,.82))]">
+          <div className="event-chip-ref left-[7%] top-[22%]"><i className="fa fa-users text-emerald-500" /><span><b>RSVP</b><small>Confirmado</small></span></div>
+          <div className="event-chip-ref right-[7%] top-[36%]"><i className="fa fa-image text-blue-500" /><span><b>Galería</b><small>128 fotos</small></span></div>
+          <div className="event-chip-ref bottom-[24%] right-[8%]"><i className="fa fa-video text-rose-500" /><span><b>Streaming</b><small>En vivo</small></span></div>
+          <div className="event-phone-ref">
+            <div className="event-notch-ref" />
+            <div className="event-phone-screen-ref">
+              <div className="text-[13px] font-black tracking-[0.16em] text-white/80">M&amp;R</div>
+              <div className="mt-10 font-serif text-[32px] italic leading-[1.08] text-white">Mariana<br />&amp;<br />Roberto</div>
+              <div className="mt-6 text-[9px] font-black tracking-[0.18em] text-white/78">SÁBADO 24 DE AGOSTO, 2025</div>
+              <div className="mt-7 grid grid-cols-3 gap-2 text-white">
+                {[["120", "Días"], ["14", "Horas"], ["30", "Min"]].map(([value, label]) => (
+                  <span key={label} className="rounded-xl bg-white/12 px-2 py-2 backdrop-blur"><b className="block text-[16px]">{value}</b><small className="text-[8px] text-white/68">{label}</small></span>
+                ))}
+              </div>
+              <button className="mt-6 rounded-full bg-white/14 px-5 py-2 text-[10px] font-black text-white backdrop-blur">Confirmar asistencia</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SolutionsShowcase() {
+  return (
+    <section id="soluciones" className="section-transition relative overflow-hidden py-16 md:py-24">
+      <div className="absolute inset-x-0 top-0 -z-10 h-[620px] bg-[radial-gradient(circle_at_50%_0%,rgba(199,234,255,.42),transparent_36%),linear-gradient(180deg,rgba(238,248,255,.76),rgba(255,255,255,0))]" />
+      <div className="pumpea-container">
+        <div className="mx-auto max-w-[840px] text-center scroll-reveal">
+          <span className="section-kicker !px-5 !py-2 !text-[12px] !tracking-[0.20em]">SOLUCIONES</span>
+          <h2 className="mt-6 font-heading text-[clamp(40px,3vw,58px)] font-black tracking-[-0.055em] text-[#182a56]">
+            ¿Qué <span className="text-gradient-main">hacemos?</span>
+          </h2>
+          <p className="mt-5 text-[clamp(17px,1.06vw,20px)] font-medium text-slate-600">
+            Tecnología, estrategia y creatividad para <b className="font-black text-blue-600">hacer crecer tu negocio.</b>
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-7 md:grid-cols-2 xl:grid-cols-4 xl:gap-8">
+          {solutionCards.map((item, index) => <SoftSolutionCard key={item.title} item={item} index={index} />)}
+        </div>
+
+        <div className="section-transition ecosystem-banner-ref mt-12 grid min-h-[300px] items-center gap-8 overflow-hidden px-6 py-8 md:grid-cols-[0.9fr_1.45fr] md:px-10 lg:px-16">
+          <CubesIllustration />
+          <div className="relative z-10 scroll-reveal">
+            <h3 className="max-w-[680px] font-heading text-[clamp(30px,2.35vw,46px)] font-black leading-[1.08] tracking-[-0.04em] text-[#162a59]">
+              Todo lo que tu negocio necesita,
+              <span className="block text-gradient-main">en un solo lugar.</span>
+            </h3>
+            <p className="mt-6 max-w-[650px] text-[16px] font-medium leading-[1.75] text-slate-600">
+              Un ecosistema digital completo para atraer, convertir y fidelizar clientes.<br className="hidden md:block" />
+              Sin complicaciones. Sin rodeos. <b className="text-slate-800">Solo resultados.</b>
+            </p>
+          </div>
+        </div>
+
+        <WorkTimeline />
+        <ProductSpotlight />
+      </div>
+    </section>
+  );
+}
+
 
 export default function Home() {
   return (
@@ -335,90 +555,7 @@ export default function Home() {
 
       <AlliancePanel />
 
-      <section id="soluciones" className="pumpea-container py-16 md:py-24">
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="section-kicker">Soluciones diseñadas para convertir</span>
-          <h2 className="mt-5 font-heading text-4xl font-black tracking-tight text-[#101a39] md:text-5xl">
-            El patrón visual también es el patrón operativo: claro, conectado y medible.
-          </h2>
-          <p className="mt-5 text-lg font-medium leading-relaxed text-slate-600">
-            Cada solución combina estrategia, diseño, automatización y datos para que el sitio no solo se vea bien: debe explicar, vender, captar y operar mejor.
-          </p>
-        </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          <SolutionCard icon="fa-window-maximize" title="Webs que venden" desc="Landing pages, sitios corporativos y experiencias comerciales con arquitectura de conversión.">
-            <ul className="mt-6 space-y-2 text-sm font-bold text-slate-600">
-              <li><i className="fa fa-check mr-2 text-blue-600" />Diseño responsive premium</li>
-              <li><i className="fa fa-check mr-2 text-blue-600" />SEO técnico base</li>
-              <li><i className="fa fa-check mr-2 text-blue-600" />CTA y captura de leads</li>
-            </ul>
-          </SolutionCard>
-          <SolutionCard icon="fa-robot" title="Bots y automatización" desc="Flujos para WhatsApp, atención, seguimiento, recordatorios y tareas repetibles.">
-            <ul className="mt-6 space-y-2 text-sm font-bold text-slate-600">
-              <li><i className="fa fa-check mr-2 text-blue-600" />Respuestas 24/7</li>
-              <li><i className="fa fa-check mr-2 text-blue-600" />Calificación de prospectos</li>
-              <li><i className="fa fa-check mr-2 text-blue-600" />Procesos documentados</li>
-            </ul>
-          </SolutionCard>
-          <SolutionCard icon="fa-plug" title="Integraciones" desc="Conectamos formularios, CRMs, hojas de cálculo, pagos, correos y operación interna.">
-            <ul className="mt-6 space-y-2 text-sm font-bold text-slate-600">
-              <li><i className="fa fa-check mr-2 text-blue-600" />Menos captura manual</li>
-              <li><i className="fa fa-check mr-2 text-blue-600" />Datos centralizados</li>
-              <li><i className="fa fa-check mr-2 text-blue-600" />Reportes claros</li>
-            </ul>
-          </SolutionCard>
-          <SolutionCard icon="fa-cubes" title="Productos digitales" desc="Sistemas a medida, portales, herramientas internas y experiencias para eventos.">
-            <ul className="mt-6 space-y-2 text-sm font-bold text-slate-600">
-              <li><i className="fa fa-check mr-2 text-blue-600" />MVP funcional</li>
-              <li><i className="fa fa-check mr-2 text-blue-600" />Escalabilidad progresiva</li>
-              <li><i className="fa fa-check mr-2 text-blue-600" />Capacitación de entrega</li>
-            </ul>
-          </SolutionCard>
-        </div>
-      </section>
-
-      <section className="relative overflow-hidden py-16 md:py-24">
-        <div className="pumpea-container grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="texture-panel min-h-[480px] p-8 text-white md:p-10">
-            <span className="rounded-full bg-white/16 px-4 py-2 text-sm font-black backdrop-blur">User journey</span>
-            <h2 className="mt-8 max-w-[560px] font-heading text-4xl font-black leading-tight md:text-5xl">
-              De una idea suelta a una experiencia digital completa.
-            </h2>
-            <p className="mt-6 max-w-[560px] text-lg font-semibold leading-relaxed text-white/84">
-              Pumpea traduce el alcance comercial en una ruta clara: atraer, explicar, capturar, automatizar y medir. El usuario siempre sabe dónde está, qué gana y qué sigue.
-            </p>
-            <div className="mt-10 grid gap-4 sm:grid-cols-2">
-              {process.map((item, index) => (
-                <div key={item} className="rounded-3xl border border-white/18 bg-white/12 p-5 backdrop-blur-xl">
-                  <span className="text-sm font-black text-cyan-100">0{index + 1}</span>
-                  <p className="mt-3 font-heading text-lg font-black leading-snug">{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="grid gap-5">
-            <div className="glass-card-strong p-7 md:p-9">
-              <span className="section-kicker">Método Pumpea</span>
-              <h3 className="mt-5 font-heading text-3xl font-black text-[#101a39]">Diseñamos para que tu operación se vea y funcione mejor.</h3>
-              <p className="mt-4 text-lg font-medium leading-relaxed text-slate-600">
-                La estética del home se replica en todo el sitio con tarjetas de valor, jerarquía clara, microinteracciones, textura tecnológica y CTAs recurrentes. Eso mantiene consistencia y reduce fricción.
-              </p>
-            </div>
-            <div className="grid gap-5 sm:grid-cols-2">
-              <div className="glass-card p-6">
-                <span className="icon-bubble mb-5"><i className="fa fa-bullseye" /></span>
-                <h4 className="font-heading text-xl font-black text-[#101a39]">Conversión</h4>
-                <p className="mt-2 font-medium leading-relaxed text-slate-600">Cada sección sostiene una acción siguiente: agenda, cotiza, explora o contacta.</p>
-              </div>
-              <div className="glass-card p-6">
-                <span className="icon-bubble mb-5"><i className="fa fa-layer-group" /></span>
-                <h4 className="font-heading text-xl font-black text-[#101a39]">Escala visual</h4>
-                <p className="mt-2 font-medium leading-relaxed text-slate-600">El sistema se aplica a servicios, precios, casos, contacto y eventos sin perder identidad.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <SolutionsShowcase />
 
       <section className="pumpea-container pb-24 pt-10">
         <div className="glass-card-strong grid items-center gap-8 p-7 md:grid-cols-[1fr_auto] md:p-10">

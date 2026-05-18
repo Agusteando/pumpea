@@ -1,8 +1,8 @@
-fix: tighten hero mockup proportions and rebuild 3D logo silhouette
+feat: refine solutions section and add interactive 3D logo motion
 
-- Reworked the homepage hero visual cluster for cleaner desktop scaling, closer Figma spacing, controlled text wrapping, and stronger alignment at wide layouts.
-- Rebuilt the phone mockup containment using measured frame coordinates so the screen content is clipped inside the transparent mobile frame instead of leaking through the sides.
-- Tuned the browser mockup, stat cards, automation card, phone placement, and service cards as a single proportional composition rather than independent oversized elements.
-- Rebuilt the Three.js logo model to follow the Pumpea mark reference more closely: circular ring, side caps, upward arrow, two vertical inner eyes, soft material, shadows, and calm motion.
-- Removed React Three Fiber/Drei usage from the source path and kept the implementation on direct Three.js to avoid the ReactCurrentOwner/runtime fiber error.
-- Left package-lock.json out of the codebase package.
+- Added mouse-hover interaction to the direct Three.js Pumpea logo scene with calm pointer-follow rotation, soft lift, light response, and an elegant hover spin.
+- Rebuilt the next home section to closely match the provided reference: centered Soluciones header, four pastel service cards, ecosystem banner, process timeline, and Click&Celebrate product spotlight.
+- Added production-oriented scroll reveal transitions for sections and staggered content, using IntersectionObserver with route-change support and reduced-motion fallbacks.
+- Improved section spacing, scaling, card rhythm, icon treatments, CTA placement, and responsive structure for a stronger commercial landing-page feel.
+- Removed stale React Three Fiber scene references and kept the implementation on direct Three.js only.
+- Excluded package-lock.json from the deliverable.

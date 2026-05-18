@@ -223,6 +223,39 @@ export default function PumpeaLogoCanvas() {
     const clock = new THREE.Clock();
     let frameId = 0;
 
+    const interaction = {
+      x: 0,
+      y: 0,
+      targetX: 0,
+      targetY: 0,
+      hover: 0,
+      targetHover: 0,
+      spin: 0,
+      spinVelocity: 0,
+    };
+
+    const handlePointerMove = (event) => {
+      const rect = host.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      interaction.targetX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+      interaction.targetY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+    };
+
+    const handlePointerEnter = () => {
+      interaction.targetHover = 1;
+      interaction.spinVelocity += 0.018;
+    };
+
+    const handlePointerLeave = () => {
+      interaction.targetHover = 0;
+      interaction.targetX = 0;
+      interaction.targetY = 0;
+    };
+
+    host.addEventListener("pointermove", handlePointerMove);
+    host.addEventListener("pointerenter", handlePointerEnter);
+    host.addEventListener("pointerleave", handlePointerLeave);
+
     const resize = () => {
       const rect = host.getBoundingClientRect();
       const width = Math.max(1, Math.floor(rect.width));
@@ -239,9 +272,18 @@ export default function PumpeaLogoCanvas() {
 
     const render = () => {
       const elapsed = clock.getElapsedTime();
-      logo.rotation.y = Math.sin(elapsed * 0.32) * 0.14;
-      logo.rotation.x = Math.cos(elapsed * 0.24) * 0.035;
-      logo.position.y = Math.sin(elapsed * 0.56) * 0.05 + 0.04;
+      interaction.x = THREE.MathUtils.lerp(interaction.x, interaction.targetX, 0.075);
+      interaction.y = THREE.MathUtils.lerp(interaction.y, interaction.targetY, 0.075);
+      interaction.hover = THREE.MathUtils.lerp(interaction.hover, interaction.targetHover, 0.08);
+      interaction.spinVelocity *= 0.952;
+      interaction.spin += interaction.hover * 0.012 + interaction.spinVelocity;
+
+      logo.rotation.y = Math.sin(elapsed * 0.32) * 0.14 + interaction.x * 0.18 + interaction.spin;
+      logo.rotation.x = Math.cos(elapsed * 0.24) * 0.035 - interaction.y * 0.1;
+      logo.position.y = Math.sin(elapsed * 0.56) * 0.05 + 0.04 + interaction.hover * 0.035;
+      logo.scale.setScalar(0.88 + interaction.hover * 0.035);
+      fill.intensity = 1.7 + interaction.hover * 0.48;
+      rim.intensity = 1.15 + interaction.hover * 0.3;
 
       ripples.forEach((item, index) => {
         const pulse = 1 + Math.sin(elapsed * 0.62 + index * 0.8) * 0.017;
@@ -257,6 +299,9 @@ export default function PumpeaLogoCanvas() {
 
     return () => {
       window.cancelAnimationFrame(frameId);
+      host.removeEventListener("pointermove", handlePointerMove);
+      host.removeEventListener("pointerenter", handlePointerEnter);
+      host.removeEventListener("pointerleave", handlePointerLeave);
       observer.disconnect();
       disposeScene(scene);
       renderer.dispose();
@@ -265,5 +310,5 @@ export default function PumpeaLogoCanvas() {
     };
   }, []);
 
-  return <div ref={hostRef} className="h-full w-full" aria-label="Modelo 3D animado inspirado en el logo de Pumpea" role="img" />;
+  return <div ref={hostRef} className="h-full w-full cursor-grab active:cursor-grabbing" aria-label="Modelo 3D animado inspirado en el logo de Pumpea" role="img" />;
 }
