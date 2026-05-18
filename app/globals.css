@@ -399,7 +399,7 @@ body {
   position: relative;
   z-index: 2;
   width: 100%;
-  min-height: 238px;
+  min-height: 274px;
   height: 100%;
   cursor: grab;
   touch-action: pan-y;
@@ -546,7 +546,7 @@ body {
 @media (max-width: 1024px) {
   .workflow-track-ref::before { display: none; }
   .service-card-ref { min-height: 360px; }
-  .ecosystem-cubes-canvas { min-height: 210px; }
+  .ecosystem-cubes-canvas { min-height: 230px; }
 }
 
 @media (max-width: 640px) {

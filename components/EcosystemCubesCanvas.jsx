@@ -35,46 +35,43 @@ function roundedRectShape(width, height, radius) {
   return shape;
 }
 
-function roundedBoxGeometry(width, height, depth, radius = 0.12) {
+function roundedBoxGeometry(width, height, depth, radius = 0.1) {
   const geometry = new THREE.ExtrudeGeometry(roundedRectShape(width, height, radius), {
     depth,
     bevelEnabled: true,
-    bevelSize: radius * 0.22,
+    bevelSize: radius * 0.18,
     bevelThickness: radius * 0.22,
-    bevelSegments: 8,
-    curveSegments: 14,
+    bevelSegments: 10,
+    curveSegments: 16,
   });
   geometry.center();
   geometry.computeVertexNormals();
   return geometry;
 }
 
-function makePrism({ width, height, depth, radius, material, position, name }) {
+function createBlock({ width, height, depth, radius = 0.12, position, material, name }) {
   const mesh = new THREE.Mesh(roundedBoxGeometry(width, height, depth, radius), material);
-  mesh.position.set(position[0], position[1], position[2]);
+  mesh.position.set(...position);
   mesh.castShadow = true;
   mesh.receiveShadow = true;
-  mesh.userData.homeY = position[1];
-  mesh.userData.name = name;
+  mesh.userData = { home: mesh.position.clone(), name };
   return mesh;
 }
 
-function makeEdgeOverlay(mesh, color = 0xdcefff, opacity = 0.42) {
+function addEdges(parent, mesh, opacity = 0.34) {
   const edges = new THREE.LineSegments(
-    new THREE.EdgesGeometry(mesh.geometry, 32),
-    new THREE.LineBasicMaterial({ color, transparent: true, opacity, depthWrite: false })
+    new THREE.EdgesGeometry(mesh.geometry, 22),
+    new THREE.LineBasicMaterial({ color: 0xd6ecff, transparent: true, opacity, depthWrite: false })
   );
   edges.position.copy(mesh.position);
   edges.rotation.copy(mesh.rotation);
   edges.scale.copy(mesh.scale);
+  parent.add(edges);
   return edges;
 }
 
-function makeLabelPlate(width, depth, material) {
-  const plate = new THREE.Mesh(roundedBoxGeometry(width, 0.08, depth, 0.08), material);
-  plate.castShadow = true;
-  plate.receiveShadow = true;
-  return plate;
+function makeVerticalLine(points, material) {
+  return new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), material);
 }
 
 export default function EcosystemCubesCanvas() {
@@ -85,19 +82,15 @@ export default function EcosystemCubesCanvas() {
     if (!host) return undefined;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-3.4, 3.4, 2.35, -2.35, 0.1, 100);
-    camera.position.set(4.4, 3.4, 5.2);
-    camera.lookAt(0, 0.55, 0);
+    const camera = new THREE.OrthographicCamera(-3, 3, 2.25, -2.25, 0.1, 80);
+    camera.position.set(4.25, 3.18, 5.05);
+    camera.lookAt(-0.08, 0.58, 0.02);
 
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      powerPreference: "high-performance",
-    });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.14;
+    renderer.toneMappingExposure = 1.23;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.domElement.style.display = "block";
@@ -106,161 +99,169 @@ export default function EcosystemCubesCanvas() {
     host.appendChild(renderer.domElement);
 
     const root = new THREE.Group();
-    root.position.set(-0.22, -0.16, 0);
+    root.position.set(-0.22, -0.38, 0);
     root.rotation.y = -0.08;
+    root.rotation.x = 0.01;
     scene.add(root);
 
-    const porcelain = new THREE.MeshPhysicalMaterial({
-      color: 0xf8fcff,
-      roughness: 0.28,
-      metalness: 0,
+    const matWhite = new THREE.MeshPhysicalMaterial({
+      color: 0xf9fcff,
+      roughness: 0.34,
+      metalness: 0.01,
       transparent: true,
-      opacity: 0.94,
-      transmission: 0.18,
-      thickness: 0.82,
-      ior: 1.2,
+      opacity: 0.95,
+      transmission: 0.14,
+      thickness: 0.55,
+      ior: 1.18,
       clearcoat: 1,
-      clearcoatRoughness: 0.14,
-      attenuationColor: new THREE.Color(0xe4f3ff),
-      attenuationDistance: 2.4,
+      clearcoatRoughness: 0.13,
+      attenuationColor: new THREE.Color(0xe7f4ff),
+      attenuationDistance: 2.2,
     });
 
-    const blueIce = new THREE.MeshPhysicalMaterial({
-      color: 0x8fc7ff,
-      roughness: 0.2,
+    const matIce = new THREE.MeshPhysicalMaterial({
+      color: 0x9ed6ff,
+      roughness: 0.22,
       metalness: 0.02,
       transparent: true,
-      opacity: 0.58,
+      opacity: 0.66,
       transmission: 0.36,
-      thickness: 0.72,
+      thickness: 0.48,
+      ior: 1.2,
       clearcoat: 1,
-      clearcoatRoughness: 0.1,
+      clearcoatRoughness: 0.09,
     });
 
-    const whiteGlow = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
+    const matSoftBlue = new THREE.MeshPhysicalMaterial({
+      color: 0xd8efff,
+      roughness: 0.26,
+      metalness: 0,
       transparent: true,
-      opacity: 0.42,
-      depthWrite: false,
+      opacity: 0.72,
+      transmission: 0.18,
+      thickness: 0.4,
+      clearcoat: 1,
+      clearcoatRoughness: 0.12,
     });
 
-    const blockSpecs = [
-      { name: "left", width: 0.72, height: 1.72, depth: 0.88, radius: 0.13, position: [-1.05, 0.86, -0.1], material: porcelain },
-      { name: "main", width: 1.18, height: 1.16, depth: 1.16, radius: 0.15, position: [0, 0.58, 0], material: porcelain },
-      { name: "right", width: 0.68, height: 0.82, depth: 0.7, radius: 0.12, position: [0.94, 0.41, 0.26], material: porcelain },
-      { name: "tiny", width: 0.44, height: 0.52, depth: 0.46, radius: 0.09, position: [1.58, 0.26, 0.58], material: porcelain },
+    const blocks = [];
+    const edgeGroup = new THREE.Group();
+    root.add(edgeGroup);
+
+    const specs = [
+      { name: "left-tower", width: 0.74, height: 1.72, depth: 0.86, radius: 0.12, position: [-1.22, 0.86, -0.1], material: matWhite },
+      { name: "main-base", width: 1.18, height: 1.18, depth: 1.18, radius: 0.15, position: [-0.1, 0.59, 0.02], material: matWhite },
+      { name: "right-box", width: 0.74, height: 0.88, depth: 0.74, radius: 0.12, position: [0.96, 0.44, 0.34], material: matWhite },
+      { name: "front-mini", width: 0.45, height: 0.53, depth: 0.48, radius: 0.09, position: [1.58, 0.27, 0.62], material: matWhite },
     ];
 
-    const blocks = blockSpecs.map((spec) => {
-      const mesh = makePrism(spec);
-      root.add(mesh);
-      root.add(makeEdgeOverlay(mesh));
-      return mesh;
+    specs.forEach((spec) => {
+      const block = createBlock(spec);
+      blocks.push(block);
+      root.add(block);
+      addEdges(edgeGroup, block, 0.3);
     });
 
-    const topGroup = new THREE.Group();
-    topGroup.position.set(0, 1.34, 0);
-    root.add(topGroup);
+    const topStack = new THREE.Group();
+    topStack.position.set(-0.12, 1.31, 0.02);
+    topStack.userData.home = topStack.position.clone();
+    root.add(topStack);
 
-    const topBase = makeLabelPlate(0.92, 0.92, porcelain);
-    topBase.position.set(0, 0, 0);
-    topGroup.add(topBase);
-    topGroup.add(makeEdgeOverlay(topBase, 0xffffff, 0.52));
+    const topBase = createBlock({ width: 0.96, height: 0.16, depth: 0.96, radius: 0.09, position: [0, 0, 0], material: matWhite, name: "top-base" });
+    topStack.add(topBase);
+    addEdges(topStack, topBase, 0.46);
 
-    const topGlow = makeLabelPlate(0.62, 0.62, blueIce);
-    topGlow.position.set(0, 0.085, 0);
-    topGlow.scale.set(0.96, 1, 0.96);
-    topGroup.add(topGlow);
+    const topGlass = createBlock({ width: 0.67, height: 0.18, depth: 0.67, radius: 0.08, position: [0, 0.15, 0], material: matIce, name: "top-glass" });
+    topStack.add(topGlass);
+    addEdges(topStack, topGlass, 0.5);
 
-    const centerGem = new THREE.Mesh(roundedBoxGeometry(0.34, 0.16, 0.34, 0.055), blueIce);
-    centerGem.position.set(0, 0.205, 0);
-    centerGem.castShadow = true;
-    topGroup.add(centerGem);
+    const innerPlate = createBlock({ width: 0.42, height: 0.1, depth: 0.42, radius: 0.06, position: [0, 0.3, 0], material: matSoftBlue, name: "inner-plate" });
+    topStack.add(innerPlate);
 
-    const halo = new THREE.Mesh(
-      new THREE.CircleGeometry(2.2, 96),
-      new THREE.MeshBasicMaterial({ color: 0x91d7ff, transparent: true, opacity: 0.12, depthWrite: false, side: THREE.DoubleSide })
+    const leftCap = createBlock({ width: 0.5, height: 0.14, depth: 0.54, radius: 0.07, position: [-1.22, 1.78, -0.1], material: matSoftBlue, name: "left-cap" });
+    root.add(leftCap);
+    blocks.push(leftCap);
+    addEdges(edgeGroup, leftCap, 0.44);
+
+    const rightCap = createBlock({ width: 0.45, height: 0.12, depth: 0.45, radius: 0.06, position: [0.96, 0.91, 0.34], material: matSoftBlue, name: "right-cap" });
+    root.add(rightCap);
+    blocks.push(rightCap);
+    addEdges(edgeGroup, rightCap, 0.42);
+
+    const baseHalo = new THREE.Mesh(
+      new THREE.CircleGeometry(2.12, 120),
+      new THREE.MeshBasicMaterial({ color: 0x85ceff, transparent: true, opacity: 0.12, depthWrite: false, side: THREE.DoubleSide })
     );
-    halo.position.set(0.1, -0.02, 0.04);
-    halo.rotation.x = -Math.PI / 2;
-    root.add(halo);
+    baseHalo.position.set(0.02, -0.02, 0.08);
+    baseHalo.rotation.x = -Math.PI / 2;
+    root.add(baseHalo);
 
-    const groundShadow = new THREE.Mesh(
-      new THREE.CircleGeometry(1.9, 96),
-      new THREE.ShadowMaterial({ color: 0x3d8dff, transparent: true, opacity: 0.18 })
+    const shadow = new THREE.Mesh(
+      new THREE.CircleGeometry(1.85, 120),
+      new THREE.ShadowMaterial({ color: 0x2c7cff, transparent: true, opacity: 0.2 })
     );
-    groundShadow.position.set(0.18, -0.035, 0.1);
-    groundShadow.rotation.x = -Math.PI / 2;
-    groundShadow.receiveShadow = true;
-    root.add(groundShadow);
+    shadow.position.set(0.04, -0.025, 0.1);
+    shadow.rotation.x = -Math.PI / 2;
+    shadow.receiveShadow = true;
+    root.add(shadow);
 
-    const network = new THREE.Group();
-    network.position.set(0, 0.018, 0);
-    root.add(network);
-
-    const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x8ecfff, transparent: true, opacity: 0.74, depthWrite: false });
-    const lineMaterial = new THREE.LineBasicMaterial({ color: 0x8ecfff, transparent: true, opacity: 0.34, depthWrite: false });
-    const nodePositions = [
-      [-1.86, 0, -0.78],
-      [-1.28, 0, 0.92],
-      [-0.16, 0, 1.18],
-      [0.82, 0, 1.04],
-      [1.76, 0, -0.06],
-      [1.28, 0, -0.86],
-      [-0.68, 0, -1.12],
+    const floorLines = new THREE.Group();
+    floorLines.position.set(0, 0.005, 0);
+    root.add(floorLines);
+    const lineMaterial = new THREE.LineBasicMaterial({ color: 0x8ed3ff, transparent: true, opacity: 0.25, depthWrite: false });
+    const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0xbce8ff, transparent: true, opacity: 0.82, depthWrite: false });
+    const nodeGeo = new THREE.SphereGeometry(0.032, 20, 20);
+    const nodes = [
+      [-1.9, 0, -0.7], [-1.46, 0, 0.78], [-0.55, 0, 1.13],
+      [0.15, 0, 1.0], [0.98, 0, 0.92], [1.64, 0, 0.2],
+      [1.26, 0, -0.78], [-0.58, 0, -1.02],
     ];
-    const nodeGeo = new THREE.SphereGeometry(0.035, 18, 18);
-    nodePositions.forEach((point) => {
+    nodes.forEach(([x, y, z]) => {
       const node = new THREE.Mesh(nodeGeo, nodeMaterial);
-      node.position.set(point[0], point[1], point[2]);
-      network.add(node);
+      node.position.set(x, y, z);
+      floorLines.add(node);
     });
-    const linePoints = [0, 6, 6, 5, 5, 4, 1, 2, 2, 3, 3, 4, 6, 2].flatMap((index) => {
-      const point = nodePositions[index];
-      return [new THREE.Vector3(point[0], point[1], point[2])];
-    });
-    const lines = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(linePoints), lineMaterial);
-    network.add(lines);
+    const segmentIndexes = [0, 7, 7, 6, 6, 5, 1, 2, 2, 3, 3, 4, 4, 5, 7, 2, 3, 6];
+    const segmentPoints = segmentIndexes.map((index) => new THREE.Vector3(...nodes[index]));
+    floorLines.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(segmentPoints), lineMaterial));
 
-    const sparkleMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.7, depthWrite: false });
-    const sparkles = [[-1.66, 1.82, -0.28], [0.62, 1.82, 0.48], [1.5, 0.94, 0.92]].map(([x, y, z], index) => {
-      const sparkle = new THREE.Mesh(new THREE.OctahedronGeometry(0.045 + index * 0.005, 0), sparkleMaterial.clone());
+    const riserMaterial = new THREE.LineBasicMaterial({ color: 0xcdeeff, transparent: true, opacity: 0.2, depthWrite: false });
+    [[-1.58, 0.02, -0.9, 0.9], [1.64, 0.02, 0.65, 0.62], [0.52, 0.02, -1.03, 0.72]].forEach(([x, y, z, h]) => {
+      floorLines.add(makeVerticalLine([new THREE.Vector3(x, y, z), new THREE.Vector3(x, h, z)], riserMaterial));
+    });
+
+    const sparkleMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.72, depthWrite: false });
+    const sparkles = [[-1.82, 1.98, -0.38], [0.66, 1.94, 0.58], [1.58, 0.98, 0.94], [-0.35, 2.05, -0.92]].map(([x, y, z], i) => {
+      const sparkle = new THREE.Mesh(new THREE.OctahedronGeometry(0.042 + i * 0.004, 0), sparkleMat.clone());
       sparkle.position.set(x, y, z);
       root.add(sparkle);
       return sparkle;
     });
 
-    scene.add(new THREE.AmbientLight(0xffffff, 1.42));
-    scene.add(new THREE.HemisphereLight(0xffffff, 0xddefff, 1.25));
+    scene.add(new THREE.AmbientLight(0xffffff, 1.35));
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xdcefff, 1.42));
 
-    const key = new THREE.DirectionalLight(0xffffff, 2.1);
-    key.position.set(4.2, 6.4, 4.8);
+    const key = new THREE.DirectionalLight(0xffffff, 2.45);
+    key.position.set(4.4, 6.2, 4.6);
     key.castShadow = true;
-    key.shadow.mapSize.set(1024, 1024);
+    key.shadow.mapSize.set(1536, 1536);
     key.shadow.camera.near = 0.5;
-    key.shadow.camera.far = 15;
-    key.shadow.camera.left = -5;
-    key.shadow.camera.right = 5;
-    key.shadow.camera.top = 5;
-    key.shadow.camera.bottom = -5;
+    key.shadow.camera.far = 14;
+    key.shadow.camera.left = -4.8;
+    key.shadow.camera.right = 4.8;
+    key.shadow.camera.top = 4.8;
+    key.shadow.camera.bottom = -4.8;
     scene.add(key);
 
-    const blueFill = new THREE.PointLight(0x79c8ff, 2.4, 7);
-    blueFill.position.set(-2.6, 1.2, 2.6);
-    scene.add(blueFill);
+    const fill = new THREE.PointLight(0x8bd4ff, 2.7, 7);
+    fill.position.set(-2.6, 1.3, 2.4);
+    scene.add(fill);
 
     const rim = new THREE.PointLight(0xffffff, 1.1, 6);
-    rim.position.set(2.3, 3.1, -2.6);
+    rim.position.set(2.4, 3.2, -2.5);
     scene.add(rim);
 
-    const interaction = {
-      x: 0,
-      y: 0,
-      targetX: 0,
-      targetY: 0,
-      hover: 0,
-      targetHover: 0,
-    };
+    const interaction = { x: 0, y: 0, targetX: 0, targetY: 0, hover: 0, targetHover: 0 };
 
     const handlePointerMove = (event) => {
       const rect = host.getBoundingClientRect();
@@ -268,11 +269,7 @@ export default function EcosystemCubesCanvas() {
       interaction.targetX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
       interaction.targetY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
     };
-
-    const handlePointerEnter = () => {
-      interaction.targetHover = 1;
-    };
-
+    const handlePointerEnter = () => { interaction.targetHover = 1; };
     const handlePointerLeave = () => {
       interaction.targetHover = 0;
       interaction.targetX = 0;
@@ -288,14 +285,14 @@ export default function EcosystemCubesCanvas() {
       const width = Math.max(1, Math.floor(rect.width));
       const height = Math.max(1, Math.floor(rect.height));
       const aspect = width / height;
-      const viewHeight = 4.52;
+      const viewHeight = 4.15;
       const viewWidth = viewHeight * aspect;
       camera.left = -viewWidth / 2;
       camera.right = viewWidth / 2;
       camera.top = viewHeight / 2;
       camera.bottom = -viewHeight / 2;
       camera.updateProjectionMatrix();
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.7));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
       renderer.setSize(width, height, false);
     };
 
@@ -304,36 +301,34 @@ export default function EcosystemCubesCanvas() {
     resize();
 
     const clock = new THREE.Clock();
-    let frameId = 0;
     const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+    let frameId = 0;
 
     const render = () => {
       const elapsed = clock.getElapsedTime();
-      interaction.x = THREE.MathUtils.lerp(interaction.x, interaction.targetX, 0.07);
-      interaction.y = THREE.MathUtils.lerp(interaction.y, interaction.targetY, 0.07);
+      const t = reducedMotion ? 0 : elapsed;
+      interaction.x = THREE.MathUtils.lerp(interaction.x, interaction.targetX, 0.075);
+      interaction.y = THREE.MathUtils.lerp(interaction.y, interaction.targetY, 0.075);
       interaction.hover = THREE.MathUtils.lerp(interaction.hover, interaction.targetHover, 0.08);
 
-      const slow = reducedMotion ? 0 : elapsed;
-      root.rotation.y = -0.08 + Math.sin(slow * 0.36) * 0.035 + interaction.x * 0.055;
-      root.rotation.x = -interaction.y * 0.025;
-      root.position.y = -0.16 + Math.sin(slow * 0.62) * 0.025 + interaction.hover * 0.035;
+      root.rotation.y = -0.08 + Math.sin(t * 0.32) * 0.026 + interaction.x * 0.05;
+      root.rotation.x = 0.01 - interaction.y * 0.025;
+      root.position.y = -0.38 + Math.sin(t * 0.56) * 0.024 + interaction.hover * 0.035;
       root.scale.setScalar(1 + interaction.hover * 0.018);
-      topGroup.position.y = 1.34 + Math.sin(slow * 0.82) * 0.025 + interaction.hover * 0.025;
-      topGroup.rotation.y = Math.sin(slow * 0.52) * 0.035;
-      centerGem.rotation.y = slow * 0.18;
-      topGlow.material.opacity = 0.5 + Math.sin(slow * 1.15) * 0.07 + interaction.hover * 0.08;
-      halo.material.opacity = 0.12 + Math.sin(slow * 0.7) * 0.025 + interaction.hover * 0.025;
-      blueFill.intensity = 2.4 + interaction.hover * 0.7;
+      topStack.position.y = topStack.userData.home.y + Math.sin(t * 0.72) * 0.028 + interaction.hover * 0.03;
+      topStack.rotation.y = Math.sin(t * 0.5) * 0.04 + interaction.x * 0.025;
+      topGlass.material.opacity = 0.64 + Math.sin(t * 1.05) * 0.05 + interaction.hover * 0.06;
+      baseHalo.material.opacity = 0.11 + Math.sin(t * 0.6) * 0.018 + interaction.hover * 0.025;
+      fill.intensity = 2.7 + interaction.hover * 0.65;
 
       blocks.forEach((block, index) => {
-        block.position.y = block.userData.homeY + Math.sin(slow * 0.48 + index * 0.7) * 0.012;
+        block.position.y = block.userData.home.y + Math.sin(t * 0.42 + index * 0.7) * 0.012;
       });
-
       sparkles.forEach((sparkle, index) => {
-        sparkle.rotation.x = slow * (0.35 + index * 0.08);
-        sparkle.rotation.y = slow * (0.45 + index * 0.06);
-        sparkle.material.opacity = 0.38 + Math.sin(slow * 1.2 + index) * 0.2;
-        sparkle.scale.setScalar(0.9 + Math.sin(slow * 1.1 + index) * 0.12);
+        sparkle.rotation.x = t * (0.35 + index * 0.04);
+        sparkle.rotation.y = t * (0.42 + index * 0.05);
+        sparkle.material.opacity = 0.44 + Math.sin(t * 1.08 + index) * 0.22;
+        sparkle.scale.setScalar(0.92 + Math.sin(t * 1.1 + index) * 0.14);
       });
 
       renderer.render(scene, camera);
@@ -355,5 +350,5 @@ export default function EcosystemCubesCanvas() {
     };
   }, []);
 
-  return <div ref={hostRef} className="ecosystem-cubes-canvas" aria-label="Gráfico 3D de cubos conectados para ecosistema digital" role="img" />;
+  return <div ref={hostRef} className="ecosystem-cubes-canvas" aria-label="Gráfico 3D de módulos conectados para ecosistema digital" role="img" />;
 }
