@@ -25,19 +25,19 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 px-4 pt-4 md:px-8">
-      <div className="glass-nav mx-auto flex h-[82px] w-full max-w-[1580px] items-center justify-between rounded-2xl px-5 md:px-9">
+    <header className="sticky top-0 z-50 px-3 pt-3 sm:px-4 md:px-8 md:pt-4">
+      <div className="glass-nav mx-auto flex h-[70px] w-full max-w-[1580px] items-center justify-between rounded-[22px] px-4 sm:h-[76px] md:h-[82px] md:rounded-2xl md:px-9">
         <Link href="/" className="flex items-center" onClick={() => setMenuOpen(false)} aria-label="Ir al inicio de Pumpea">
           <img
             src="/logo-h.png"
-            className="h-[46px] w-auto object-contain md:h-[52px]"
+            className="h-[39px] w-auto object-contain sm:h-[44px] md:h-[52px]"
             alt="Pumpea Tecnología"
             style={{ filter: "drop-shadow(0 7px 18px rgba(19, 88, 243, .10))" }}
           />
         </Link>
 
         <button
-          className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-blue-100 bg-white/75 text-blue-700 shadow-sm md:hidden"
+          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[16px] border border-blue-100 bg-white/80 text-blue-700 shadow-sm lg:hidden"
           onClick={() => setMenuOpen((v) => !v)}
           aria-label="Abrir menú"
           type="button"
@@ -48,9 +48,9 @@ export default function Navbar() {
         <nav
           className={`${
             menuOpen
-              ? "absolute left-4 right-4 top-[104px] flex rounded-3xl border border-blue-100 bg-white/95 p-4 shadow-2xl backdrop-blur-xl"
+              ? "absolute left-3 right-3 top-[84px] flex max-h-[calc(100vh-104px)] overflow-y-auto rounded-[26px] border border-blue-100 bg-white/96 p-3 shadow-2xl backdrop-blur-xl sm:left-4 sm:right-4 sm:top-[92px]"
               : "hidden"
-          } flex-col items-stretch gap-2 font-heading text-[15px] font-bold md:static md:flex md:flex-row md:items-center md:gap-8 md:border-0 md:bg-transparent md:p-0 md:shadow-none`}
+          } flex-col items-stretch gap-2 font-heading text-[15px] font-bold lg:static lg:flex lg:flex-row lg:items-center lg:gap-5 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none xl:gap-8`}
         >
           {links.map((link) => {
             const active = link.match(pathname || "");
@@ -58,7 +58,7 @@ export default function Navbar() {
               <Link
                 key={link.href + link.label}
                 href={link.href}
-                className={`relative flex items-center justify-between rounded-2xl px-3 py-3 transition md:rounded-none md:px-0 md:py-1 ${
+                className={`relative flex items-center justify-between rounded-[18px] px-4 py-3.5 transition lg:rounded-none lg:px-0 lg:py-1 ${
                   active ? "nav-active-line text-blue-700" : "text-slate-700 hover:text-blue-700"
                 }`}
                 onClick={() => setMenuOpen(false)}
@@ -68,11 +68,19 @@ export default function Navbar() {
               </Link>
             );
           })}
+          <button
+            onClick={handleAgenda}
+            className="mt-1 inline-flex min-h-[54px] w-full items-center justify-center gap-3 rounded-[20px] bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 px-5 font-heading text-[15px] font-extrabold text-white shadow-[0_16px_34px_rgba(19,88,243,.24)] lg:hidden"
+            type="button"
+          >
+            <i className="fa fa-calendar-days" />
+            Agenda tu cita
+          </button>
         </nav>
 
         <button
           onClick={handleAgenda}
-          className="hidden items-center gap-3 rounded-[28px] bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 px-7 py-4 font-heading text-[17px] font-extrabold text-white shadow-[0_18px_38px_rgba(19,88,243,.30)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_48px_rgba(19,88,243,.36)] md:inline-flex"
+          className="hidden items-center gap-3 rounded-[28px] bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 px-5 py-4 font-heading text-[16px] font-extrabold text-white shadow-[0_18px_38px_rgba(19,88,243,.30)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_48px_rgba(19,88,243,.36)] lg:inline-flex xl:px-7 xl:text-[17px]"
           type="button"
         >
           <i className="fa fa-calendar-days" />

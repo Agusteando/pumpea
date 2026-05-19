@@ -23,15 +23,15 @@ export default function CalendlyModalProvider({ children }) {
 
 function CalendlyModal({ onClose }) {
   return (
-    <div className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/46 px-4 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/46 px-3 py-4 backdrop-blur-sm sm:px-4">
       <button className="absolute inset-0 cursor-default" onClick={onClose} aria-label="Cerrar agenda" type="button" />
-      <div className="glass-card-strong relative z-10 w-full max-w-3xl overflow-hidden p-0">
-        <div className="flex items-center justify-between border-b border-blue-100 bg-white/74 px-6 py-4">
-          <span className="font-heading text-lg font-black text-[#102453]">
+      <div className="glass-card-strong relative z-10 max-h-[92vh] w-full max-w-3xl overflow-hidden p-0">
+        <div className="flex items-center justify-between gap-4 border-b border-blue-100 bg-white/74 px-4 py-3 sm:px-6 sm:py-4">
+          <span className="font-heading text-base font-black leading-tight text-[#102453] sm:text-lg">
             Agenda tu cita con PUMPEA
           </span>
           <button
-            className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-blue-100 bg-white text-2xl text-blue-700 shadow-sm hover:bg-blue-50"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-blue-100 bg-white text-2xl text-blue-700 shadow-sm hover:bg-blue-50"
             aria-label="Cerrar"
             onClick={onClose}
             type="button"
@@ -41,7 +41,7 @@ function CalendlyModal({ onClose }) {
         </div>
         <iframe
           src="https://calendly.com/desarrollo-tecnologico-casitaiedis/programa-tu-sesion-con-pumpea?hide_event_type_details=1&primary_color=1358f3"
-          className="h-[72vh] min-h-[540px] w-full bg-white"
+          className="h-[74vh] min-h-[420px] w-full bg-white sm:min-h-[540px]"
           style={{ border: "none" }}
           allow="camera; microphone; autoplay; encrypted-media"
           title="Reserva de cita con PUMPEA"

@@ -28,9 +28,9 @@ export default function AgendaPage() {
       </PageHero>
 
       <section className="pumpea-container pb-20">
-        <div className="grid gap-5 md:grid-cols-5">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {steps.map((step, index) => (
-            <article key={step.title} className="glass-card reveal-card relative p-6 text-center">
+            <article key={step.title} className="glass-card reveal-card relative p-5 text-center sm:p-6">
               <span className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-700 to-cyan-400 text-2xl text-white shadow-xl shadow-blue-500/20">
                 <i className={`fa ${step.icon}`} />
               </span>
@@ -43,15 +43,15 @@ export default function AgendaPage() {
       </section>
 
       <section className="pumpea-container pb-24">
-        <div className="texture-panel grid items-center gap-8 p-7 text-white md:grid-cols-[1fr_auto] md:p-10">
+        <div className="texture-panel grid items-center gap-6 p-5 text-white sm:p-7 md:grid-cols-[1fr_auto] md:gap-8 md:p-10">
           <div>
             <span className="rounded-full bg-white/16 px-4 py-2 text-sm font-black backdrop-blur">Calendly integrado</span>
-            <h2 className="mt-6 font-heading text-3xl font-black md:text-5xl">Reserva el horario que mejor te funcione.</h2>
-            <p className="mt-5 max-w-3xl text-lg font-semibold leading-relaxed text-white/82">
+            <h2 className="mt-6 font-heading text-[29px] font-black leading-tight sm:text-3xl md:text-5xl">Reserva el horario que mejor te funcione.</h2>
+            <p className="mt-5 max-w-3xl text-base font-semibold leading-relaxed text-white/82 sm:text-lg">
               La cita sirve para definir objetivo, urgencia, recursos disponibles y la primera versión del alcance. Después recibirás una propuesta accionable.
             </p>
           </div>
-          <div className="flex min-w-[270px] flex-col gap-3">
+          <div className="flex w-full flex-col gap-3 md:min-w-[270px]">
             <button type="button" onClick={handleAgendaClick} className="cta-button !bg-white !text-blue-700">
               <i className="fa fa-calendar" /> Abrir agenda
             </button>

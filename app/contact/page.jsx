@@ -103,25 +103,25 @@ export default function ContactPage() {
 
       <section className="pumpea-container pb-24">
         <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr]">
-          <aside className="glass-card-strong p-7 md:p-9">
+          <aside className="glass-card-strong p-5 sm:p-7 md:p-9">
             <span className="section-kicker">Atención directa</span>
-            <h2 className="mt-5 font-heading text-3xl font-black text-[#102453]">Respuesta cercana, diagnóstico sin costo.</h2>
-            <p className="mt-4 text-lg font-medium leading-relaxed text-slate-600">
+            <h2 className="mt-5 font-heading text-[29px] font-black leading-tight text-[#102453] sm:text-3xl">Respuesta cercana, diagnóstico sin costo.</h2>
+            <p className="mt-4 text-base font-medium leading-relaxed text-slate-600 sm:text-lg">
               Comparte el contexto de tu negocio y el tipo de solución que buscas. Si el alcance requiere llamada, la agendamos para definir prioridades.
             </p>
             <div className="mt-8 space-y-4">
-              <div className="float-card flex gap-4 p-5"><span className="icon-bubble !h-12 !w-12"><i className="fa fa-clock" /></span><p className="font-bold text-slate-600"><b className="block text-[#102453]">Respuesta en 24h</b>Primer contacto rápido para ubicar el proyecto.</p></div>
-              <div className="float-card flex gap-4 p-5"><span className="icon-bubble !h-12 !w-12"><i className="fa fa-shield-halved" /></span><p className="font-bold text-slate-600"><b className="block text-[#102453]">Confidencialidad</b>Cuidamos tu idea y tu información desde la primera conversación.</p></div>
-              <div className="float-card flex gap-4 p-5"><span className="icon-bubble !h-12 !w-12"><i className="fa fa-route" /></span><p className="font-bold text-slate-600"><b className="block text-[#102453]">Ruta de ejecución</b>Te proponemos un camino por fases, no una lista genérica.</p></div>
+              <div className="float-card flex flex-col gap-3 p-4 sm:flex-row sm:gap-4 sm:p-5"><span className="icon-bubble !h-12 !w-12"><i className="fa fa-clock" /></span><p className="font-bold text-slate-600"><b className="block text-[#102453]">Respuesta en 24h</b>Primer contacto rápido para ubicar el proyecto.</p></div>
+              <div className="float-card flex flex-col gap-3 p-4 sm:flex-row sm:gap-4 sm:p-5"><span className="icon-bubble !h-12 !w-12"><i className="fa fa-shield-halved" /></span><p className="font-bold text-slate-600"><b className="block text-[#102453]">Confidencialidad</b>Cuidamos tu idea y tu información desde la primera conversación.</p></div>
+              <div className="float-card flex flex-col gap-3 p-4 sm:flex-row sm:gap-4 sm:p-5"><span className="icon-bubble !h-12 !w-12"><i className="fa fa-route" /></span><p className="font-bold text-slate-600"><b className="block text-[#102453]">Ruta de ejecución</b>Te proponemos un camino por fases, no una lista genérica.</p></div>
             </div>
           </aside>
 
-          <div className="glass-card-strong p-7 md:p-9">
+          <div className="glass-card-strong p-5 sm:p-7 md:p-9">
             {submitted ? (
               <div className="flex min-h-[480px] flex-col items-center justify-center text-center">
                 <span className="icon-bubble mb-6 !h-16 !w-16"><i className="fa fa-check text-2xl" /></span>
-                <h2 className="font-heading text-3xl font-black text-[#102453]">Gracias por tu solicitud.</h2>
-                <p className="mt-4 max-w-lg text-lg font-medium leading-relaxed text-slate-600">
+                <h2 className="font-heading text-[29px] font-black leading-tight text-[#102453] sm:text-3xl">Gracias por tu solicitud.</h2>
+                <p className="mt-4 max-w-lg text-base font-medium leading-relaxed text-slate-600 sm:text-lg">
                   Te contactaremos pronto al correo <b>{submittedEmail}</b>. Mientras tanto, también puedes escribirnos por WhatsApp si necesitas acelerar el seguimiento.
                 </p>
                 <button type="button" className="cta-button mt-8" onClick={handleReset}>Enviar otra consulta</button>

@@ -17,9 +17,9 @@ export default function WorkAgendaPage() {
       </PageHero>
 
       <section className="pumpea-container pb-20">
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-5">
           {steps.map((step, index) => (
-            <article key={step.title} className="glass-card reveal-card p-6">
+            <article key={step.title} className="glass-card reveal-card p-5 sm:p-6">
               <span className="mb-5 flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-700 to-cyan-400 text-2xl text-white shadow-xl shadow-blue-500/20">
                 <i className={`fa ${step.icon}`} />
               </span>
@@ -32,12 +32,12 @@ export default function WorkAgendaPage() {
       </section>
 
       <section className="pumpea-container pb-24">
-        <div className="glass-card-strong grid items-center gap-8 p-7 md:grid-cols-[1fr_auto] md:p-10">
+        <div className="glass-card-strong grid items-center gap-6 p-5 sm:p-7 md:grid-cols-[1fr_auto] md:gap-8 md:p-10">
           <div>
             <span className="section-kicker">Siguiente paso</span>
-            <h2 className="mt-5 font-heading text-3xl font-black text-[#102453] md:text-4xl">Tu próxima gran idea necesita estructura, estrategia y un buen equipo detrás.</h2>
+            <h2 className="mt-5 font-heading text-[28px] font-black leading-tight text-[#102453] sm:text-3xl md:text-4xl">Tu próxima gran idea necesita estructura, estrategia y un buen equipo detrás.</h2>
           </div>
-          <Link href="/agenda" className="cta-button min-w-[260px]"><i className="fa fa-calendar" /> Agenda gratis</Link>
+          <Link href="/agenda" className="cta-button w-full md:min-w-[260px]"><i className="fa fa-calendar" /> Agenda gratis</Link>
         </div>
       </section>
     </div>

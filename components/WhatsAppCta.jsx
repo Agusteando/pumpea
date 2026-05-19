@@ -23,7 +23,7 @@ export default function WhatsAppCta({ text = "Cotiza por WhatsApp", className = 
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Cotiza por WhatsApp"
-      className={`fixed bottom-5 right-5 z-50 hidden items-center gap-3 rounded-[24px] border border-emerald-200/80 bg-gradient-to-r from-emerald-500 to-teal-400 px-5 py-4 font-heading text-base font-black text-white shadow-[0_20px_48px_rgba(16,185,129,.28)] transition hover:-translate-y-1 hover:shadow-[0_26px_60px_rgba(16,185,129,.34)] sm:flex ${className}`}
+      className={`fixed bottom-5 right-5 z-50 hidden items-center justify-center gap-3 rounded-[22px] border border-emerald-200/80 bg-gradient-to-r from-emerald-500 to-teal-400 font-heading text-base font-black text-white shadow-[0_20px_48px_rgba(16,185,129,.28)] transition hover:-translate-y-1 hover:shadow-[0_26px_60px_rgba(16,185,129,.34)] lg:flex lg:px-5 lg:py-4 ${className}`}
     >
       <span ref={pulseRef} className="absolute inset-0 rounded-[24px] pointer-events-none" />
       <i className="fab fa-whatsapp text-2xl" />

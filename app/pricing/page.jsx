@@ -52,12 +52,12 @@ export default function PricingPage() {
             const showAll = expanded[pkg.title];
             const perks = showAll ? pkg.perks : pkg.perks.slice(0, 4);
             return (
-              <article key={pkg.title} className={`glass-card reveal-card relative flex min-h-[520px] flex-col p-7 ${pkg.popular ? "ring-2 ring-blue-500/30" : ""}`}>
+              <article key={pkg.title} className={`glass-card reveal-card relative flex flex-col p-5 sm:p-7 md:min-h-[520px] ${pkg.popular ? "ring-2 ring-blue-500/30" : ""}`}>
                 <div className={`mb-5 w-fit rounded-full px-4 py-2 text-xs font-black ${pkg.popular ? "bg-blue-600 text-white" : "bg-blue-50 text-blue-700"}`}>
                   {pkg.badge}
                 </div>
                 <h2 className="font-heading text-2xl font-black text-[#102453]">{pkg.title}</h2>
-                <p className="mt-3 font-heading text-3xl font-black text-blue-700">{pkg.price}</p>
+                <p className="mt-3 font-heading text-[27px] font-black leading-tight text-blue-700 sm:text-3xl">{pkg.price}</p>
                 <p className="mt-4 text-sm font-medium leading-relaxed text-slate-600">{pkg.desc}</p>
                 <ul className="mt-6 flex-1 space-y-3 text-sm font-bold text-slate-600">
                   {perks.map((perk) => (
@@ -79,11 +79,11 @@ export default function PricingPage() {
       </section>
 
       <section className="pumpea-container pb-24">
-        <div className="glass-card-strong grid items-center gap-8 p-7 md:grid-cols-[1fr_auto] md:p-10">
+        <div className="glass-card-strong grid items-center gap-6 p-5 sm:p-7 md:grid-cols-[1fr_auto] md:gap-8 md:p-10">
           <div>
             <span className="section-kicker">Proyecto a medida</span>
-            <h2 className="mt-5 font-heading text-3xl font-black text-[#102453] md:text-4xl">¿No ves tu caso exacto?</h2>
-            <p className="mt-4 max-w-3xl text-lg font-medium leading-relaxed text-slate-600">
+            <h2 className="mt-5 font-heading text-[29px] font-black leading-tight text-[#102453] sm:text-3xl md:text-4xl">¿No ves tu caso exacto?</h2>
+            <p className="mt-4 max-w-3xl text-base font-medium leading-relaxed text-slate-600 sm:text-lg">
               Cotizamos soluciones por alcance real. Podemos iniciar con una landing, conectar automatizaciones o diseñar un producto completo por fases.
             </p>
             <ul className="mt-5 grid gap-3 text-sm font-bold text-slate-600 sm:grid-cols-3">
@@ -92,7 +92,7 @@ export default function PricingPage() {
               <li><i className="fa fa-check mr-2 text-blue-600" />Entrega con capacitación</li>
             </ul>
           </div>
-          <div className="flex min-w-[270px] flex-col gap-3">
+          <div className="flex w-full flex-col gap-3 md:min-w-[270px]">
             <Link href="/contact" className="cta-button">Pedir cotización</Link>
             <a href="https://wa.me/5217293062147?text=Hola%20Pumpea%2C%20quiero%20informes%20y%20cotización%20de%20tu%20servicio" target="_blank" rel="noopener noreferrer" className="button !text-emerald-700">
               <i className="fab fa-whatsapp" /> WhatsApp
