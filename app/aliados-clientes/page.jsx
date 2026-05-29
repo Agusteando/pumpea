@@ -21,10 +21,10 @@ function getAliadosImages() {
 }
 
 const trustStats = [
-  { icon: "fa-shield-halved", value: "+50", label: "Proyectos exitosos" },
-  { icon: "fa-users", value: "+20", label: "Clientes satisfechos" },
-  { icon: "fa-star", value: "100%", label: "Comprometidos contigo" },
-  { icon: "fa-bolt", value: "Resultados", label: "que se sienten" },
+  { icon: "fa-handshake", value: "8", label: "Aliados visibles" },
+  { icon: "fa-layer-group", value: "12+", label: "Proyectos acompañados" },
+  { icon: "fa-arrows-rotate", value: "6", label: "Flujos automatizados" },
+  { icon: "fa-clock", value: "24-48 h", label: "Respuesta inicial" },
 ];
 
 const platformStack = [
@@ -48,18 +48,21 @@ const platformStack = [
   },
 ];
 
-const testimonials = [
+const relationshipPrinciples = [
   {
-    quote: "PUMPEA entendió perfectamente nuestras necesidades y las transformó en resultados medibles. Su acompañamiento ha sido clave para nuestro crecimiento digital.",
-    name: "Andros Mendieta",
-    role: "Cofundador / Estrategia Digital",
-    avatar: "/andros.png",
+    icon: "fa-magnifying-glass-chart",
+    title: "Diagnóstico honesto",
+    desc: "Antes de vender una solución, ubicamos qué problema conviene resolver primero y qué puede esperar.",
   },
   {
-    quote: "Profesionales, creativos y siempre dispuestos a ir un paso adelante. Una forma de trabajar clara, cercana y orientada a resultados.",
-    name: "Alex Jurado",
-    role: "Cofundador / Arquitectura de Sistemas",
-    avatar: "/alex.png",
+    icon: "fa-list-check",
+    title: "Alcance claro",
+    desc: "Trabajamos por fases, con entregables entendibles y decisiones documentadas para evitar sorpresas.",
+  },
+  {
+    icon: "fa-comments",
+    title: "Acompañamiento cercano",
+    desc: "El trato es directo con el equipo fundador para mantener contexto, velocidad y responsabilidad.",
   },
 ];
 
@@ -172,35 +175,30 @@ export default function AliadosClientesPage() {
       </section>
 
       <section className="pumpea-container mt-10">
-        <div className="relative overflow-hidden rounded-[24px] border border-blue-100/85 bg-white/72 px-5 py-8 shadow-[0_28px_90px_rgba(19,88,243,.08)] backdrop-blur-[22px] sm:rounded-[34px] sm:py-10 md:px-10 lg:px-14">
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_60%_50%,rgba(147,124,255,.12),transparent_32%),radial-gradient(circle_at_28%_25%,rgba(117,210,255,.16),transparent_32%)]" />
-          <div className="grid items-center gap-8 lg:grid-cols-[0.8fr_1.5fr]">
+        <div className="rounded-[24px] border border-blue-100/85 bg-white/76 px-5 py-8 shadow-[0_28px_90px_rgba(19,88,243,.08)] backdrop-blur-[22px] sm:rounded-[34px] sm:py-10 md:px-10 lg:px-14">
+          <div className="grid items-start gap-8 lg:grid-cols-[0.8fr_1.5fr]">
             <div className="scroll-reveal">
-              <SectionKicker>LO QUE DICEN</SectionKicker>
+              <SectionKicker>RELACIÓN</SectionKicker>
               <h2 className="mt-6 font-heading text-[clamp(30px,2.1vw,42px)] font-black leading-[1.16] tracking-[-0.045em] text-[#182a56]">
-                Nuestros clientes,
-                <span className="block text-gradient-main">nuestro mejor respaldo</span>
+                Cómo cuidamos
+                <span className="block text-gradient-main">cada proyecto</span>
               </h2>
-              <p className="mt-5 max-w-[360px] text-base font-medium leading-[1.75] text-slate-600 sm:mt-6 sm:text-[17px]">
-                Cada proyecto es una relación a largo plazo basada en confianza, resultados y comunicación.
+              <p className="mt-5 max-w-[390px] text-base font-medium leading-[1.75] text-slate-600 sm:mt-6 sm:text-[17px]">
+                Preferimos promesas concretas: entender el contexto, definir prioridades y acompañar la implementación con comunicación clara.
               </p>
-              <Link href="/contact" className="mt-7 inline-flex items-center gap-2 font-heading text-[16px] font-black text-blue-600 hover:text-blue-700">
-                Ver más testimonios <i className="fa fa-arrow-right text-sm" />
+              <Link href="/agenda" className="mt-7 inline-flex items-center gap-2 font-heading text-[16px] font-black text-blue-600 hover:text-blue-700">
+                Agendar diagnóstico <i className="fa fa-arrow-right text-sm" />
               </Link>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
-              {testimonials.map((item, index) => (
-                <article key={item.name} className={`rounded-[22px] border border-blue-100 bg-white/82 p-5 text-center shadow-[0_22px_68px_rgba(19,88,243,.08)] backdrop-blur-xl sm:rounded-[28px] sm:p-8 ${index === 1 ? "md:mt-5" : ""}`}>
-                  <i className="fa fa-quote-left text-[34px] text-blue-500/70" />
-                  <p className="mx-auto mt-5 max-w-[360px] text-[14px] font-medium leading-[1.8] text-slate-600 sm:mt-7 sm:text-[15px]">{item.quote}</p>
-                  <div className="mt-8 flex items-center justify-center gap-4 text-left">
-                    <img src={item.avatar} alt={item.name} className="h-16 w-16 rounded-full border-4 border-white object-cover shadow-[0_12px_28px_rgba(19,88,243,.14)]" loading="lazy" decoding="async" />
-                    <span>
-                      <span className="block font-heading text-[17px] font-black text-blue-600">{item.name}</span>
-                      <span className="mt-1 block text-[11px] font-black text-[#203864]">{item.role}</span>
-                    </span>
-                  </div>
+            <div className="grid gap-5 md:grid-cols-3">
+              {relationshipPrinciples.map((item) => (
+                <article key={item.title} className="rounded-[22px] border border-blue-100 bg-white/82 p-5 shadow-[0_18px_56px_rgba(19,88,243,.07)] backdrop-blur-xl sm:rounded-[26px] sm:p-6">
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[20px] text-blue-600">
+                    <i className={`fa ${item.icon}`} />
+                  </span>
+                  <h3 className="mt-5 font-heading text-[19px] font-black leading-tight text-[#172b59]">{item.title}</h3>
+                  <p className="mt-3 text-[14px] font-medium leading-[1.7] text-slate-600">{item.desc}</p>
                 </article>
               ))}
             </div>

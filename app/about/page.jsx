@@ -6,10 +6,10 @@ export const metadata = {
 };
 
 const stats = [
-  { icon: "fa-rocket", value: "+50", label: ["Proyectos", "exitosos"] },
-  { icon: "fa-users", value: "+20", label: ["Clientes", "satisfechos"] },
-  { icon: "fa-clock", value: "+1,200", label: ["Horas de", "automatización"] },
-  { icon: "fa-star", value: "100%", label: ["Comprometidos", "contigo"] },
+  { icon: "fa-rocket", value: "12+", label: ["Proyectos", "acompañados"] },
+  { icon: "fa-users", value: "8", label: ["Aliados", "y clientes"] },
+  { icon: "fa-arrows-rotate", value: "6", label: ["Flujos", "automatizados"] },
+  { icon: "fa-user-group", value: "2", label: ["Fundadores", "activos"] },
 ];
 
 export default function AboutPage() {

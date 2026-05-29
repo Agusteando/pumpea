@@ -18,6 +18,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const modal = useCalendlyModal();
+  const menuId = "primary-mobile-menu";
 
   function handleAgenda() {
     setMenuOpen(false);
@@ -25,8 +26,8 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 px-3 pt-3 sm:px-4 md:px-8 md:pt-4">
-      <div className="glass-nav mx-auto flex h-[70px] w-full max-w-[1580px] items-center justify-between rounded-[22px] px-4 sm:h-[76px] md:h-[82px] md:rounded-2xl md:px-9">
+    <header className="sticky top-0 z-[90] px-3 pt-3 sm:px-4 md:px-8 md:pt-4">
+      <div className="glass-nav relative mx-auto flex h-[70px] w-full max-w-[1580px] items-center justify-between rounded-[22px] px-4 sm:h-[76px] md:h-[82px] md:rounded-2xl md:px-9">
         <Link href="/" className="flex items-center" onClick={() => setMenuOpen(false)} aria-label="Ir al inicio de Pumpea">
           <img
             src="/logo-h.png"
@@ -39,18 +40,21 @@ export default function Navbar() {
         <button
           className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[16px] border border-blue-100 bg-white/80 text-blue-700 shadow-sm lg:hidden"
           onClick={() => setMenuOpen((v) => !v)}
-          aria-label="Abrir menú"
+          aria-expanded={menuOpen}
+          aria-controls={menuId}
+          aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
           type="button"
         >
           <i className={menuOpen ? "fa fa-times" : "fa fa-bars"} />
         </button>
 
         <nav
+          id={menuId}
           className={`${
             menuOpen
-              ? "absolute left-3 right-3 top-[84px] flex max-h-[calc(100vh-104px)] overflow-y-auto rounded-[26px] border border-blue-100 bg-white/96 p-3 shadow-2xl backdrop-blur-xl sm:left-4 sm:right-4 sm:top-[92px]"
+              ? "absolute inset-x-0 top-[calc(100%+10px)] z-20 flex max-h-[calc(100vh-104px)] overflow-y-auto rounded-[24px] border border-blue-100 bg-white p-3 shadow-[0_28px_80px_rgba(24,64,128,.18)]"
               : "hidden"
-          } flex-col items-stretch gap-2 font-heading text-[15px] font-bold lg:static lg:flex lg:flex-row lg:items-center lg:gap-5 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none xl:gap-8`}
+          } flex-col items-stretch gap-2 font-heading text-[15px] font-bold lg:static lg:z-auto lg:flex lg:max-h-none lg:flex-row lg:items-center lg:gap-5 lg:overflow-visible lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none xl:gap-8`}
         >
           {links.map((link) => {
             const active = link.match(pathname || "");

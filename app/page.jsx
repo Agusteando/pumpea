@@ -25,15 +25,15 @@ const services = [
 ];
 
 const automationStats = [
-  { icon: "fa-chart-line", label: "Leads captados", value: "1,248", change: "+32%" },
-  { icon: "fa-arrows-rotate", label: "Procesos automatizados", value: "24", change: "+18%" },
-  { icon: "fa-clock", label: "Tiempo ahorrado", value: "120 h", change: "+40%" },
+  { icon: "fa-comments", label: "Conversaciones ordenadas", value: "36", change: "+12%" },
+  { icon: "fa-arrows-rotate", label: "Flujos activos", value: "6", change: "+2" },
+  { icon: "fa-clock", label: "Horas liberadas/mes", value: "18 h", change: "Estim." },
 ];
 
 const metrics = [
-  { icon: "fa-robot", value: "+30 proyectos", label: "exitosos", desc: "en diferentes industrias", tone: "blue" },
-  { icon: "fa-gear", value: "100% soluciones", label: "a medida", desc: "alineadas a tus objetivos", tone: "cyan" },
-  { icon: "fa-crosshairs", value: "Atención cercana", label: "y experta", desc: "acompañamiento real", tone: "violet" },
+  { icon: "fa-handshake", value: "8", label: "aliados visibles", desc: "marcas y proyectos del ecosistema", tone: "blue" },
+  { icon: "fa-layer-group", value: "12", label: "proyectos acompañados", desc: "entre sitios, flujos y eventos", tone: "cyan" },
+  { icon: "fa-clock", value: "24-48 h", label: "respuesta inicial", desc: "con próximos pasos concretos", tone: "violet" },
 ];
 
 const process = [
@@ -44,10 +44,10 @@ const process = [
 ];
 
 const aboutStats = [
-  { icon: "fa-rocket", value: "+50", label: "Proyectos exitosos" },
-  { icon: "fa-users", value: "+20", label: "Clientes satisfechos" },
-  { icon: "fa-clock", value: "+1,200", label: "Horas automatizadas" },
-  { icon: "fa-star", value: "100%", label: "Compromiso cercano" },
+  { icon: "fa-rocket", value: "12+", label: "Proyectos acompañados" },
+  { icon: "fa-users", value: "8", label: "Aliados y clientes" },
+  { icon: "fa-arrows-rotate", value: "6", label: "Flujos automatizados" },
+  { icon: "fa-user-group", value: "2", label: "Fundadores activos" },
 ];
 
 
@@ -57,28 +57,21 @@ const solutionCards = [
     icon: "fa-globe",
     title: "Sitios Web de Impacto",
     desc: "Desarrollo de sitios web modernos, rápidos y optimizados que venden y posicionan tu marca.",
-    bullets: ["Diseño responsivo", "SEO técnico", "Velocidad ultrarrápida"],
+    bullets: ["Diseño responsivo", "SEO técnico", "Carga optimizada"],
   },
   {
     tone: "green",
     icon: "fa-robot",
     title: "Automatización + Bots",
-    desc: "Bots inteligentes para WhatsApp, flujos automatizados y atención 24/7 que convierten.",
-    bullets: ["Bots para WhatsApp", "Flujos automatizados", "Atención 24/7"],
-  },
-  {
-    tone: "violet",
-    icon: "fa-share-nodes",
-    title: "Redes + Crecimiento",
-    desc: "Gestión profesional de redes sociales y campañas que conectan y convierten.",
-    bullets: ["Estrategia de contenido", "Publicidad pagada", "Análisis y reportes"],
+    desc: "Bots para WhatsApp, formularios y flujos simples que reducen trabajo manual y aceleran respuestas.",
+    bullets: ["Bots para WhatsApp", "Flujos automatizados", "Seguimiento ordenado"],
   },
   {
     tone: "orange",
     icon: "fa-plug",
     title: "Integraciones & Sistemas",
     desc: "Plataformas y sistemas a la medida, integrados para escalar tu ecosistema digital.",
-    bullets: ["Desarrollo a la medida", "Integraciones API", "Escalabilidad garantizada"],
+    bullets: ["Desarrollo a la medida", "Integraciones API", "Arquitectura por fases"],
   },
 ];
 
@@ -176,7 +169,7 @@ function MobileHeroVisual() {
           <span className="mt-1 block text-[11px] font-semibold text-slate-500">vs. mes anterior</span>
         </span>
         <span className="flex items-center gap-2 text-[34px] font-black leading-none text-emerald-500">
-          <i className="fa fa-arrow-up text-base" /> 48%
+          <i className="fa fa-arrow-up text-base" /> 12%
         </span>
       </div>
     </div>
@@ -220,7 +213,7 @@ function BrowserMockup() {
       <div className="float-card absolute right-[1.5%] top-[18%] z-20 w-[27.5%] min-w-[176px] rounded-[22px] px-5 py-5">
         <p className="text-[15px] font-black leading-tight text-slate-700">Rendimiento general</p>
         <div className="mt-3 flex items-center gap-2 text-[42px] font-black leading-none text-emerald-500">
-          <i className="fa fa-arrow-up text-lg" /> 48%
+          <i className="fa fa-arrow-up text-lg" /> 12%
         </div>
         <p className="mt-1 text-[11px] font-semibold text-slate-500">vs. mes anterior</p>
         <svg viewBox="0 0 160 58" className="mt-2 h-[50px] w-full" aria-hidden>
@@ -346,22 +339,32 @@ function HomeAboutSection() {
 function AlliancePanel() {
   return (
     <section className="pumpea-container relative pb-14 md:pb-20">
-      <div className="glass-card-strong p-5 sm:p-6 md:p-10">
-        <div className="grid items-center gap-6 lg:grid-cols-[220px_1fr] lg:gap-8">
-          <div>
-            <h2 className="font-heading text-[24px] font-black leading-tight text-[#162a59]">
+      <div className="overflow-hidden rounded-[30px] border border-blue-100/90 bg-[linear-gradient(145deg,rgba(255,255,255,.94),rgba(238,248,255,.82))] px-5 py-7 shadow-[0_26px_80px_rgba(19,88,243,.1)] backdrop-blur-[24px] sm:px-7 sm:py-8 md:rounded-[36px] md:px-10 md:py-10">
+        <div className="grid items-center gap-7 lg:grid-cols-[0.74fr_1.26fr] lg:gap-10">
+          <div className="max-w-[540px]">
+            <span className="section-kicker !px-4 !py-1.5 !text-[11px] !tracking-[0.18em]">ALIADOS</span>
+            <h2 className="mt-5 font-heading text-[30px] font-black leading-[1.08] tracking-[-0.04em] text-[#162a59] sm:text-[38px]">
               Aliados que ya confían en Pumpea
             </h2>
-            <p className="mt-3 text-base font-medium leading-relaxed text-slate-600">
-              Marcas y organizaciones que están creciendo con nosotros.
+            <p className="mt-4 text-base font-medium leading-relaxed text-slate-600 sm:text-[17px]">
+              Trabajamos con negocios, escuelas y proyectos locales que necesitan una presencia digital clara, mantenible y útil para vender u operar mejor.
             </p>
+            <div className="mt-6 flex flex-wrap gap-2 text-[12px] font-black text-blue-700">
+              {["Negocios locales", "Educación", "Eventos", "Operación digital"].map((tag) => (
+                <span key={tag} className="rounded-full border border-blue-100 bg-white/70 px-3 py-2 shadow-sm">
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
-          <SpriteLogoRail compact framed={false} className="w-full" />
+          <div className="rounded-[24px] border border-white/80 bg-white/62 px-2 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,.92)] sm:px-5">
+            <SpriteLogoRail compact framed={false} className="w-full" />
+          </div>
         </div>
 
-        <div className="mt-6 grid overflow-hidden rounded-[20px] border border-blue-100 bg-white/66 md:mt-8 md:grid-cols-3 md:rounded-[22px]">
-          {metrics.map((metric, index) => (
-            <div key={metric.value} className="flex items-center gap-4 p-5 sm:gap-5 sm:p-6 md:px-8">
+        <div className="mt-7 grid gap-3 md:mt-9 md:grid-cols-3">
+          {metrics.map((metric) => (
+            <div key={metric.value} className="flex items-center gap-4 rounded-[22px] border border-blue-100/80 bg-white/72 p-5 shadow-[0_16px_44px_rgba(19,88,243,.06)] sm:gap-5 sm:p-6">
               <span className={`metric-icon ${metric.tone === "cyan" ? "!bg-gradient-to-br !from-cyan-500 !to-teal-400" : metric.tone === "violet" ? "!bg-gradient-to-br !from-violet-600 !to-blue-500" : ""}`}>
                 <i className={`fa ${metric.icon} text-xl`} />
               </span>
@@ -370,7 +373,6 @@ function AlliancePanel() {
                 <span className="block font-heading text-xl font-black leading-tight text-[#162a59]">{metric.label}</span>
                 <span className="mt-1 block text-sm font-semibold text-slate-500">{metric.desc}</span>
               </span>
-              {index < metrics.length - 1 && <span className="ml-auto hidden h-12 w-px bg-blue-100 md:block" />}
             </div>
           ))}
         </div>
@@ -529,7 +531,7 @@ function SolutionsShowcase() {
           </p>
         </div>
 
-        <div className="mt-8 grid gap-5 sm:mt-12 sm:gap-7 md:grid-cols-2 xl:grid-cols-4 xl:gap-8">
+        <div className="mx-auto mt-8 grid max-w-[1180px] gap-5 sm:mt-12 sm:gap-7 md:grid-cols-3 xl:gap-8">
           {solutionCards.map((item, index) => <SoftSolutionCard key={item.title} item={item} index={index} />)}
         </div>
 
@@ -541,8 +543,8 @@ function SolutionsShowcase() {
               <span className="block text-gradient-main">en un solo lugar.</span>
             </h3>
             <p className="mx-auto mt-5 max-w-[650px] text-[15px] font-medium leading-[1.75] text-slate-600 sm:text-[16px] md:mx-0 md:mt-6">
-              Un ecosistema digital completo para atraer, convertir y fidelizar clientes.<br className="hidden md:block" />
-              Sin complicaciones. Sin rodeos. <b className="text-slate-800">Solo resultados.</b>
+              Un ecosistema digital práctico para atraer, responder y dar seguimiento con más orden.<br className="hidden md:block" />
+              Sin complicaciones. Sin rodeos. <b className="text-slate-800">Con dirección clara.</b>
             </p>
           </div>
         </div>

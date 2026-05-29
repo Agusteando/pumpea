@@ -162,7 +162,7 @@ iframe {
   backdrop-filter: blur(18px);
 }
 
-.surface-card, .glass-card {
+.glass-card {
   border: 1px solid rgba(218, 231, 255, .86);
   border-radius: var(--radius-xl);
   background: linear-gradient(145deg, rgba(255,255,255,.88), rgba(246,251,255,.72));
@@ -312,13 +312,6 @@ iframe {
   0%, 100% { opacity: .42; transform: scale(.96); }
   50% { opacity: .78; transform: scale(1.04); }
 }
-@keyframes shineMove {
-  0% { transform: translateX(-55%) rotate(11deg); opacity: 0; }
-  24% { opacity: .7; }
-  50% { transform: translateX(155%) rotate(11deg); opacity: 0; }
-  100% { transform: translateX(155%) rotate(11deg); opacity: 0; }
-}
-
 .animate-float-slow { animation: floatY 7s ease-in-out infinite; }
 .animate-float-medium { animation: floatY 5.8s ease-in-out infinite; }
 .animate-pulse-glow { animation: pulseGlow 4.6s ease-in-out infinite; }
@@ -366,7 +359,6 @@ iframe {
 
   .glass-card,
   .glass-card-strong,
-  .surface-card,
   .workflow-card-ref,
   .product-card-ref,
   .ecosystem-banner-ref {
@@ -396,7 +388,6 @@ iframe {
   h2,
   h3 {
     letter-spacing: 0 !important;
-    overflow-wrap: anywhere;
   }
 
   .badge-pill {
@@ -449,19 +440,19 @@ iframe {
   }
 
   .event-phone-stage {
-    min-height: 390px;
+    min-height: 430px;
   }
 
   .event-chip-ref {
     min-width: 104px;
     padding: 9px 10px;
-    transform: scale(.86);
+    transform: scale(.9);
   }
 
   .event-phone-ref {
     bottom: 24px;
-    width: min(220px, 68vw);
-    height: 330px;
+    width: min(230px, 68vw);
+    height: 350px;
     border-width: 7px;
     border-radius: 36px;
   }
@@ -556,10 +547,6 @@ iframe {
   font-size: 35px;
   box-shadow: 0 20px 45px rgba(19, 88, 243, .12), inset 0 1px 0 rgba(255,255,255,.92);
 }
-
-.service-card-ref:nth-child(2) .service-icon-ref { color: #1b5fff; }
-.service-card-ref:nth-child(3) .service-icon-ref { color: #1b4cf2; }
-.service-card-ref:nth-child(4) .service-icon-ref { color: #154ff0; }
 
 .ecosystem-banner-ref {
   position: relative;
@@ -740,12 +727,6 @@ iframe {
   .workflow-track-ref::before { display: none; }
   .service-card-ref { min-height: 360px; }
   .ecosystem-cubes-canvas { min-height: 230px; }
-}
-
-@media (max-width: 640px) {
-  .event-phone-stage { min-height: 430px; }
-  .event-chip-ref { transform: scale(.9); }
-  .event-phone-ref { width: 230px; height: 350px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
